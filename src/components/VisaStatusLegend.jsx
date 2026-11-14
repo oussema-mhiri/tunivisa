@@ -9,7 +9,7 @@ export default function VisaStatusLegend({ compact = false, className }) {
         const meta = visaStatusMeta(key)
         return (
           <li key={key} className="flex items-center gap-2.5">
-            <span aria-hidden="true" className={cn('h-3 w-3 shrink-0 rounded-full', meta.dot)} />
+            <span aria-hidden="true" className={cn('h-3 w-3 shrink-0 border border-ink-900/40', meta.dot)} />
             <span className="text-sm font-medium text-ink-700">{meta.label}</span>
           </li>
         )

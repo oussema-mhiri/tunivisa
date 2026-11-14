@@ -136,7 +136,7 @@ export default function SearchPalette() {
       toItem: (t) => ({ type: 'visa', payload: t }),
       render: (t) => (
         <>
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+          <span className="flex h-8 w-8 items-center justify-center rounded-none bg-brand-50 text-brand-600">
             <Plane className="h-4 w-4" aria-hidden="true" />
           </span>
           <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink-900">{t.label}</span>
@@ -151,7 +151,7 @@ export default function SearchPalette() {
       toItem: (t) => ({ type: 'purpose', payload: t }),
       render: (t) => (
         <>
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-success-50 text-success-600">
+          <span className="flex h-8 w-8 items-center justify-center rounded-none bg-success-50 text-success-600">
             <Plane className="h-4 w-4" aria-hidden="true" />
           </span>
           <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink-900">{t.label}</span>
@@ -183,7 +183,7 @@ export default function SearchPalette() {
             role="dialog"
             aria-modal="true"
             aria-label="Global search"
-            className="w-full max-w-xl overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-pop"
+            className="w-full max-w-xl overflow-hidden rounded-none border border-ink-200 bg-white shadow-pop"
           >
             <div className="flex items-center gap-3 border-b border-ink-100 px-4 py-3">
               <Search className="h-5 w-5 text-ink-400" aria-hidden="true" />
@@ -200,7 +200,7 @@ export default function SearchPalette() {
               <button
                 type="button"
                 onClick={closePalette}
-                className="rounded-lg border border-ink-200 px-1.5 py-0.5 text-xs font-semibold text-ink-400 hover:text-ink-600"
+                className="rounded-none border border-ink-200 px-1.5 py-0.5 text-xs font-semibold text-ink-400 hover:text-ink-600"
                 aria-label="Close search"
               >
                 ESC
@@ -260,9 +260,9 @@ export default function SearchPalette() {
             </div>
 
             <div className="hidden items-center gap-4 border-t border-ink-100 bg-ink-50 px-4 py-2 text-[11px] font-medium text-ink-400 sm:flex">
-              <span className="flex items-center gap-1"><kbd className="rounded border border-ink-200 bg-white px-1">↑↓</kbd> Navigate</span>
-              <span className="flex items-center gap-1"><kbd className="rounded border border-ink-200 bg-white px-1">↵</kbd> Select</span>
-              <span className="flex items-center gap-1"><kbd className="rounded border border-ink-200 bg-white px-1">ESC</kbd> Close</span>
+              <span className="flex items-center gap-1"><kbd className="rounded-none border border-ink-200 bg-white px-1">↑↓</kbd> Navigate</span>
+              <span className="flex items-center gap-1"><kbd className="rounded-none border border-ink-200 bg-white px-1">↵</kbd> Select</span>
+              <span className="flex items-center gap-1"><kbd className="rounded-none border border-ink-200 bg-white px-1">ESC</kbd> Close</span>
             </div>
           </motion.div>
         </motion.div>

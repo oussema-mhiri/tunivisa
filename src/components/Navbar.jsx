@@ -34,7 +34,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-ink-200/70 bg-white/85 backdrop-blur-lg">
+      <header className="zc-header sticky top-0 z-50 border-b border-ink-200/70 bg-white/85 backdrop-blur-lg">
         <div className="container-page flex h-16 items-center justify-between gap-2 sm:gap-4">
           <Logo />
 
@@ -46,8 +46,8 @@ export default function Navbar() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    'rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors',
-                    isActive ? 'bg-brand-50 text-brand-700' : 'text-ink-600 hover:bg-ink-100 hover:text-ink-900',
+                    'rounded-none px-3.5 py-2 text-sm font-semibold transition-colors',
+                    isActive ? 'bg-brand-200 text-ink-900' : 'text-ink-600 hover:bg-ink-100 hover:text-ink-900',
                   )
                 }
               >
@@ -60,12 +60,12 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event('tunivisa:open-search'))}
-              className="hidden h-10 items-center gap-2 rounded-xl border border-ink-200 bg-white px-3 text-sm font-medium text-ink-500 shadow-sm transition-colors hover:border-ink-300 hover:text-ink-700 sm:flex"
+              className="hidden h-10 items-center gap-2 rounded-none border border-ink-200 bg-white px-3 text-sm font-medium text-ink-500 shadow-sm transition-colors hover:border-ink-300 hover:text-ink-700 sm:flex"
               aria-label={t('nav.openSearch')}
             >
               <Search className="h-4 w-4" aria-hidden="true" />
               <span className="hidden xl:inline">Search…</span>
-              <kbd className="hidden rounded-md border border-ink-200 bg-ink-50 px-1.5 py-0.5 text-[10px] font-semibold text-ink-400 xl:inline">
+              <kbd className="hidden rounded-none border border-ink-200 bg-ink-50 px-1.5 py-0.5 text-[10px] font-semibold text-ink-400 xl:inline">
                 ⌘K
               </kbd>
             </button>
@@ -77,7 +77,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setLangOpen((o) => !o)}
-                className="flex h-10 items-center gap-1.5 rounded-xl px-2.5 text-sm font-semibold text-ink-600 transition-colors hover:bg-ink-100"
+                className="flex h-10 items-center gap-1.5 rounded-none px-2.5 text-sm font-semibold text-ink-600 transition-colors hover:bg-ink-100"
                 aria-haspopup="listbox"
                 aria-expanded={langOpen}
                 aria-label="Select language"
@@ -95,7 +95,7 @@ export default function Navbar() {
                     transition={{ duration: 0.14 }}
                     role="listbox"
                     aria-label="Language options"
-                    className="absolute right-0 z-40 mt-2 w-44 overflow-hidden rounded-xl border border-ink-200 bg-white py-1 shadow-pop"
+                    className="absolute right-0 z-40 mt-2 w-44 overflow-hidden rounded-none border border-ink-200 bg-white py-1 shadow-pop"
                   >
                     {languages.map((l) => (
                       <li key={l.code} role="option" aria-selected={l.code === lang}>
@@ -125,12 +125,12 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setProfileOpen((o) => !o)}
-                  className="flex h-10 items-center gap-2 rounded-xl px-2 transition-colors hover:bg-ink-100"
+                  className="flex h-10 items-center gap-2 rounded-none px-2 transition-colors hover:bg-ink-100"
                   aria-haspopup="menu"
                   aria-expanded={profileOpen}
                   aria-label="Account menu"
                 >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-sm font-bold text-white">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-none bg-brand-200 text-sm font-bold text-ink-900">
                     {(user?.name || 'U').charAt(0).toUpperCase()}
                   </span>
                 </button>
@@ -142,7 +142,7 @@ export default function Navbar() {
                       exit={{ opacity: 0, y: -6, scale: 0.98 }}
                       transition={{ duration: 0.14 }}
                       role="menu"
-                      className="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-xl border border-ink-200 bg-white py-1.5 shadow-pop"
+                      className="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-none border border-ink-200 bg-white py-1.5 shadow-pop"
                     >
                       <div className="border-b border-ink-100 px-4 py-3">
                         <p className="truncate text-sm font-bold text-ink-900">{user?.name}</p>
@@ -179,7 +179,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMenuOpen((o) => !o)}
-              className="flex h-10 w-10 items-center justify-center rounded-xl text-ink-600 transition-colors hover:bg-ink-100 lg:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-none text-ink-600 transition-colors hover:bg-ink-100 lg:hidden"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
             >
@@ -208,8 +208,8 @@ export default function Navbar() {
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
                       cn(
-                        'block rounded-xl px-4 py-3 text-base font-semibold',
-                        isActive ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-50',
+                        'block rounded-none px-4 py-3 text-base font-semibold',
+                        isActive ? 'bg-brand-200 text-ink-900' : 'text-ink-700 hover:bg-ink-50',
                       )
                     }
                   >
@@ -222,7 +222,7 @@ export default function Navbar() {
                     setMenuOpen(false)
                     window.dispatchEvent(new Event('tunivisa:open-search'))
                   }}
-                  className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold text-ink-700 hover:bg-ink-50"
+                  className="flex w-full items-center gap-3 rounded-none px-4 py-3 text-base font-semibold text-ink-700 hover:bg-ink-50"
                 >
                   <Search className="h-5 w-5 text-ink-400" aria-hidden="true" />
                   {t('nav.openSearch')}
@@ -240,9 +240,9 @@ export default function Navbar() {
                         }}
                         aria-pressed={l.code === lang}
                         className={cn(
-                          'rounded-lg border px-3 py-1.5 text-sm font-semibold transition-colors',
+                          'rounded-none border px-3 py-1.5 text-sm font-semibold transition-colors',
                           l.code === lang
-                            ? 'border-brand-600 bg-brand-50 text-brand-700'
+                            ? 'border-ink-900 bg-brand-200 text-ink-900'
                             : 'border-ink-200 text-ink-600 hover:bg-ink-50',
                         )}
                       >

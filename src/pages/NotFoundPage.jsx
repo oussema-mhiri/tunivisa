@@ -43,11 +43,11 @@ export default function NotFoundPage({
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className="relative"
       >
-        <div className="absolute inset-0 -z-10 rounded-full bg-brand-100/60 blur-3xl" aria-hidden="true" />
-        <div className="flex h-24 w-24 items-center justify-center rounded-3xl border border-ink-200/70 bg-white shadow-card">
+        <div className="hidden" aria-hidden="true" />
+        <div className="flex h-24 w-24 items-center justify-center rounded-none border border-ink-200/70 bg-white shadow-card">
           <Icon className="h-10 w-10 text-brand-600" strokeWidth={1.75} aria-hidden="true" />
         </div>
-        <span className="absolute -top-3 -right-3 flex h-9 w-9 items-center justify-center rounded-full bg-ink-900 font-display text-sm font-bold text-white shadow-pop">
+        <span className="absolute -top-3 -right-3 flex h-9 w-9 items-center justify-center rounded-none bg-ink-900 font-display text-sm font-bold text-white shadow-pop">
           404
         </span>
       </motion.div>
@@ -97,7 +97,7 @@ export default function NotFoundPage({
                 key={country.code}
                 to={`/countries/${country.code}`}
                 className={cn(
-                  'group flex flex-col items-center gap-2 rounded-2xl border border-ink-200/80 bg-white p-4',
+                  'group flex flex-col items-center gap-2 rounded-none border border-ink-200/80 bg-white p-4',
                   'text-center shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-card-hover',
                 )}
               >

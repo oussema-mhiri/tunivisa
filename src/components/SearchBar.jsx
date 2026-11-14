@@ -30,7 +30,7 @@ export default function SearchBar({
         autoFocus={autoFocus}
         aria-label={ariaLabel || placeholder}
         className={cn(
-          'input rounded-xl',
+          'input',
           size === 'lg' ? 'px-12 py-3.5 text-base' : 'py-2.5',
         )}
       />

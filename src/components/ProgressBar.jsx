@@ -16,11 +16,11 @@ export default function ProgressBar({ value, className, barClassName, label }) {
         aria-valuemin={0}
         aria-valuemax={100}
         aria-label={label}
-        className="h-2 w-full overflow-hidden rounded-full bg-ink-200/70"
+        className="h-2 w-full overflow-hidden rounded-none bg-ink-200/70"
       >
         <div
           className={cn(
-            'h-full rounded-full bg-brand-600 transition-all duration-500 ease-out',
+            'h-full rounded-none bg-brand-600 transition-all duration-500 ease-out',
             barClassName,
           )}
           style={{ width: `${pct}%` }}

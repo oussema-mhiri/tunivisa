@@ -42,9 +42,9 @@ export default function OfficialSourceCard({ links, embassyWebsite, sourceName }
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col gap-2 rounded-2xl border border-ink-200/80 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-card-hover"
+              className="group flex flex-col gap-2 rounded-none border border-ink-200/80 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-card-hover"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+              <span className="flex h-9 w-9 items-center justify-center rounded-none bg-brand-50 text-brand-600">
                 <Icon className="h-4.5 w-4.5" aria-hidden="true" />
               </span>
               <span className="text-sm font-semibold text-ink-800">{label}</span>

@@ -70,7 +70,7 @@ export default function AdminDashboardPage() {
                   <AlertTriangle className="h-5 w-5 text-warning-500" aria-hidden="true" />
                   Review queue
                 </h2>
-                <span className="rounded-full bg-warning-50 px-2.5 py-0.5 text-xs font-bold text-warning-700">
+                <span className="rounded-none bg-warning-50 px-2.5 py-0.5 text-xs font-bold text-warning-700">
                   {reviewQueue.length}
                 </span>
               </div>
@@ -112,7 +112,7 @@ export default function AdminDashboardPage() {
                   <ShieldCheck className="h-5 w-5 text-success-600" aria-hidden="true" />
                   Source health
                 </h2>
-                <span className="rounded-full bg-success-50 px-2.5 py-0.5 text-xs font-bold text-success-700">
+                <span className="rounded-none bg-success-50 px-2.5 py-0.5 text-xs font-bold text-success-700">
                   {stats.verifiedSources} verified
                 </span>
               </div>

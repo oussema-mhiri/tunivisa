@@ -70,7 +70,7 @@ export default function ProfilePage() {
         >
           <h2 id="personal-info" className="font-display text-lg font-bold text-ink-900">Personal information</h2>
           <div className="mt-5 flex items-center gap-4">
-            <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-600 font-display text-2xl font-bold text-white">
+            <span className="flex h-16 w-16 items-center justify-center rounded-none bg-brand-600 font-display text-2xl font-bold text-white">
               {(p.name || 'U').charAt(0).toUpperCase()}
             </span>
             <div>
@@ -100,7 +100,7 @@ export default function ProfilePage() {
               <h2 id="saved-dest" className="flex items-center gap-2 font-display text-lg font-bold text-ink-900">
                 <Heart className="h-5 w-5 text-danger-500" aria-hidden="true" />
                 Saved destinations
-                <span className="rounded-full bg-ink-100 px-2 py-0.5 text-xs font-bold text-ink-600">{saved.length}</span>
+                <span className="rounded-none bg-ink-100 px-2 py-0.5 text-xs font-bold text-ink-600">{saved.length}</span>
               </h2>
               <Link to="/saved" className="btn-secondary h-9 px-3 text-xs">
                 View all <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -120,7 +120,7 @@ export default function ProfilePage() {
                   <li key={c.code}>
                     <Link
                       to={`/countries/${c.code}`}
-                      className="flex items-center gap-3 rounded-xl border border-ink-200/70 bg-white p-3 transition-all hover:border-brand-200 hover:shadow-card-hover"
+                      className="flex items-center gap-3 rounded-none border border-ink-200/70 bg-white p-3 transition-all hover:border-brand-200 hover:shadow-card-hover"
                     >
                       <Flag code={c.code} size="md" />
                       <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink-800">{c.name}</span>
@@ -137,10 +137,10 @@ export default function ProfilePage() {
             <h2 id="saved-checklists" className="flex items-center gap-2 font-display text-lg font-bold text-ink-900">
               <ClipboardCheck className="h-5 w-5 text-success-600" aria-hidden="true" />
               Saved visa checklists
-              <span className="rounded-full bg-ink-100 px-2 py-0.5 text-xs font-bold text-ink-600">{checklistDetails.length}</span>
+              <span className="rounded-none bg-ink-100 px-2 py-0.5 text-xs font-bold text-ink-600">{checklistDetails.length}</span>
             </h2>
             {checklistDetails.length === 0 ? (
-              <p className="mt-4 rounded-xl bg-ink-50 px-4 py-4 text-sm text-ink-500">
+              <p className="mt-4 rounded-none bg-ink-50 px-4 py-4 text-sm text-ink-500">
                 No checklists in progress. Open any visa guide and tick off documents as you prepare them.
               </p>
             ) : (
@@ -149,7 +149,7 @@ export default function ProfilePage() {
                   <li key={`${country.code}:${rule.visaType}`}>
                     <Link
                       to={`/countries/${country.code}/visa/${rule.visaType}`}
-                      className="flex items-center gap-3 rounded-xl border border-ink-200/70 bg-white p-3.5 transition-all hover:border-brand-200 hover:shadow-card-hover"
+                      className="flex items-center gap-3 rounded-none border border-ink-200/70 bg-white p-3.5 transition-all hover:border-brand-200 hover:shadow-card-hover"
                     >
                       <Flag code={country.code} size="md" />
                       <div className="min-w-0 flex-1">
@@ -182,7 +182,7 @@ export default function ProfilePage() {
               )}
             </div>
             {recentSearches.length === 0 ? (
-              <p className="mt-4 rounded-xl bg-ink-50 px-4 py-4 text-sm text-ink-500">
+              <p className="mt-4 rounded-none bg-ink-50 px-4 py-4 text-sm text-ink-500">
                 Your recent searches will appear here as you explore the map and country search.
               </p>
             ) : (
@@ -191,7 +191,7 @@ export default function ProfilePage() {
                   <li key={term}>
                     <Link
                       to={`/countries?q=${encodeURIComponent(term)}`}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-white px-3 py-1.5 text-sm font-medium text-ink-600 transition-colors hover:border-brand-300 hover:text-brand-700"
+                      className="inline-flex items-center gap-1.5 rounded-none border border-ink-200 bg-white px-3 py-1.5 text-sm font-medium text-ink-600 transition-colors hover:border-brand-300 hover:text-brand-700"
                     >
                       <Save className="h-3.5 w-3.5 text-ink-300" aria-hidden="true" />
                       {term}

@@ -10,9 +10,9 @@ export default function CountryHero({ country, demo = false }) {
   const saved = isSaved(country.code)
 
   return (
-    <div className="card relative overflow-hidden">
+    <div className="card zc-country-hero relative overflow-hidden">
       <div
-        className="absolute inset-0 bg-gradient-to-br from-brand-50 via-transparent to-info-50"
+        className="zc-glow absolute inset-0 bg-gradient-to-br from-brand-50 via-transparent to-info-50"
         aria-hidden="true"
       />
       <div className="relative flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center">
@@ -20,14 +20,14 @@ export default function CountryHero({ country, demo = false }) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
-          className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border border-ink-200/70 bg-white shadow-card"
+          className="flex h-20 w-20 shrink-0 items-center justify-center border border-ink-900 bg-brand-200 shadow-[3px_3px_0_0_var(--color-ink-900)]"
         >
           <Flag code={country.code} size="lg" />
         </motion.div>
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="font-display text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+            <h1 className="font-display text-4xl leading-none text-ink-900 sm:text-6xl">
               {country.name}
             </h1>
             {country.detailed && <Badge tone="brand">Full guide</Badge>}
@@ -36,7 +36,7 @@ export default function CountryHero({ country, demo = false }) {
           <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-ink-500">
             {country.capital && (
               <span className="inline-flex items-center gap-1.5">
-                <span aria-hidden="true">🏛️</span>
+                <span className="zc-emoji" aria-hidden="true">🏛️</span>
                 Capital: <span className="font-medium text-ink-700">{country.capital}</span>
               </span>
             )}
@@ -46,13 +46,13 @@ export default function CountryHero({ country, demo = false }) {
             </span>
             {country.languages && (
               <span className="inline-flex items-center gap-1.5">
-                <span aria-hidden="true">💬</span>
+                <span className="zc-emoji" aria-hidden="true">💬</span>
                 {country.languages.join(', ')}
               </span>
             )}
             {country.currency && (
               <span className="inline-flex items-center gap-1.5">
-                <span aria-hidden="true">💰</span>
+                <span className="zc-emoji" aria-hidden="true">💰</span>
                 {country.currency}
               </span>
             )}

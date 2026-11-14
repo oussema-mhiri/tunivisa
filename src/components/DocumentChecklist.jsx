@@ -18,7 +18,7 @@ export default function DocumentChecklist({ countryCode, visaType, documents, co
       <div className="border-b border-ink-100 px-5 py-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-50 text-success-600">
+            <span className="flex h-9 w-9 items-center justify-center rounded-none bg-success-50 text-success-600">
               <ClipboardCheck className="h-5 w-5" aria-hidden="true" />
             </span>
             <div>
@@ -31,7 +31,7 @@ export default function DocumentChecklist({ countryCode, visaType, documents, co
           <button
             type="button"
             onClick={() => resetChecklist(countryCode, visaType)}
-            className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-ink-500 transition-colors hover:bg-ink-100 hover:text-ink-700"
+            className="inline-flex items-center gap-1.5 rounded-none px-2.5 py-1.5 text-xs font-semibold text-ink-500 transition-colors hover:bg-ink-100 hover:text-ink-700"
           >
             <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
             Reset
@@ -45,7 +45,7 @@ export default function DocumentChecklist({ countryCode, visaType, documents, co
               animate={{ opacity: 1, y: 0 }}
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-success-600"
             >
-              <span aria-hidden="true">🎉</span> Everything ticked off — good luck!
+              <span className="zc-emoji" aria-hidden="true">🎉</span> Everything ticked off — good luck!
             </motion.span>
           )}
         </div>

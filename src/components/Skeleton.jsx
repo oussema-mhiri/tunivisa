@@ -1,7 +1,7 @@
 import { cn } from '../utils/formatters'
 
 export function Skeleton({ className }) {
-  return <div aria-hidden="true" className={cn('animate-pulse rounded-lg bg-ink-200/70', className)} />
+  return <div aria-hidden="true" className={cn('animate-pulse rounded-none bg-ink-200/70', className)} />
 }
 
 export function SkeletonText({ lines = 3, className }) {
@@ -18,14 +18,14 @@ export function SkeletonCard({ className }) {
   return (
     <div className={cn('card p-5', className)} aria-hidden="true">
       <div className="flex items-center gap-3">
-        <Skeleton className="h-10 w-10 rounded-xl" />
+        <Skeleton className="h-10 w-10 rounded-none" />
         <div className="flex-1">
           <Skeleton className="h-4 w-2/3" />
           <Skeleton className="mt-2 h-3 w-1/3" />
         </div>
       </div>
       <SkeletonText className="mt-4" lines={2} />
-      <Skeleton className="mt-4 h-9 w-full rounded-xl" />
+      <Skeleton className="mt-4 h-9 w-full rounded-none" />
     </div>
   )
 }

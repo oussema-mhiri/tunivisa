@@ -65,9 +65,9 @@ export default function ReadinessScore({ score, breakdown, className }) {
                 <span className="font-medium text-ink-700">{item.label}</span>
                 <span className="font-semibold text-ink-900">{item.value}%</span>
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-ink-200/70">
+              <div className="h-2 w-full overflow-hidden rounded-none bg-ink-200/70">
                 <motion.div
-                  className={cn('h-full rounded-full', item.value >= 70 ? 'bg-success-500' : item.value >= 45 ? 'bg-warning-500' : 'bg-danger-500')}
+                  className={cn('h-full rounded-none', item.value >= 70 ? 'bg-success-500' : item.value >= 45 ? 'bg-warning-500' : 'bg-danger-500')}
                   initial={{ width: 0 }}
                   whileInView={{ width: `${item.value}%` }}
                   viewport={{ once: true }}

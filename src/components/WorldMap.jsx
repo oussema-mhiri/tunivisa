@@ -29,7 +29,7 @@ function MapTooltip({ tooltip }) {
         initial={{ opacity: 0, scale: 0.96, y: 4 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.12 }}
-        className="rounded-xl border border-ink-200 bg-white/95 p-3 shadow-pop backdrop-blur"
+        className="zc-tooltip p-3"
       >
         <div className="flex items-center gap-2">
           <Flag code={country.code} size="md" />
@@ -173,15 +173,15 @@ export default function WorldMap({ showFilters = true }) {
     return { total: entries.length, detailed: entries.filter((entry) => entry.detailed).length }
   }, [mapData])
 
-  const chipBase = 'inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-150'
+  const chipBase = 'inline-flex items-center border border-ink-900 px-3 py-1.5 text-[10px] font-bold tracking-[0.07em] uppercase transition-all duration-150'
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-ink-200/80 bg-white shadow-card">
+    <div className="zc-map relative overflow-hidden bg-white">
       <div className="relative">
         {!mapData && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/80 backdrop-blur-[2px]">
             <div className="flex flex-col items-center gap-3">
-              <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
+              <div className="h-8 w-8 animate-spin rounded-none border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
               <p className="text-sm font-medium text-ink-500">Loading world map…</p>
             </div>
           </div>
@@ -219,7 +219,7 @@ export default function WorldMap({ showFilters = true }) {
           <button
             type="button"
             onClick={() => zoomBy(1.5)}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-ink-200 bg-white text-ink-600 shadow-sm transition-all hover:bg-ink-50 hover:text-ink-900 active:scale-95 sm:h-10 sm:w-10"
+            className="zc-map-control flex h-9 w-9 items-center justify-center text-ink-600 transition-all active:translate-y-0.5 sm:h-10 sm:w-10"
             aria-label="Zoom in"
           >
             <Plus className="h-4.5 w-4.5" />
@@ -227,7 +227,7 @@ export default function WorldMap({ showFilters = true }) {
           <button
             type="button"
             onClick={() => zoomBy(1 / 1.5)}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-ink-200 bg-white text-ink-600 shadow-sm transition-all hover:bg-ink-50 hover:text-ink-900 active:scale-95 sm:h-10 sm:w-10"
+            className="zc-map-control flex h-9 w-9 items-center justify-center text-ink-600 transition-all active:translate-y-0.5 sm:h-10 sm:w-10"
             aria-label="Zoom out"
           >
             <Minus className="h-4.5 w-4.5" />
@@ -235,14 +235,14 @@ export default function WorldMap({ showFilters = true }) {
           <button
             type="button"
             onClick={resetView}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-ink-200 bg-white text-ink-600 shadow-sm transition-all hover:bg-ink-50 hover:text-ink-900 active:scale-95 sm:h-10 sm:w-10"
+            className="zc-map-control flex h-9 w-9 items-center justify-center text-ink-600 transition-all active:translate-y-0.5 sm:h-10 sm:w-10"
             aria-label="Reset map view"
           >
             <RotateCcw className="h-4.5 w-4.5" />
           </button>
         </div>
 
-        <div className="absolute top-4 right-4 hidden items-center gap-1.5 rounded-xl border border-ink-200 bg-white/90 px-3 py-2 text-xs font-medium text-ink-600 shadow-sm backdrop-blur sm:flex">
+        <div className="zc-map-control absolute top-4 right-4 hidden items-center gap-1.5 px-3 py-2 text-[10px] font-bold tracking-[0.06em] text-ink-700 uppercase sm:flex">
           <Crosshair className="h-3.5 w-3.5 text-brand-600" aria-hidden="true" />
           {stats.detailed} full visa guides verified
         </div>
@@ -253,7 +253,7 @@ export default function WorldMap({ showFilters = true }) {
           <VisaStatusLegend compact />
           <span className="hidden h-6 w-px bg-ink-200 lg:block" aria-hidden="true" />
           <div className="flex items-center gap-2.5">
-            <span className="h-3 w-3 rounded-full" style={{ backgroundColor: HOME_COLOR }} aria-hidden="true" />
+            <span className="h-3 w-3 border border-ink-900" style={{ backgroundColor: HOME_COLOR }} aria-hidden="true" />
             <span className="text-sm font-medium text-ink-700">Home (Tunisia)</span>
           </div>
         </div>
@@ -279,7 +279,7 @@ export default function WorldMap({ showFilters = true }) {
                   className={cn(
                     chipBase,
                     active && key === 'all' && 'border-ink-900 bg-ink-900 text-white',
-                    active && key !== 'all' && 'border-transparent text-white',
+                    active && key !== 'all' && (key === 'visa_free' || key === 'visa_on_arrival' ? 'border-ink-900 text-ink-900' : 'border-ink-900 text-white'),
                     !active && 'border-ink-200 bg-white text-ink-600 hover:border-ink-300 hover:bg-ink-50',
                   )}
                   style={active && key !== 'all' ? { backgroundColor: color } : undefined}

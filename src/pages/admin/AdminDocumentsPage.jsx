@@ -48,7 +48,7 @@ export default function AdminDocumentsPage() {
               type="button"
               aria-pressed={filter === opt.key}
               onClick={() => setFilter(opt.key)}
-              className={`inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+              className={`inline-flex items-center rounded-none border px-3 py-1.5 text-xs font-semibold transition-colors ${
                 filter === opt.key
                   ? 'border-ink-900 bg-ink-900 text-white'
                   : 'border-ink-200 bg-white text-ink-600 hover:bg-ink-50'
@@ -84,7 +84,7 @@ export default function AdminDocumentsPage() {
         {rows.map((doc, i) => (
           <article key={doc.id} className="card flex flex-col p-5 transition-shadow duration-200 hover:shadow-card-hover">
             <div className="flex items-start justify-between gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+              <span className="flex h-10 w-10 items-center justify-center rounded-none bg-brand-50 text-brand-600">
                 <FileCheck2 className="h-5 w-5" aria-hidden="true" />
               </span>
               <Badge tone={doc.required ? 'brand' : 'gray'}>

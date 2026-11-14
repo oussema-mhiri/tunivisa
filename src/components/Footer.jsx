@@ -29,8 +29,8 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="mt-auto border-t border-ink-200/70 bg-white">
-      <div className="container-page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+    <footer className="zc-footer mt-auto bg-white">
+      <div className="container-page zc-footer-grid grid gap-10 py-12 sm:grid-cols-2">
         <div className="max-w-sm">
           <Logo />
           <p className="mt-4 text-sm leading-relaxed text-ink-500">{t('footer.tagline')}</p>

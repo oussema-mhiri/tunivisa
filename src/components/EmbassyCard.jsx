@@ -18,7 +18,7 @@ export default function EmbassyCard({ embassy }) {
   return (
     <div className="card overflow-hidden">
       <div className="flex items-start gap-3 border-b border-ink-100 px-5 py-4">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none bg-brand-50 text-brand-600">
           <Building2 className="h-5 w-5" aria-hidden="true" />
         </span>
         <div>

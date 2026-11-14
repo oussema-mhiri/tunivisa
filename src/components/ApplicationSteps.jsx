@@ -18,7 +18,7 @@ export default function ApplicationSteps({ steps, compact = false }) {
           className="relative flex gap-4 pb-6 last:pb-0"
         >
           <span
-            className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-600 text-xs font-bold text-white shadow-sm ring-4 ring-brand-50"
+            className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-brand-600 text-xs font-bold text-white shadow-sm ring-4 ring-brand-50"
             aria-hidden="true"
           >
             {i + 1}
@@ -28,7 +28,7 @@ export default function ApplicationSteps({ steps, compact = false }) {
             <p className="mt-1 max-w-xl text-sm leading-relaxed text-ink-500">{step.text}</p>
           </div>
           {i === steps.length - 1 && (
-            <span className="absolute right-0 top-0 flex h-8 w-8 items-center justify-center rounded-full bg-success-50 text-success-600" aria-hidden="true">
+            <span className="absolute right-0 top-0 flex h-8 w-8 items-center justify-center rounded-none bg-success-50 text-success-600" aria-hidden="true">
               <Check className="h-4 w-4" />
             </span>
           )}

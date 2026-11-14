@@ -38,7 +38,7 @@ function SidebarNav({ onNavigate }) {
           onClick={onNavigate}
           className={({ isActive }) =>
             cn(
-              'flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-colors',
+              'flex items-center gap-3 rounded-none px-3.5 py-2.5 text-sm font-semibold transition-colors',
               isActive
                 ? 'bg-brand-600 text-white shadow-sm'
                 : 'text-ink-600 hover:bg-ink-100 hover:text-ink-900',
@@ -81,7 +81,7 @@ export default function AdminLayout() {
             <SidebarNav />
             <Link
               to="/"
-              className="mt-4 flex items-center gap-2 rounded-xl border-t border-ink-100 px-3.5 pt-4 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600"
+              className="mt-4 flex items-center gap-2 rounded-none border-t border-ink-100 px-3.5 pt-4 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               Back to site
@@ -119,7 +119,7 @@ export default function AdminLayout() {
                 <SidebarNav onNavigate={() => setMobileOpen(false)} />
                 <Link
                   to="/"
-                  className="mt-3 flex items-center gap-2 rounded-xl border-t border-ink-100 px-3.5 pt-3 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600"
+                  className="mt-3 flex items-center gap-2 rounded-none border-t border-ink-100 px-3.5 pt-3 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600"
                 >
                   <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                   Back to site

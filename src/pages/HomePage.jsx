@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, BadgeCheck, FileText, Globe2, Info, Map, Plane, ShieldCheck, Sparkles, Wallet } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Compass, FileText, Globe2, Info, Map, Plane, ShieldCheck, Wallet } from 'lucide-react'
 import CountrySearch from '../components/CountrySearch'
 import Flag from '../components/Flag'
 import SectionHeading from '../components/SectionHeading'
@@ -35,7 +35,7 @@ const HOW_STEPS = [
     text: 'Review the visa status, allowed stay, fees, documents and official sources for your trip.',
   },
   {
-    icon: Sparkles,
+    icon: Compass,
     title: 'Get a personalised plan',
     text: 'Use the Visa Assistant for a step-by-step guide and document checklist built around you.',
   },
@@ -86,7 +86,7 @@ export default function HomePage() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="zc-hero-copy max-w-4xl"
           >
-            <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-brand-200/70 bg-brand-50 px-4 py-1.5 text-center text-xs font-semibold text-brand-700">
+            <span className="zc-tag max-w-full flex-wrap">
               <Plane className="h-3.5 w-3.5" aria-hidden="true" />
               Visa & travel guide for Tunisian passport holders
               <Flag code="tn" size="sm" />
@@ -120,7 +120,7 @@ export default function HomePage() {
               {t('home.exploreMap')}
             </button>
             <Link to="/assistant" className="btn-primary w-full sm:w-auto">
-              <Sparkles className="h-4.5 w-4.5" aria-hidden="true" />
+              <Compass className="h-4.5 w-4.5" aria-hidden="true" />
               Try the Visa Assistant
             </Link>
           </motion.div>
@@ -185,9 +185,9 @@ export default function HomePage() {
         <div className="mt-10">
           <Suspense
             fallback={
-              <div className="flex h-[420px] items-center justify-center rounded-3xl border border-ink-200/80 bg-white shadow-card">
+              <div className="flex h-[420px] items-center justify-center rounded-none border border-ink-200/80 bg-white shadow-card">
                 <div className="flex flex-col items-center gap-3">
-                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
+                  <div className="h-8 w-8 animate-spin rounded-none border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
                   <p className="text-sm font-medium text-ink-500">Preparing the map…</p>
                 </div>
               </div>
@@ -248,7 +248,7 @@ export default function HomePage() {
               <span className="absolute top-6 right-6 font-display text-4xl font-bold text-ink-100" aria-hidden="true">
                 0{i + 1}
               </span>
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-600 text-white shadow-sm">
+              <span className="flex h-11 w-11 items-center justify-center border border-ink-900 bg-brand-200 text-ink-900">
                 <step.icon className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-4 font-display text-lg font-bold text-ink-900">{step.title}</h3>
@@ -268,13 +268,13 @@ export default function HomePage() {
           className="zc-cta relative overflow-hidden bg-ink-900"
         >
           <div
-            className="pointer-events-none absolute inset-0"
+            className="zc-glow pointer-events-none absolute inset-0"
             style={{ background: 'radial-gradient(60% 90% at 50% 0%, rgba(99,102,241,0.35) 0%, rgba(15,23,42,0) 70%)' }}
             aria-hidden="true"
           />
           <div className="relative">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold text-white">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+            <span className="zc-tag">
+              <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
               Free · No sign-up required
             </span>
             <h2 className="mt-5 max-w-2xl font-display text-3xl text-white text-balance sm:text-4xl">

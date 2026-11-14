@@ -11,8 +11,8 @@ export default function Logo({ to = '/', className, iconOnly = false, light = fa
     >
       <span
         className={cn(
-          'flex h-9 w-9 items-center justify-center rounded-xl text-white shadow-sm transition-transform duration-200 group-hover:scale-105',
-          light ? 'bg-white/15' : 'bg-brand-600',
+          'flex h-9 w-9 items-center justify-center border border-ink-900 text-ink shadow-[3px_3px_0_0_var(--color-ink-900)] transition-transform duration-200 group-hover:-translate-y-0.5',
+          light ? 'bg-white/15' : 'bg-brand-200',
         )}
       >
         <svg viewBox="0 0 64 64" className="h-5 w-5" aria-hidden="true">
@@ -32,13 +32,13 @@ export default function Logo({ to = '/', className, iconOnly = false, light = fa
       {!iconOnly && (
         <span
           className={cn(
-            'font-display text-lg font-bold tracking-tight',
+            'font-display text-xl tracking-[0.01em]',
             light ? 'text-white' : 'text-ink-900',
           )}
         >
-          Tuni<span className={light ? 'text-brand-300' : 'text-brand-600'}>Visa</span>
+          Tuni<span className={light ? 'text-brand-300' : 'text-danger-600'}>Visa</span>
           <span className="ml-1 inline-flex translate-y-0.5 items-center" aria-hidden="true">
-            <Flag code="tn" size="xs" className="rounded-[2px]" />
+            <Flag code="tn" size="xs" />
           </span>
         </span>
       )}

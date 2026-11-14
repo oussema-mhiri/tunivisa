@@ -19,7 +19,6 @@ import {
   MapPin,
   Plane,
   RotateCcw,
-  Sparkles,
   UserRound,
   Users,
 } from 'lucide-react'
@@ -49,7 +48,7 @@ const STAY_OPTIONS = [
 const SITUATIONS = [
   { id: 'student', label: 'Student', icon: UserRound },
   { id: 'employee', label: 'Employee', icon: Briefcase },
-  { id: 'self-employed', label: 'Self-employed', icon: Sparkles },
+  { id: 'self-employed', label: 'Self-employed', icon: Briefcase },
   { id: 'business-owner', label: 'Business owner', icon: Banknote },
   { id: 'other', label: 'Other', icon: FileQuestion },
 ]
@@ -179,7 +178,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
             onClick={() => setAnswer(key, opt.id)}
             aria-pressed={selected}
             className={cn(
-              'flex items-center gap-3 rounded-2xl border-2 px-4 py-3.5 text-left text-sm font-semibold transition-all duration-150',
+              'flex items-center gap-3 rounded-none border-2 px-4 py-3.5 text-left text-sm font-semibold transition-all duration-150',
               selected
                 ? 'border-brand-600 bg-brand-50 text-brand-700'
                 : 'border-ink-200 bg-white text-ink-700 hover:border-brand-300 hover:bg-ink-50',
@@ -241,7 +240,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
                   onClick={() => setAnswer('stay', opt.id)}
                   aria-pressed={selected}
                   className={cn(
-                    'flex w-full items-center gap-3 rounded-2xl border-2 px-4 py-3.5 text-left text-sm font-semibold transition-all',
+                    'flex w-full items-center gap-3 rounded-none border-2 px-4 py-3.5 text-left text-sm font-semibold transition-all',
                     selected
                       ? 'border-brand-600 bg-brand-50 text-brand-700'
                       : 'border-ink-200 bg-white text-ink-700 hover:border-brand-300 hover:bg-ink-50',
@@ -269,7 +268,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
                   onClick={() => setAnswer('invitation', val)}
                   aria-pressed={selected}
                   className={cn(
-                    'flex items-center justify-center gap-2 rounded-2xl border-2 px-4 py-4 text-sm font-semibold capitalize transition-all',
+                    'flex items-center justify-center gap-2 rounded-none border-2 px-4 py-4 text-sm font-semibold capitalize transition-all',
                     selected
                       ? 'border-brand-600 bg-brand-50 text-brand-700'
                       : 'border-ink-200 bg-white text-ink-700 hover:border-brand-300 hover:bg-ink-50',
@@ -294,8 +293,8 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
   return (
     <div className="card relative overflow-hidden">
       <div className="flex items-center gap-3 border-b border-ink-100 px-5 py-4 sm:px-6">
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-          {stepDef ? <stepDef.icon className="h-5 w-5" aria-hidden="true" /> : <Sparkles className="h-5 w-5" aria-hidden="true" />}
+        <span className="flex h-10 w-10 items-center justify-center rounded-none bg-brand-50 text-brand-600">
+          {stepDef ? <stepDef.icon className="h-5 w-5" aria-hidden="true" /> : <Briefcase className="h-5 w-5" aria-hidden="true" />}
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-xs font-semibold tracking-wide text-brand-600 uppercase">
@@ -309,7 +308,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
           <button
             type="button"
             onClick={restart}
-            className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-ink-500 transition-colors hover:bg-ink-100 hover:text-ink-700"
+            className="inline-flex items-center gap-1.5 rounded-none px-2.5 py-1.5 text-xs font-semibold text-ink-500 transition-colors hover:bg-ink-100 hover:text-ink-700"
             aria-label="Restart assistant"
           >
             <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
@@ -376,7 +375,7 @@ function ResultView({ result, answers, onRestart }) {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl bg-gradient-to-br from-brand-50 to-ink-50 p-5 sm:p-6">
+      <div className="zc-glow border border-ink-900 bg-ink-50 p-5 shadow-[3px_3px_0_0_var(--color-ink-900)] sm:p-6">
         <div className="flex flex-wrap items-center gap-3">
           <Flag code={country.code} size="lg" />
           <div className="min-w-0 flex-1">
@@ -386,9 +385,9 @@ function ResultView({ result, answers, onRestart }) {
           <VisaStatusBadge status={rule.status} size="md" />
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink-700 shadow-sm">{rule.visaTypeLabel} visa</span>
-          <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink-700 shadow-sm">{rule.duration}</span>
-          <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink-700 shadow-sm">{rule.processingTime}</span>
+          <span className="rounded-none bg-white px-3 py-1 text-xs font-semibold text-ink-700 shadow-sm">{rule.visaTypeLabel} visa</span>
+          <span className="rounded-none bg-white px-3 py-1 text-xs font-semibold text-ink-700 shadow-sm">{rule.duration}</span>
+          <span className="rounded-none bg-white px-3 py-1 text-xs font-semibold text-ink-700 shadow-sm">{rule.processingTime}</span>
         </div>
       </div>
 
@@ -401,7 +400,7 @@ function ResultView({ result, answers, onRestart }) {
             { label: 'Processing', value: rule.processingTime },
             { label: 'Method', value: rule.applicationMethod },
           ].map((item) => (
-            <li key={item.label} className="flex items-start gap-2.5 rounded-xl border border-ink-200/70 bg-white px-3.5 py-2.5">
+            <li key={item.label} className="flex items-start gap-2.5 rounded-none border border-ink-200/70 bg-white px-3.5 py-2.5">
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success-500" aria-hidden="true" />
               <div>
                 <p className="text-xs font-medium text-ink-400 uppercase">{item.label}</p>
@@ -432,7 +431,7 @@ function ResultView({ result, answers, onRestart }) {
       </div>
 
       {embassy && (
-        <div className="rounded-2xl border border-ink-200/70 bg-white p-4">
+        <div className="rounded-none border border-ink-200/70 bg-white p-4">
           <p className="text-sm font-semibold text-ink-800">{embassy.name}</p>
           <p className="mt-0.5 text-xs text-ink-500">{embassy.city} · {embassy.type}</p>
         </div>
@@ -441,7 +440,7 @@ function ResultView({ result, answers, onRestart }) {
       <OfficialSourceCard links={links} embassyWebsite={embassy?.website} sourceName={rule.officialSource} />
       <LastVerified date={rule.lastVerified} source={rule.officialSource} />
 
-      <div className="rounded-2xl border border-warning-500/30 bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
+      <div className="rounded-none border border-warning-500/30 bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
         This guide reflects current entry rules ({meta.label}) but visa decisions are always made by the
         destination authority. Verify the fee, documents and processing time on the official government
         website before applying.

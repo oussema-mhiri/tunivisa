@@ -13,7 +13,7 @@ export default function ThemeToggle({ className }) {
       type="button"
       onClick={toggleTheme}
       className={cn(
-        'relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl text-ink-600 transition-colors hover:bg-ink-100 hover:text-ink-900',
+        'relative flex h-10 w-10 items-center justify-center overflow-hidden border border-transparent text-ink-600 transition-colors hover:border-ink-900 hover:bg-ink-100 hover:text-ink-900',
         className,
       )}
       aria-label={label}

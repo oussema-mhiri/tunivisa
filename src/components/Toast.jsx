@@ -25,7 +25,7 @@ export function Toast({ toast, onDismiss }) {
       transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
       role="status"
       className={cn(
-        'pointer-events-auto flex w-full items-start gap-3 rounded-2xl border px-4 py-3 shadow-pop',
+        'pointer-events-auto flex w-full items-start gap-3 rounded-none border px-4 py-3 shadow-pop',
         TONES[toast.type] || TONES.info,
       )}
     >
@@ -34,7 +34,7 @@ export function Toast({ toast, onDismiss }) {
       <button
         type="button"
         onClick={() => onDismiss(toast.id)}
-        className="rounded-md p-0.5 opacity-60 transition-opacity hover:opacity-100"
+        className="rounded-none p-0.5 opacity-60 transition-opacity hover:opacity-100"
         aria-label="Dismiss notification"
       >
         <X className="h-4 w-4" />

@@ -19,7 +19,7 @@ export default function PublicLayout() {
       <ScrollToTop />
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:z-[110] focus:rounded-lg focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[110] focus:rounded-none focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white"
       >
         Skip to main content
       </a>

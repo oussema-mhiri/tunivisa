@@ -53,7 +53,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="card space-y-4 p-6 sm:p-8" noValidate>
           {error && (
-            <div role="alert" className="flex items-start gap-2.5 rounded-xl bg-danger-50 px-4 py-3 text-sm font-medium text-danger-700">
+            <div role="alert" className="flex items-start gap-2.5 rounded-none bg-danger-50 px-4 py-3 text-sm font-medium text-danger-700">
               <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
               {error}
             </div>
@@ -93,7 +93,7 @@ export default function LoginPage() {
                 type="button"
                 onClick={() => setShowPassword((s) => !s)}
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
-                className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-ink-400 hover:text-ink-600"
+                className="absolute top-1/2 right-3 -translate-y-1/2 rounded-none p-1 text-ink-400 hover:text-ink-600"
               >
                 {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
               </button>

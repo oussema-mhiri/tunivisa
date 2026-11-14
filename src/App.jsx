@@ -33,7 +33,7 @@ function PageLoader() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center" role="status" aria-label="Loading page">
       <div className="flex flex-col items-center gap-3">
-        <div className="h-9 w-9 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
+        <div className="h-9 w-9 animate-spin rounded-none border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
         <p className="text-sm font-medium text-ink-500">Loading…</p>
       </div>
     </div>

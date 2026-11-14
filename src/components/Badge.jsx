@@ -13,7 +13,7 @@ export default function Badge({ children, tone = 'gray', className }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ring-inset',
+        'inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold tracking-[0.09em] uppercase ring-1 ring-inset',
         TONES[tone] || TONES.gray,
         className,
       )}

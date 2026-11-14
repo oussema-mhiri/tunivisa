@@ -55,7 +55,7 @@ export default function Flag({ code, size = 'md', className }) {
       decoding="async"
       onError={() => setFailed(true)}
       className={cn(
-        'inline-block w-auto shrink-0 rounded-[3px] object-cover ring-1 ring-black/10 dark:ring-white/20',
+        'inline-block w-auto shrink-0 object-cover ring-1 ring-ink-900/30',
         HEIGHTS[size] || HEIGHTS.md,
         className,
       )}

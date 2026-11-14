@@ -119,7 +119,7 @@ export default function CountrySearch({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.99 }}
             transition={{ duration: 0.16 }}
-            className="absolute top-full z-30 mt-2 max-h-[45vh] w-full overflow-y-auto overscroll-contain rounded-2xl border border-ink-200 bg-white shadow-pop"
+            className="absolute top-full z-30 mt-2 max-h-[45vh] w-full overflow-y-auto overscroll-contain rounded-none border border-ink-200 bg-white shadow-pop"
             role="listbox"
             aria-label="Country suggestions"
           >

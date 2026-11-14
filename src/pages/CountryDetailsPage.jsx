@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, ArrowRight, CalendarClock, Compass, CreditCard, FileText, Hourglass, Link2, MapPin, Sparkles } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CalendarClock, Compass, CreditCard, FileText, Hourglass, Link2, MapPin } from 'lucide-react'
 import CountryHero from '../components/CountryHero'
 import Flag from '../components/Flag'
 import VisaStatusBadge from '../components/VisaStatusBadge'
@@ -55,11 +55,11 @@ export default function CountryDetailsPage() {
       <div className="container-page py-10">
         <Skeleton className="h-5 w-48" />
         <div className="mt-6">
-          <Skeleton className="h-44 w-full rounded-2xl" />
+          <Skeleton className="h-44 w-full rounded-none" />
         </div>
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 rounded-2xl" />
+            <Skeleton key={i} className="h-24 rounded-none" />
           ))}
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function CountryDetailsPage() {
         className="card relative mt-8 overflow-hidden p-6 sm:p-8"
       >
         <div
-          className="absolute inset-0"
+          className="zc-glow absolute inset-0"
           style={{ background: `linear-gradient(120deg, ${meta.color}0f 0%, rgba(255,255,255,0) 55%)` }}
           aria-hidden="true"
         />
@@ -145,7 +145,7 @@ export default function CountryDetailsPage() {
           </div>
         </div>
         {!country.detailed && (
-          <p className="relative mt-5 rounded-xl bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
+          <p className="relative mt-5 rounded-none bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
             This country appears on our map but does not have a full verified guide yet. The status and stay
             details below are illustrative and should be confirmed with an official source.
           </p>
@@ -186,7 +186,7 @@ export default function CountryDetailsPage() {
             </p>
           </div>
           <Link to={`/assistant?country=${country.code}`} className="btn-secondary">
-            <Sparkles className="h-4 w-4 text-brand-600" aria-hidden="true" />
+            <Compass className="h-4 w-4" aria-hidden="true" />
             Get a personalised guide
           </Link>
         </div>
@@ -197,7 +197,7 @@ export default function CountryDetailsPage() {
         </div>
       </section>
 
-      <div className="mt-10 flex items-start gap-2.5 rounded-2xl bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
+      <div className="mt-10 flex items-start gap-2.5 rounded-none bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
         <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
         Visa rules change frequently — always confirm with the official embassy or government website of
         {' '}{country.name} before planning your trip.

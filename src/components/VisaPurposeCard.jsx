@@ -15,9 +15,9 @@ export default function VisaPurposeCard({ purpose, country, index = 0 }) {
     >
       <Link
         to={`/countries/${country.code}/visa/${purpose.id}`}
-        className="group flex h-full items-center gap-4 rounded-2xl border border-ink-200/80 bg-white p-4 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-card-hover"
+        className="group flex h-full items-center gap-4 rounded-none border border-ink-200/80 bg-white p-4 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-card-hover"
       >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-brand-600 group-hover:text-white">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-none bg-brand-50 text-brand-600 transition-colors group-hover:bg-brand-600 group-hover:text-white">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
         <span className="min-w-0 flex-1">

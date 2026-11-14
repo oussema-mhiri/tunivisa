@@ -11,8 +11,8 @@ import {
   HeartHandshake,
   Map,
   RefreshCw,
+  Route,
   ShieldCheck,
-  Sparkles,
 } from 'lucide-react'
 import SectionHeading from '../components/SectionHeading'
 import VisaStatusBadge from '../components/VisaStatusBadge'
@@ -30,7 +30,7 @@ const VALUES = [
     text: 'Explore countries, check the visa status, choose your travel purpose and follow a clear step-by-step application guide tailored to your trip.',
   },
   {
-    icon: Sparkles,
+    icon: Route,
     title: 'A personal guide in minutes',
     text: 'The Visa Assistant turns a few questions into a personalised readiness score, document checklist and application plan.',
   },
@@ -85,7 +85,7 @@ export default function AboutPage() {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="zc-hero-copy max-w-4xl"
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-200/70 bg-brand-50 px-4 py-1.5 text-xs font-semibold text-brand-700">
+            <span className="zc-tag">
               <Handshake className="h-3.5 w-3.5" aria-hidden="true" />
               About TuniVisa
             </span>
@@ -109,7 +109,7 @@ export default function AboutPage() {
               <ArrowRight className="h-4.5 w-4.5" aria-hidden="true" />
             </Link>
             <Link to="/assistant" className="btn-secondary">
-              <Sparkles className="h-4.5 w-4.5 text-brand-600" aria-hidden="true" />
+              <Compass className="h-4.5 w-4.5" aria-hidden="true" />
               Try the Visa Assistant
             </Link>
           </motion.div>
@@ -134,7 +134,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.35, delay: i * 0.08 }}
                 className="card p-6"
               >
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-600 text-white shadow-sm">
+                <span className="flex h-11 w-11 items-center justify-center border border-ink-900 bg-brand-200 text-ink-900">
                   <item.icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <h3 className="mt-4 font-display text-lg font-bold text-ink-900">{item.title}</h3>
@@ -180,7 +180,7 @@ export default function AboutPage() {
                 title="Serious about accuracy, honest about limits"
                 subtitle="TuniVisa is a guide, not a guarantee. We mark every figure as verified, due for review or limited so you always know what you are looking at."
               />
-              <div className="mt-8 flex items-start gap-2.5 rounded-2xl border border-warning-500/30 bg-warning-50 px-4 py-3 text-sm leading-relaxed text-warning-700">
+              <div className="mt-8 flex items-start gap-2.5 border border-ink-900 bg-warning-50 px-4 py-3 text-sm leading-relaxed text-warning-700 shadow-[3px_3px_0_0_var(--color-ink-900)]">
                 <ShieldCheck className="mt-0.5 h-4.5 w-4.5 shrink-0" aria-hidden="true" />
                 <p>
                   Visa rules change. Always confirm the latest requirements on the official government or
@@ -199,7 +199,7 @@ export default function AboutPage() {
                   transition={{ duration: 0.3, delay: i * 0.06 }}
                   className="card p-5"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                  <span className="flex h-10 w-10 items-center justify-center border border-ink-900 bg-brand-200 text-ink-900">
                     <point.icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <h3 className="mt-3.5 font-display text-base font-bold text-ink-900">{point.title}</h3>
@@ -232,9 +232,9 @@ export default function AboutPage() {
               transition={{ duration: 0.3, delay: i * 0.06 }}
               className="card flex items-start gap-4 p-5"
             >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-                <item.icon className="h-5 w-5" aria-hidden="true" />
-              </span>
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-ink-900 bg-brand-200 text-ink-900">
+                  <item.icon className="h-5 w-5" aria-hidden="true" />
+                </span>
               <div>
                 <h3 className="font-display text-base font-bold text-ink-900">{item.title}</h3>
                 <p className="mt-1 text-sm leading-relaxed text-ink-500">{item.text}</p>
@@ -254,7 +254,7 @@ export default function AboutPage() {
           className="zc-cta relative overflow-hidden bg-ink-900"
         >
           <div
-            className="pointer-events-none absolute inset-0"
+            className="zc-glow pointer-events-none absolute inset-0"
             style={{ background: 'radial-gradient(60% 90% at 50% 0%, rgba(99,102,241,0.35) 0%, rgba(15,23,42,0) 70%)' }}
             aria-hidden="true"
           />
@@ -272,9 +272,9 @@ export default function AboutPage() {
               </Link>
               <Link
                 to="/assistant"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                className="inline-flex items-center justify-center gap-2 rounded-none border border-white/20 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
               >
-                <Sparkles className="h-4.5 w-4.5" aria-hidden="true" />
+                <Compass className="h-4.5 w-4.5" aria-hidden="true" />
                 Visa Assistant
               </Link>
             </div>

@@ -128,7 +128,7 @@ export default function AdminVisaRulesPage() {
                     <td className="px-5 py-3.5 text-right">
                       <Link
                         to={`/countries/${rule.countryCode}/visa/${rule.visaType}`}
-                        className="inline-flex h-9 items-center rounded-xl border border-ink-200 bg-white px-3 text-xs font-semibold text-ink-700 shadow-sm transition-colors hover:border-ink-300 hover:bg-ink-100"
+                        className="inline-flex h-9 items-center rounded-none border border-ink-200 bg-white px-3 text-xs font-semibold text-ink-700 shadow-sm transition-colors hover:border-ink-300 hover:bg-ink-100"
                         aria-label={`Open ${rule.countryName} ${rule.visaTypeLabel} visa guide`}
                       >
                         View

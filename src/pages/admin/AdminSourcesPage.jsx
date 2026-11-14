@@ -41,7 +41,7 @@ export default function AdminSourcesPage() {
                 type="button"
                 aria-pressed={filter === opt.key}
                 onClick={() => setFilter(opt.key)}
-                className={`inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                className={`inline-flex items-center rounded-none border px-3 py-1.5 text-xs font-semibold transition-colors ${
                   filter === opt.key
                     ? 'border-ink-900 bg-ink-900 text-white'
                     : 'border-ink-200 bg-white text-ink-600 hover:bg-ink-50'

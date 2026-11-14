@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
 
         {sent ? (
           <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="card p-8 text-center">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-success-50 text-success-600">
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-none bg-success-50 text-success-600">
               <MailCheck className="h-7 w-7" aria-hidden="true" />
             </span>
             <h2 className="mt-4 font-display text-lg font-bold text-ink-900">Check your inbox</h2>
@@ -56,7 +56,7 @@ export default function ForgotPasswordPage() {
         ) : (
           <form onSubmit={handleSubmit} className="card space-y-4 p-6 sm:p-8" noValidate>
             {error && (
-              <p role="alert" className="flex items-center gap-2 rounded-xl bg-danger-50 px-4 py-3 text-sm font-medium text-danger-700">
+              <p role="alert" className="flex items-center gap-2 rounded-none bg-danger-50 px-4 py-3 text-sm font-medium text-danger-700">
                 <CheckCircle2 className="h-4 w-4 rotate-45" aria-hidden="true" />
                 {error}
               </p>
