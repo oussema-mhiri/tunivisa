@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <script>
+      // Apply the saved (or system) theme before first paint to avoid a flash.
+      (function () {
+        try {
+          var stored = localStorage.getItem('tunivisa.theme')
+          var theme = stored ? JSON.parse(stored) : null
+          if (theme !== 'dark' && theme !== 'light') {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+          }
+          if (theme === 'dark') document.documentElement.classList.add('dark')
+          document.documentElement.style.colorScheme = theme
+          var meta = document.querySelector('meta[name="theme-color"]')
+          if (meta && theme === 'dark') meta.setAttribute('content', '#0b1120')
+        } catch (e) {}
+      })()
+    </script>
+
+    <title>TuniVisa — Where can you travel with your Tunisian passport?</title>
+    <meta
+      name="description"
+      content="TuniVisa helps Tunisian passport holders discover visa-free destinations, visa on arrival countries, eVisa options and how to apply for visas around the world."
+    />
+    <meta name="keywords" content="Tunisian passport, visa free countries, visa requirements, eVisa, visa on arrival, Tunisia travel" />
+    <meta name="author" content="TuniVisa" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TuniVisa" />
+    <meta property="og:title" content="TuniVisa — Visa & Travel Guide for Tunisian Passport Holders" />
+    <meta
+      property="og:description"
+      content="Discover visa requirements, application procedures and travel information for destinations around the world."
+    />
+    <meta property="og:image" content="/favicon.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="TuniVisa — Visa & Travel Guide for Tunisian Passport Holders" />
+    <meta
+      name="twitter:description"
+      content="Discover visa requirements, application procedures and travel information for destinations around the world."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

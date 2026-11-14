@@ -1,0 +1,27 @@
+{
+  "name": "tunivisa",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "TuniVisa — visa & travel assistant for Tunisian passport holders",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "framer-motion": "^13.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "^7.1.1",
+    "react-simple-maps": "3.0.0",
+    "world-atlas": "2.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.0.0",
+    "vite": "^6.0.7"
+  }
+}
