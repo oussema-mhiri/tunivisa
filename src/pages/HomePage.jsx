@@ -267,11 +267,6 @@ export default function HomePage() {
           transition={{ duration: 0.4 }}
           className="zc-cta relative overflow-hidden bg-ink-900"
         >
-          <div
-            className="zc-glow pointer-events-none absolute inset-0"
-            style={{ background: 'radial-gradient(60% 90% at 50% 0%, rgba(99,102,241,0.35) 0%, rgba(15,23,42,0) 70%)' }}
-            aria-hidden="true"
-          />
           <div className="relative">
             <span className="zc-tag">
               <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />

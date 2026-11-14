@@ -8,56 +8,70 @@
   --font-display: "Anton", "Arial Narrow", Impact, sans-serif;
   --font-mono: "Space Mono", "Courier New", ui-monospace, monospace;
 
-  --color-paper: #f2efe6;
-  --color-concrete: #c6bfb2;
-  --color-ink: #0d0d0b;
-  --color-safety: #e6ff32;
-  --color-signal: #e23a2e;
+  /* Argile & Céladon — warm paper, terracotta fill, celadon accent */
+  --color-paper: #f2e9d8;
+  --color-concrete: #cdbfa8;
+  --color-ink: #191410;
+  --color-clay: #b8452a;
+  --color-celadon: #6fa98c;
+  --color-safety: #b8452a;
+  --color-signal: #a8241a;
 
-  --color-brand-50: #f5f6e6;
-  --color-brand-100: #e9edc4;
-  --color-brand-200: #e6ff32;
-  --color-brand-300: #e6ff32;
-  --color-brand-400: #d9f21f;
-  --color-brand-500: #cfeb00;
-  --color-brand-600: #0d0d0b;
-  --color-brand-700: #0d0d0b;
-  --color-brand-800: #0d0d0b;
-  --color-brand-900: #0d0d0b;
+  --color-brand-50: #f8ebe4;
+  --color-brand-100: #f0d3c6;
+  --color-brand-200: #d46a4a;
+  --color-brand-300: #c15536;
+  --color-brand-400: #a83f27;
+  --color-brand-500: #9a3521;
+  --color-brand-600: #8f2f1c;
+  --color-brand-700: #6e2416;
+  --color-brand-800: #4a170e;
+  --color-brand-900: #2a0d07;
 
-  --color-ink-50: #f2efe6;
-  --color-ink-100: #e8e3d6;
-  --color-ink-200: #c6bfb2;
-  --color-ink-300: #a8a093;
-  --color-ink-400: #7c766c;
-  --color-ink-500: #55514a;
-  --color-ink-600: #3a3732;
-  --color-ink-700: #24221e;
-  --color-ink-800: #151411;
-  --color-ink-900: #0d0d0b;
+  --color-celadon-50: #eef5f1;
+  --color-celadon-100: #d9e9e0;
+  --color-celadon-200: #b3d4c3;
+  --color-celadon-300: #8fbfa7;
+  --color-celadon-400: #77b197;
+  --color-celadon-500: #6fa98c;
+  --color-celadon-600: #4e8a6e;
+  --color-celadon-700: #356b52;
+  --color-celadon-800: #234a38;
+  --color-celadon-900: #142d22;
 
-  --color-success-50: #f6ffc2;
-  --color-success-500: #e6ff32;
-  --color-success-600: #7c8a00;
-  --color-success-700: #0d0d0b;
+  --color-ink-50: #f2e9d8;
+  --color-ink-100: #e8dcc7;
+  --color-ink-200: #cdbfa8;
+  --color-ink-300: #b0a18a;
+  --color-ink-400: #857968;
+  --color-ink-500: #5e5548;
+  --color-ink-600: #413b32;
+  --color-ink-700: #2b2721;
+  --color-ink-800: #1f1b16;
+  --color-ink-900: #191410;
 
-  --color-warning-50: #e8e3d6;
-  --color-warning-500: #c6bfb2;
-  --color-warning-600: #55514a;
-  --color-warning-700: #24221e;
+  --color-success-50: #eef5f1;
+  --color-success-500: #6fa98c;
+  --color-success-600: #4e8a6e;
+  --color-success-700: #356b52;
 
-  --color-danger-50: #f6d9d3;
-  --color-danger-500: #e23a2e;
-  --color-danger-600: #c42c21;
-  --color-danger-700: #8f1d15;
+  --color-warning-50: #e8dcc7;
+  --color-warning-500: #cdbfa8;
+  --color-warning-600: #5e5548;
+  --color-warning-700: #2b2721;
 
-  --color-info-50: #ddd7ca;
-  --color-info-500: #8d8579;
-  --color-info-600: #24221e;
+  --color-danger-50: #f6ddd7;
+  --color-danger-500: #c42c21;
+  --color-danger-600: #a8241a;
+  --color-danger-700: #7d1811;
 
-  --shadow-card: 4px 4px 0 0 #0d0d0b;
-  --shadow-card-hover: 6px 6px 0 0 #0d0d0b;
-  --shadow-pop: 6px 6px 0 0 #0d0d0b;
+  --color-info-50: #e3ebe6;
+  --color-info-500: #8aa697;
+  --color-info-600: #356b52;
+
+  --shadow-card: 4px 4px 0 0 #191410;
+  --shadow-card-hover: 6px 6px 0 0 #6fa98c;
+  --shadow-pop: 6px 6px 0 0 #191410;
 
   --animate-fade-in: fade-in 0.4s ease both;
   --animate-scale-in: scale-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -100,7 +114,7 @@
     letter-spacing: -0.01em;
   }
   ::selection {
-    @apply bg-brand-200 text-brand-900;
+    @apply bg-brand-200 text-paper;
   }
   :focus-visible {
     outline: 2px solid var(--color-ink-900);
@@ -263,10 +277,10 @@
 }
 
 .zc-cta .btn-primary {
-  border-color: var(--color-brand-200);
-  background-color: var(--color-brand-200) !important;
+  border-color: var(--color-paper);
+  background-color: var(--color-paper) !important;
   color: var(--color-ink) !important;
-  box-shadow: 4px 4px 0 0 var(--color-brand-200);
+  box-shadow: 4px 4px 0 0 var(--color-celadon-500);
 }
 
 .zc-cta > .relative {
@@ -575,6 +589,15 @@ body::after {
   color: var(--color-ink) !important;
 }
 
+/* Re-map the SVG country fills (data layer still emits the legacy hex). */
+.tunivisa-country:not(:hover)[style*="e6ff32"] { fill: var(--color-brand-200) !important; }
+.tunivisa-country:not(:hover)[style*="c6bfb2"] { fill: var(--color-ink-200) !important; }
+.tunivisa-country:not(:hover)[style*="0d0d0b"],
+.tunivisa-country:not(:hover)[style*="rgb(13, 13, 11)"] { fill: var(--color-ink-900) !important; }
+.tunivisa-country:not(:hover)[style*="e23a2e"] { fill: var(--color-danger-600) !important; }
+.tunivisa-country:not(:hover)[style*="8d8579"] { fill: var(--color-info-500) !important; }
+.tunivisa-country:hover { fill: var(--color-celadon-500) !important; }
+
 .zc-tooltip {
   border: 1px solid var(--color-ink-900) !important;
   border-radius: 0 !important;
@@ -660,83 +683,86 @@ a .lucide-sparkles {
 }
 
 :root {
-  --surface: #f2efe6;
-  --surface-soft: #e8e3d6;
+  --surface: #f2e9d8;
+  --surface-soft: #e8dcc7;
 }
 
 :root.dark {
   color-scheme: dark;
-  scrollbar-color: #4a463f #0d0d0b;
+  scrollbar-color: #5e5548 #191410;
 
-  --color-ink-50: #0d0d0b;
-  --color-ink-100: #161512;
-  --color-ink-200: #2a2824;
-  --color-ink-300: #4a463f;
-  --color-ink-400: #8f887c;
-  --color-ink-500: #b8b0a3;
-  --color-ink-600: #d6cec0;
-  --color-ink-700: #e6ded0;
-  --color-ink-800: #f2efe6;
-  --color-ink-900: #f2efe6;
+  --color-ink-50: #191410;
+  --color-ink-100: #211d18;
+  --color-ink-200: #302a23;
+  --color-ink-300: #4d4539;
+  --color-ink-400: #857968;
+  --color-ink-500: #b0a18a;
+  --color-ink-600: #cdbfa8;
+  --color-ink-700: #e0d3bd;
+  --color-ink-800: #ece1cf;
+  --color-ink-900: #f2e9d8;
 
-  --color-brand-50: #20250f;
-  --color-brand-100: #2e3516;
-  --color-brand-200: #e6ff32;
+  --color-brand-50: #2a1310;
+  --color-brand-100: #3d1a14;
+  --color-brand-200: #d46a4a;
+  --color-brand-600: #e0a08a;
+  --color-brand-700: #eab8a7;
 
-  --color-success-50: #20250f;
-  --color-warning-50: #211f1a;
+  --color-success-50: #16281f;
+  --color-warning-50: #241f18;
   --color-danger-50: #2c1310;
-  --color-info-50: #211f1a;
+  --color-info-50: #16251e;
 
-  --surface: #161512;
-  --surface-soft: #1d1b17;
+  --surface: #1a1713;
+  --surface-soft: #221e19;
 
-  --shadow-card: 4px 4px 0 0 #f2efe6;
-  --shadow-card-hover: 6px 6px 0 0 #f2efe6;
-  --shadow-pop: 6px 6px 0 0 #f2efe6;
+  --shadow-card: 4px 4px 0 0 #f2e9d8;
+  --shadow-card-hover: 6px 6px 0 0 #6fa98c;
+  --shadow-pop: 6px 6px 0 0 #f2e9d8;
 }
 
 /* Surfaces that use literal `bg-white` */
 :root.dark .bg-white { background-color: var(--surface); }
-:root.dark .bg-white\/60 { background-color: rgb(22 21 18 / 0.6); }
-:root.dark .bg-white\/80 { background-color: rgb(22 21 18 / 0.85); }
-:root.dark .bg-white\/85 { background-color: rgb(13 13 11 / 0.92); }
-:root.dark .bg-white\/90 { background-color: rgb(22 21 18 / 0.94); }
-:root.dark .bg-white\/95 { background-color: rgb(22 21 18 / 0.97); }
+:root.dark .bg-white\/60 { background-color: rgb(26 23 19 / 0.6); }
+:root.dark .bg-white\/80 { background-color: rgb(26 23 19 / 0.85); }
+:root.dark .bg-white\/85 { background-color: rgb(25 20 16 / 0.92); }
+:root.dark .bg-white\/90 { background-color: rgb(26 23 19 / 0.94); }
+:root.dark .bg-white\/95 { background-color: rgb(26 23 19 / 0.97); }
 
 /* Dark sections (CTAs, active chips) must stay dark in dark mode */
-:root.dark .bg-ink-900 { background-color: #0d0d0b; }
-:root.dark .bg-ink-900\/50 { background-color: rgb(13 13 11 / 0.72); }
-:root.dark .border-ink-900 { border-color: #f2efe6; }
+:root.dark .bg-ink-900 { background-color: #191410; }
+:root.dark .bg-ink-900\/50 { background-color: rgb(25 20 16 / 0.72); }
+:root.dark .border-ink-900 { border-color: #f2e9d8; }
 
 /* Accent text that needs a lighter tone on dark surfaces */
-:root.dark .text-ink-300 { color: #8f887c; }
-:root.dark .text-brand-600 { color: #e6ff32; }
-:root.dark .text-brand-700 { color: #e6ff32; }
-:root.dark .text-success-600 { color: #e6ff32; }
-:root.dark .text-success-700 { color: #e6ff32; }
-:root.dark .text-warning-600 { color: #c6bfb2; }
-:root.dark .text-warning-700 { color: #e8e3d6; }
-:root.dark .text-danger-600 { color: #ff6b5e; }
-:root.dark .text-danger-700 { color: #ff8f85; }
-:root.dark .text-info-600 { color: #c6bfb2; }
+:root.dark .text-ink-300 { color: #857968; }
+:root.dark .text-brand-600 { color: #e0a08a; }
+:root.dark .text-brand-700 { color: #eab8a7; }
+:root.dark .text-success-600 { color: #8fbfa7; }
+:root.dark .text-success-700 { color: #b3d4c3; }
+:root.dark .text-warning-600 { color: #cdbfa8; }
+:root.dark .text-warning-700 { color: #e0d3bd; }
+:root.dark .text-danger-600 { color: #ff7f70; }
+:root.dark .text-danger-700 { color: #ffa096; }
+:root.dark .text-info-600 { color: #b3d4c3; }
 
-/* Accent fills in dark mode: safety yellow becomes the active surface. */
-:root.dark .bg-brand-600 { background-color: #e6ff32; color: #0d0d0b; }
-:root.dark .bg-brand-200 { color: #0d0d0b; }
+/* Accent fills in dark mode: terracotta becomes the active surface. */
+:root.dark .bg-brand-600 { background-color: #b8452a; color: #f2e9d8; }
+:root.dark .bg-brand-200 { color: #191410; }
 :root.dark .bg-brand-200.border-ink-900,
-:root.dark .bg-brand-200 > .border-ink-900 { border-color: #0d0d0b; }
+:root.dark .bg-brand-200 > .border-ink-900 { border-color: #191410; }
 :root.dark .bg-brand-200 .text-ink-900,
-:root.dark .bg-brand-200.text-ink-900 { color: #0d0d0b; }
-:root.dark .zc-tag { border-color: #0d0d0b; }
+:root.dark .bg-brand-200.text-ink-900 { color: #191410; }
+:root.dark .zc-tag { border-color: #191410; }
+:root.dark .bg-brand-200 .text-white { color: #191410; }
 
 /* Hover/group-hover accent variants (Tailwind escapes these class names) */
-:root.dark .hover\:text-brand-600:hover { color: #e6ff32; }
-:root.dark .hover\:text-brand-700:hover { color: #e6ff32; }
-:root.dark .hover\:text-danger-600:hover { color: #ff6b5e; }
-:root.dark .group:hover .group-hover\:text-brand-600 { color: #e6ff32; }
-:root.dark .group:hover .group-hover\:text-brand-700 { color: #e6ff32; }
-:root.dark .hover\:bg-brand-700:hover { background-color: #c6bfb2; color: #0d0d0b; }
+:root.dark .hover\:text-brand-600:hover { color: #e0a08a; }
+:root.dark .hover\:text-brand-700:hover { color: #eab8a7; }
+:root.dark .hover\:text-danger-600:hover { color: #ff7f70; }
+:root.dark .group:hover .group-hover\:text-brand-600 { color: #e0a08a; }
+:root.dark .group:hover .group-hover\:text-brand-700 { color: #eab8a7; }
+:root.dark .hover\:bg-brand-700:hover { background-color: #cdbfa8; color: #191410; }
 
 h1,
 h2,

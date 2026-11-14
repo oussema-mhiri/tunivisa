@@ -11,10 +11,6 @@ export default function CountryHero({ country, demo = false }) {
 
   return (
     <div className="card zc-country-hero relative overflow-hidden">
-      <div
-        className="zc-glow absolute inset-0 bg-gradient-to-br from-brand-50 via-transparent to-info-50"
-        aria-hidden="true"
-      />
       <div className="relative flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}

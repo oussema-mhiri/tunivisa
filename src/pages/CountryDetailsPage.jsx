@@ -119,11 +119,6 @@ export default function CountryDetailsPage() {
         transition={{ duration: 0.3, delay: 0.05 }}
         className="card relative mt-8 overflow-hidden p-6 sm:p-8"
       >
-        <div
-          className="zc-glow absolute inset-0"
-          style={{ background: `linear-gradient(120deg, ${meta.color}0f 0%, rgba(255,255,255,0) 55%)` }}
-          aria-hidden="true"
-        />
         <div className="relative flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 items-center gap-4">
             <Flag code="tn" size="lg" />

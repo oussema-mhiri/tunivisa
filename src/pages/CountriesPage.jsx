@@ -169,13 +169,16 @@ export default function CountriesPage() {
                   'inline-flex items-center gap-1.5 rounded-none border px-3 py-1.5 text-xs font-semibold transition-colors',
                   active
                     ? key === 'all'
-                      ? 'border-ink-900 bg-ink-900 text-white'
-                      : key === 'visa_free' || key === 'visa_on_arrival'
-                        ? 'border-transparent text-ink-900'
-                        : 'border-transparent text-white'
+                      ? 'border-ink-900 bg-ink-900 text-paper'
+                      : key === 'visa_free'
+                        ? 'border-ink-900 bg-brand-200 text-ink-900'
+                        : key === 'visa_on_arrival'
+                          ? 'border-ink-900 bg-ink-200 text-ink-900'
+                          : key === 'evisa_eta'
+                            ? 'border-ink-900 bg-ink-900 text-paper'
+                            : 'border-ink-900 bg-danger-600 text-paper'
                     : 'border-ink-200 bg-white text-ink-600 hover:border-ink-300 hover:bg-ink-50',
                 )}
-                style={active && key !== 'all' ? { backgroundColor: visaStatusMeta(key).color } : undefined}
               >
                 {key === 'all' ? t('common.all') : visaStatusMeta(key).label}
               </button>
