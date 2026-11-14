@@ -21,7 +21,7 @@ export default function CountryCard({ country, layout = 'grid', index = 0 }) {
         'inline-flex h-9 w-9 items-center justify-center border border-ink-900 transition-all duration-200',
         saved
           ? 'bg-danger-50 text-danger-600'
-          : 'bg-ink-100/80 text-ink-500 hover:bg-ink-200 hover:text-ink-700',
+          : 'bg-ink-100/80 text-ink-500 hover:bg-ink-900 hover:text-paper',
       )}
     >
       <Heart className={cn('h-4.5 w-4.5', saved && 'fill-current')} aria-hidden="true" />
@@ -72,10 +72,14 @@ export default function CountryCard({ country, layout = 'grid', index = 0 }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.4) }}
-      className="group relative flex flex-col overflow-hidden border border-ink-900 bg-white shadow-[4px_4px_0_0_var(--color-ink-900)] transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[7px_7px_0_0_var(--color-ink-900)]"
+      className="group relative flex flex-col overflow-hidden border border-ink-900 bg-white shadow-[4px_4px_0_0_var(--color-ink-900)] transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[7px_7px_0_0_var(--color-celadon-500)]"
     >
-      <div className="relative flex h-28 items-center justify-center border-b border-ink-900 bg-ink-100">
-        <Flag code={country.code} size="xl" className="drop-shadow-sm" />
+      <div className="zc-flag-field relative flex h-28 items-center justify-center overflow-hidden border-b border-ink-900 bg-ink-100">
+        <Flag
+          code={country.code}
+          size="xl"
+          className="rotate-[-2deg] drop-shadow-sm transition-transform duration-300 group-hover:rotate-0 group-hover:scale-125"
+        />
         <div className="absolute top-3 right-3">{SaveButton}</div>
       </div>
       <div className="flex flex-1 flex-col p-4">

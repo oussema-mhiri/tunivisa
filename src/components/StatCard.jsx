@@ -21,7 +21,7 @@ export default function StatCard({ icon: Icon, label, value, sub, accent = 'bran
         <Icon className="h-5.5 w-5.5" strokeWidth={2} aria-hidden="true" />
       </div>
       <div>
-        <p className="font-display text-4xl leading-none text-ink-900">{value}</p>
+        <p className="font-display text-5xl leading-none tracking-[-0.04em] text-ink-900">{value}</p>
         <p className="mt-1 text-xs font-bold tracking-[0.06em] text-ink-700 uppercase">{label}</p>
         {sub && <p className="mt-1 text-[11px] text-ink-400">{sub}</p>}
       </div>

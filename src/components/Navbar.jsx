@@ -60,7 +60,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event('tunivisa:open-search'))}
-              className="hidden h-10 items-center gap-2 rounded-none border border-ink-200 bg-white px-3 text-sm font-medium text-ink-500 shadow-sm transition-colors hover:border-ink-300 hover:text-ink-700 sm:flex"
+              className="hidden h-10 items-center gap-2 rounded-none border border-ink-900 bg-white px-3 text-sm font-medium text-ink-500 transition-colors hover:bg-celadon-100 hover:text-ink-900 sm:flex"
               aria-label={t('nav.openSearch')}
             >
               <Search className="h-4 w-4" aria-hidden="true" />
