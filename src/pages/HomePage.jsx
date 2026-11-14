@@ -79,7 +79,7 @@ export default function HomePage() {
       <section className="zc-hero relative">
         <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
 
-        <div className="container-page zc-hero-inner relative py-12 sm:py-24 lg:py-28">
+        <div className="container-page zc-hero-inner relative py-14 sm:py-28 lg:py-32">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -138,9 +138,10 @@ export default function HomePage() {
       </section>
 
       {/* --------------------------- STATISTICS --------------------------- */}
-      <section className="border-y border-ink-200/70 bg-white">
-        <div className="container-page py-14 sm:py-16">
+      <section className="relative z-10 -mt-8 border-y border-ink-900 bg-white sm:-mt-12">
+        <div className="container-page max-w-6xl py-10 sm:py-16">
           <SectionHeading
+            className="lg:ml-12"
             eyebrow="At a glance"
             title={t('home.statsTitle')}
             subtitle={t('home.statsSubtitle')}
@@ -176,8 +177,9 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------- WORLD MAP -------------------------- */}
-      <section id="world-map" className="container-page scroll-mt-20 py-14 sm:py-20">
+      <section id="world-map" className="container-page scroll-mt-20 py-16 sm:py-24 lg:max-w-[82rem]">
         <SectionHeading
+          className="lg:ml-16"
           eyebrow="Interactive map"
           title={t('home.mapTitle')}
           subtitle={t('home.mapSubtitle')}
@@ -199,8 +201,8 @@ export default function HomePage() {
       </section>
 
       {/* -------------------------- POPULAR DESTINATIONS ------------------- */}
-      <section className="border-y border-ink-200/70 bg-white">
-        <div className="container-page py-14 sm:py-20">
+      <section className="border-y border-ink-900 bg-white">
+        <div className="container-page max-w-[88rem] py-20 sm:py-14">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <SectionHeading
               align="left"
@@ -229,8 +231,9 @@ export default function HomePage() {
       </section>
 
       {/* ---------------------------- HOW IT WORKS ------------------------- */}
-      <section className="container-page py-14 sm:py-20">
+      <section className="container-page max-w-5xl py-10 sm:py-24">
         <SectionHeading
+          className="lg:pl-16"
           eyebrow="Simple by design"
           title={t('home.howTitle')}
           subtitle="Three steps between you and your next trip."
@@ -259,7 +262,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------------------------- ASSISTANT CTA ------------------------ */}
-      <section className="container-page pb-16 sm:pb-24">
+      <section className="container-page pb-20 sm:pb-32">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

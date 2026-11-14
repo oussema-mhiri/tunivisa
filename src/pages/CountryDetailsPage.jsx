@@ -97,7 +97,7 @@ export default function CountryDetailsPage() {
   ]
 
   return (
-    <div className="container-page py-8 sm:py-10">
+    <div className="container-page max-w-6xl py-10 sm:py-14">
       <nav aria-label="Breadcrumb" className="mb-6">
         <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink-500">
           <li>
@@ -117,7 +117,7 @@ export default function CountryDetailsPage() {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.05 }}
-        className="card relative mt-8 overflow-hidden p-6 sm:p-8"
+        className="card relative z-10 -mt-5 overflow-hidden p-6 sm:-mt-8 sm:p-8"
       >
         <div className="relative flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 items-center gap-4">
@@ -148,7 +148,7 @@ export default function CountryDetailsPage() {
       </motion.div>
 
       {/* Meta grid */}
-      <section className="mt-8" aria-label="Visa details">
+      <section className="mt-12 sm:mt-16" aria-label="Visa details">
         <dl className="zc-meta-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {metaItems.map(({ label, value, icon: Icon }, i) => (
             <motion.div
@@ -170,7 +170,7 @@ export default function CountryDetailsPage() {
       </section>
 
       {/* Travel purposes */}
-      <section className="mt-12">
+      <section className="mt-16">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="font-display text-2xl font-bold tracking-tight text-ink-900">
@@ -192,7 +192,7 @@ export default function CountryDetailsPage() {
         </div>
       </section>
 
-      <div className="mt-10 flex items-start gap-2.5 rounded-none bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
+      <div className="mt-14 flex items-start gap-2.5 rounded-none bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
         <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
         Visa rules change frequently — always confirm with the official embassy or government website of
         {' '}{country.name} before planning your trip.

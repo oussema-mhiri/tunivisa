@@ -74,8 +74,8 @@ export default function CountriesPage() {
   }
 
   return (
-    <div className="container-page py-10 sm:py-14">
-      <div className="zc-page-head flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+    <div className="container-page max-w-[86rem] py-12 sm:py-16">
+      <div className="zc-page-head flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end lg:pl-8">
         <div>
           <p className="text-sm font-semibold tracking-wide text-brand-600 uppercase">{t('nav.explore')}</p>
           <h1 className="zc-page-title mt-2 font-display text-ink-900">

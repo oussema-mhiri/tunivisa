@@ -117,9 +117,10 @@ export default function AboutPage() {
       </section>
 
       {/* ----------------------------- VALUES ----------------------------- */}
-      <section className="border-y border-ink-200/70 bg-white">
-        <div className="container-page py-14 sm:py-20">
+      <section className="border-y border-ink-900 bg-white">
+        <div className="container-page max-w-6xl py-16 sm:py-20">
           <SectionHeading
+            className="lg:ml-10"
             eyebrow="Why TuniVisa"
             title="A travel companion built around the Tunisian passport"
             subtitle="Visa rules are written for tourists, workers, students and families. We present them clearly, in one place, for one passport."
@@ -146,8 +147,9 @@ export default function AboutPage() {
       </section>
 
       {/* -------------------------- STATUS COLORS ------------------------- */}
-      <section className="container-page py-14 sm:py-20">
+      <section className="container-page max-w-5xl py-10 sm:py-24">
         <SectionHeading
+          className="lg:ml-16"
           eyebrow="At a glance"
           title="Four statuses, one colour code"
           subtitle="The same colour language is used across the map, country cards and visa pages, so it never takes more than a second to know where you stand."
@@ -170,9 +172,9 @@ export default function AboutPage() {
       </section>
 
       {/* --------------------------- DATA & TRUST ------------------------- */}
-      <section className="border-y border-ink-200/70 bg-white">
-        <div className="container-page py-14 sm:py-20">
-          <div className="zc-data-layout grid items-start gap-10 lg:grid-cols-[1fr_1.2fr]">
+      <section className="border-y border-ink-900 bg-white">
+        <div className="container-page max-w-[86rem] py-20 sm:py-16">
+          <div className="zc-data-layout grid items-start gap-10 lg:grid-cols-[0.85fr_1.35fr]">
             <div>
               <SectionHeading
                 align="left"
@@ -212,8 +214,9 @@ export default function AboutPage() {
       </section>
 
       {/* ----------------------------- ROADMAP ---------------------------- */}
-      <section className="container-page py-14 sm:py-20">
+      <section className="container-page max-w-6xl py-12 sm:py-20">
         <SectionHeading
+          className="lg:ml-16"
           eyebrow="Where it’s heading"
           title="A platform that grows with its users"
           subtitle="The roadmap is shaped around real travellers, official sources and multilingual support."
@@ -245,7 +248,7 @@ export default function AboutPage() {
       </section>
 
       {/* ------------------------------ CTA ------------------------------- */}
-      <section className="container-page pb-16 sm:pb-24">
+      <section className="container-page pb-20 sm:pb-28">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
