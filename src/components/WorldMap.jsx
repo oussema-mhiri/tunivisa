@@ -13,7 +13,7 @@ import { useTheme } from '../context/ThemeContext'
 import { cn } from '../utils/formatters'
 
 const STATUS_FILTERS = ['all', 'visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required']
-const HOME_COLOR = '#8b5cf6'
+const HOME_COLOR = '#e6ff32'
 
 function MapTooltip({ tooltip }) {
   if (!tooltip) return null
@@ -92,16 +92,16 @@ function CountryPath({ geo, mapData, statusFilter, regionFilter, dark, onHover, 
         className="tunivisa-country"
         style={{
           default: {
-            fill: entry ? (entry.home ? HOME_COLOR : meta.color) : dark ? '#1e293b' : '#e2e8f0',
-            stroke: dark ? '#0b1120' : '#ffffff',
+            fill: entry ? (entry.home ? HOME_COLOR : meta.color) : dark ? '#2a2824' : '#c6bfb2',
+            stroke: dark ? '#0d0d0b' : '#0d0d0b',
             strokeWidth: 0.45,
             outline: 'none',
             opacity: dimmed ? (dark ? 0.22 : 0.18) : 1,
             transition: 'opacity 200ms ease, fill 200ms ease',
           },
           hover: {
-            fill: dark ? '#334155' : '#ffffff',
-            stroke: dark ? '#94a3b8' : '#334155',
+            fill: '#e6ff32',
+            stroke: '#0d0d0b',
             strokeWidth: 0.7,
             outline: 'none',
             cursor: 'pointer',
@@ -189,7 +189,7 @@ export default function WorldMap({ showFilters = true }) {
 
         <svg className="h-[240px] w-full sm:h-auto" viewBox="0 0 800 450" role="img" aria-label="Interactive world map of visa requirements for Tunisian passport holders">
           <ComposableMap projection="geoEqualEarth" projectionConfig={{ scale: 147, center: [0, 15] }}>
-            <Sphere fill={dark ? '#0b1120' : '#eef2ff'} stroke={dark ? '#1e293b' : '#cbd5e1'} strokeWidth={0.6} />
+            <Sphere fill={dark ? '#161512' : '#e8e3d6'} stroke={dark ? '#4a463f' : '#0d0d0b'} strokeWidth={0.6} />
             <ZoomableGroup zoom={zoom} center={center} minZoom={1} maxZoom={8} translateExtent={[[-400, -225], [1200, 675]]}>
               <Geographies geography={worldAtlas}>
                 {({ geographies }) =>

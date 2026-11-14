@@ -4,49 +4,56 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Space Mono", "Courier New", ui-monospace, monospace;
+  --font-display: "Anton", "Arial Narrow", Impact, sans-serif;
+  --font-mono: "Space Mono", "Courier New", ui-monospace, monospace;
 
-  --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-200: #c7d2fe;
-  --color-brand-300: #a5b4fc;
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-800: #3730a3;
-  --color-brand-900: #312e81;
+  --color-paper: #f2efe6;
+  --color-concrete: #c6bfb2;
+  --color-ink: #0d0d0b;
+  --color-safety: #e6ff32;
+  --color-signal: #e23a2e;
 
-  --color-ink-50: #f8fafc;
-  --color-ink-100: #f1f5f9;
-  --color-ink-200: #e2e8f0;
-  --color-ink-300: #cbd5e1;
-  --color-ink-400: #94a3b8;
-  --color-ink-500: #64748b;
-  --color-ink-600: #475569;
-  --color-ink-700: #334155;
-  --color-ink-800: #1e293b;
-  --color-ink-900: #0f172a;
+  --color-brand-50: #f5f6e6;
+  --color-brand-100: #e9edc4;
+  --color-brand-200: #e6ff32;
+  --color-brand-300: #e6ff32;
+  --color-brand-400: #d9f21f;
+  --color-brand-500: #cfeb00;
+  --color-brand-600: #0d0d0b;
+  --color-brand-700: #0d0d0b;
+  --color-brand-800: #0d0d0b;
+  --color-brand-900: #0d0d0b;
 
-  --color-success-50: #ecfdf5;
-  --color-success-500: #10b981;
-  --color-success-600: #059669;
-  --color-success-700: #047857;
+  --color-ink-50: #f2efe6;
+  --color-ink-100: #e8e3d6;
+  --color-ink-200: #c6bfb2;
+  --color-ink-300: #a8a093;
+  --color-ink-400: #7c766c;
+  --color-ink-500: #55514a;
+  --color-ink-600: #3a3732;
+  --color-ink-700: #24221e;
+  --color-ink-800: #151411;
+  --color-ink-900: #0d0d0b;
 
-  --color-warning-50: #fffbeb;
-  --color-warning-500: #f59e0b;
-  --color-warning-600: #d97706;
-  --color-warning-700: #b45309;
+  --color-success-50: #f6ffc2;
+  --color-success-500: #e6ff32;
+  --color-success-600: #7c8a00;
+  --color-success-700: #0d0d0b;
 
-  --color-danger-50: #fef2f2;
-  --color-danger-500: #ef4444;
-  --color-danger-600: #dc2626;
-  --color-danger-700: #b91c1c;
+  --color-warning-50: #e8e3d6;
+  --color-warning-500: #c6bfb2;
+  --color-warning-600: #55514a;
+  --color-warning-700: #24221e;
 
-  --color-info-50: #eff6ff;
-  --color-info-500: #3b82f6;
-  --color-info-600: #2563eb;
+  --color-danger-50: #f6d9d3;
+  --color-danger-500: #e23a2e;
+  --color-danger-600: #c42c21;
+  --color-danger-700: #8f1d15;
+
+  --color-info-50: #ddd7ca;
+  --color-info-500: #8d8579;
+  --color-info-600: #24221e;
 
   --shadow-card: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 4px 12px -2px rgb(15 23 42 / 0.06);
   --shadow-card-hover: 0 4px 8px -2px rgb(15 23 42 / 0.06), 0 12px 28px -8px rgb(15 23 42 / 0.12);
@@ -77,15 +84,28 @@
   }
   body {
     @apply bg-ink-50 font-sans text-ink-800;
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
   }
   ::selection {
     @apply bg-brand-200 text-brand-900;
   }
   :focus-visible {
-    outline: 2px solid var(--color-brand-500);
+    outline: 3px solid var(--color-brand-200);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 0;
   }
 }
 
@@ -158,36 +178,36 @@
 }
 
 :root {
-  --surface: #ffffff;
-  --surface-soft: #f8fafc;
+  --surface: #f2efe6;
+  --surface-soft: #e8e3d6;
 }
 
 :root.dark {
   color-scheme: dark;
-  scrollbar-color: #334155 #0b1120;
+  scrollbar-color: #4a463f #0d0d0b;
 
-  --color-ink-50: #0b1120;
-  --color-ink-100: #121c2f;
-  --color-ink-200: #1e293b;
-  --color-ink-300: #334155;
-  --color-ink-400: #94a3b8;
-  --color-ink-500: #a9b8cb;
-  --color-ink-600: #cbd5e1;
-  --color-ink-700: #dde5ee;
-  --color-ink-800: #eef3f9;
-  --color-ink-900: #f8fafc;
+  --color-ink-50: #0d0d0b;
+  --color-ink-100: #161512;
+  --color-ink-200: #2a2824;
+  --color-ink-300: #4a463f;
+  --color-ink-400: #8f887c;
+  --color-ink-500: #b8b0a3;
+  --color-ink-600: #d6cec0;
+  --color-ink-700: #e6ded0;
+  --color-ink-800: #f2efe6;
+  --color-ink-900: #f2efe6;
 
-  --color-brand-50: #1c1a44;
-  --color-brand-100: #262257;
-  --color-brand-200: #3730a3;
+  --color-brand-50: #20250f;
+  --color-brand-100: #2e3516;
+  --color-brand-200: #e6ff32;
 
-  --color-success-50: #06281f;
-  --color-warning-50: #33260a;
-  --color-danger-50: #3a1216;
-  --color-info-50: #0b2440;
+  --color-success-50: #20250f;
+  --color-warning-50: #211f1a;
+  --color-danger-50: #2c1310;
+  --color-info-50: #211f1a;
 
-  --surface: #0f172a;
-  --surface-soft: #121c2f;
+  --surface: #161512;
+  --surface-soft: #1d1b17;
 
   --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.4), 0 4px 14px -4px rgb(0 0 0 / 0.5);
   --shadow-card-hover: 0 4px 10px -2px rgb(0 0 0 / 0.45), 0 16px 34px -10px rgb(0 0 0 / 0.55);
@@ -196,40 +216,47 @@
 
 /* Surfaces that use literal `bg-white` */
 :root.dark .bg-white { background-color: var(--surface); }
-:root.dark .bg-white\/60 { background-color: rgb(15 23 42 / 0.6); }
-:root.dark .bg-white\/80 { background-color: rgb(15 23 42 / 0.85); }
-:root.dark .bg-white\/85 { background-color: rgb(11 17 32 / 0.8); }
-:root.dark .bg-white\/90 { background-color: rgb(15 23 42 / 0.92); }
-:root.dark .bg-white\/95 { background-color: rgb(15 23 42 / 0.96); }
+:root.dark .bg-white\/60 { background-color: rgb(22 21 18 / 0.6); }
+:root.dark .bg-white\/80 { background-color: rgb(22 21 18 / 0.85); }
+:root.dark .bg-white\/85 { background-color: rgb(13 13 11 / 0.92); }
+:root.dark .bg-white\/90 { background-color: rgb(22 21 18 / 0.94); }
+:root.dark .bg-white\/95 { background-color: rgb(22 21 18 / 0.97); }
 
 /* Dark sections (CTAs, active chips) must stay dark in dark mode */
-:root.dark .bg-ink-900 { background-color: #060b16; }
-:root.dark .bg-ink-900\/50 { background-color: rgb(2 6 23 / 0.72); }
-:root.dark .border-ink-900 { border-color: #475569; }
+:root.dark .bg-ink-900 { background-color: #0d0d0b; }
+:root.dark .bg-ink-900\/50 { background-color: rgb(13 13 11 / 0.72); }
+:root.dark .border-ink-900 { border-color: #f2efe6; }
 
 /* Accent text that needs a lighter tone on dark surfaces */
-:root.dark .text-ink-300 { color: #94a3b8; }
-:root.dark .text-brand-600 { color: #818cf8; }
-:root.dark .text-brand-700 { color: #a5b4fc; }
-:root.dark .text-success-600 { color: #34d399; }
-:root.dark .text-success-700 { color: #6ee7b7; }
-:root.dark .text-warning-600 { color: #fbbf24; }
-:root.dark .text-warning-700 { color: #fcd34d; }
-:root.dark .text-danger-600 { color: #f87171; }
-:root.dark .text-danger-700 { color: #fca5a5; }
-:root.dark .text-info-600 { color: #93c5fd; }
+:root.dark .text-ink-300 { color: #8f887c; }
+:root.dark .text-brand-600 { color: #e6ff32; }
+:root.dark .text-brand-700 { color: #e6ff32; }
+:root.dark .text-success-600 { color: #e6ff32; }
+:root.dark .text-success-700 { color: #e6ff32; }
+:root.dark .text-warning-600 { color: #c6bfb2; }
+:root.dark .text-warning-700 { color: #e8e3d6; }
+:root.dark .text-danger-600 { color: #ff6b5e; }
+:root.dark .text-danger-700 { color: #ff8f85; }
+:root.dark .text-info-600 { color: #c6bfb2; }
 
-/* Hero glow tuned for dark backgrounds */
-:root.dark .hero-glow {
-  background:
-    radial-gradient(45% 45% at 8% 5%, rgba(99, 102, 241, 0.22) 0%, rgba(11, 17, 32, 0) 60%),
-    radial-gradient(40% 40% at 95% 15%, rgba(16, 185, 129, 0.14) 0%, rgba(11, 17, 32, 0) 55%),
-    radial-gradient(50% 45% at 50% 100%, rgba(59, 130, 246, 0.14) 0%, rgba(11, 17, 32, 0) 60%);
-}
+/* Accent fills in dark mode: safety yellow becomes the active surface. */
+:root.dark .bg-brand-600 { background-color: #e6ff32; color: #0d0d0b; }
 
 /* Hover/group-hover accent variants (Tailwind escapes these class names) */
-:root.dark .hover\:text-brand-600:hover { color: #818cf8; }
-:root.dark .hover\:text-brand-700:hover { color: #a5b4fc; }
-:root.dark .hover\:text-danger-600:hover { color: #f87171; }
-:root.dark .group:hover .group-hover\:text-brand-600 { color: #818cf8; }
-:root.dark .group:hover .group-hover\:text-brand-700 { color: #a5b4fc; }
+:root.dark .hover\:text-brand-600:hover { color: #e6ff32; }
+:root.dark .hover\:text-brand-700:hover { color: #e6ff32; }
+:root.dark .hover\:text-danger-600:hover { color: #ff6b5e; }
+:root.dark .group:hover .group-hover\:text-brand-600 { color: #e6ff32; }
+:root.dark .group:hover .group-hover\:text-brand-700 { color: #e6ff32; }
+:root.dark .hover\:bg-brand-700:hover { background-color: #c6bfb2; color: #0d0d0b; }
+
+/* Zone Franche: display type keeps Anton's single weight. */
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-weight: 400 !important;
+  text-transform: uppercase;
+}
+
