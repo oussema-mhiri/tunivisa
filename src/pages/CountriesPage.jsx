@@ -75,10 +75,10 @@ export default function CountriesPage() {
 
   return (
     <div className="container-page py-10 sm:py-14">
-      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <div className="zc-page-head flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <p className="text-sm font-semibold tracking-wide text-brand-600 uppercase">{t('nav.explore')}</p>
-          <h1 className="mt-1 font-display text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
+          <h1 className="zc-page-title mt-2 font-display text-ink-900">
             {t('countries.title')}
           </h1>
           <p className="mt-2 text-sm text-ink-500 sm:text-base">
@@ -201,7 +201,7 @@ export default function CountriesPage() {
         )}
 
         {countries && filtered.length > 0 && view === 'grid' && (
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="zc-country-grid grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {shown.map((country, i) => (
               <CountryCard key={country.code} country={country} index={i} />
             ))}

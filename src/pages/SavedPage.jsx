@@ -54,7 +54,7 @@ export default function SavedPage() {
             <p className="mb-4 text-sm font-medium text-ink-500">
               {countries.length} saved {countries.length === 1 ? 'destination' : 'destinations'}
             </p>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="zc-country-grid grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {countries.map((country, i) => (
                 <CountryCard key={country.code} country={country} index={i} />
               ))}

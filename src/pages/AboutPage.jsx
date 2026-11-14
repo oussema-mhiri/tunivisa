@@ -76,23 +76,23 @@ export default function AboutPage() {
   return (
     <div className="overflow-hidden">
       {/* ------------------------------ HERO ------------------------------ */}
-      <section className="relative">
+      <section className="zc-hero relative">
         <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
-        <div className="container-page relative py-16 sm:py-24">
+        <div className="container-page zc-hero-inner relative py-16 sm:py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto max-w-3xl text-center"
+            className="zc-hero-copy max-w-4xl"
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-200/70 bg-brand-50 px-4 py-1.5 text-xs font-semibold text-brand-700">
               <Handshake className="h-3.5 w-3.5" aria-hidden="true" />
               About TuniVisa
             </span>
-            <h1 className="mt-6 font-display text-4xl leading-tight font-extrabold tracking-tight text-ink-900 text-balance sm:text-5xl">
+            <h1 className="zc-hero-title mt-6 font-display text-ink-900 text-balance">
               Every Tunisian passport deserves a clear answer
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-500 sm:text-xl">
+            <p className="zc-hero-lede mt-7 text-base leading-relaxed text-ink-500 sm:text-lg">
               TuniVisa exists to answer one question simply: where can you travel with your Tunisian passport,
               what do you need, and how do you get it?
             </p>
@@ -102,7 +102,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="mx-auto mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            className="zc-hero-actions mt-8 flex flex-col gap-3 sm:flex-row"
           >
             <Link to="/countries" className="btn-primary">
               Explore countries
@@ -124,7 +124,7 @@ export default function AboutPage() {
             title="A travel companion built around the Tunisian passport"
             subtitle="Visa rules are written for tourists, workers, students and families. We present them clearly, in one place, for one passport."
           />
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="zc-value-grid mt-10 grid gap-5 md:grid-cols-3">
             {VALUES.map((item, i) => (
               <motion.div
                 key={item.title}
@@ -152,7 +152,7 @@ export default function AboutPage() {
           title="Four statuses, one colour code"
           subtitle="The same colour language is used across the map, country cards and visa pages, so it never takes more than a second to know where you stand."
         />
-        <div className="mx-auto mt-10 grid max-w-4xl gap-3 sm:grid-cols-2">
+        <div className="zc-status-grid mt-10 grid gap-3 sm:grid-cols-2">
           {STATUS_ROWS.map((row) => (
             <motion.div
               key={row.key}
@@ -172,7 +172,7 @@ export default function AboutPage() {
       {/* --------------------------- DATA & TRUST ------------------------- */}
       <section className="border-y border-ink-200/70 bg-white">
         <div className="container-page py-14 sm:py-20">
-          <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.2fr]">
+          <div className="zc-data-layout grid items-start gap-10 lg:grid-cols-[1fr_1.2fr]">
             <div>
               <SectionHeading
                 align="left"
@@ -218,7 +218,7 @@ export default function AboutPage() {
           title="A platform that grows with its users"
           subtitle="The roadmap is shaped around real travellers, official sources and multilingual support."
         />
-        <div className="mx-auto mt-10 grid max-w-4xl gap-3">
+        <div className="zc-roadmap mt-10 grid gap-3">
           {[
             { icon: Map, title: 'More countries and purposes', text: 'Expanding the map dataset and depth of every country guide.' },
             { icon: Globe2, title: 'French and Arabic editions', text: 'The interface is built for translation; French and Arabic are next on the list.' },
@@ -251,7 +251,7 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.4 }}
-          className="relative overflow-hidden rounded-3xl bg-ink-900 px-6 py-12 text-center sm:px-12 sm:py-16"
+          className="zc-cta relative overflow-hidden bg-ink-900"
         >
           <div
             className="pointer-events-none absolute inset-0"
@@ -259,13 +259,13 @@ export default function AboutPage() {
             aria-hidden="true"
           />
           <div className="relative">
-            <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold text-white text-balance sm:text-4xl">
+            <h2 className="max-w-2xl font-display text-3xl text-white text-balance sm:text-4xl">
               Ready to find your next destination?
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base text-ink-300">
+            <p className="mt-3 max-w-xl text-base text-ink-300">
               Start with a country, or let the Assistant build a personalised guide for you.
             </p>
-            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Link to="/countries" className="btn-primary bg-white text-ink-900 hover:bg-ink-100">
                 Explore countries
                 <ArrowRight className="h-4.5 w-4.5" aria-hidden="true" />

@@ -31,12 +31,12 @@ export default function AssistantPage() {
 
   return (
     <div className="container-page py-10 sm:py-14">
-      <div className="mx-auto max-w-3xl">
-        <p className="text-center text-sm font-semibold tracking-wide text-brand-600 uppercase">Visa Assistant</p>
-        <h1 className="mt-1 text-center font-display text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
+      <div className="max-w-3xl">
+        <p className="zc-eyebrow text-xs font-bold tracking-[0.18em] text-brand-600 uppercase">Visa Assistant</p>
+        <h1 className="zc-page-title mt-3 font-display text-ink-900">
           Build your visa guide in under a minute
         </h1>
-        <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-ink-500 sm:text-base">
+        <p className="zc-section-lede mt-5 max-w-xl text-sm leading-relaxed text-ink-500 sm:text-base">
           Answer six quick questions and TuniVisa will generate a personalised checklist, application steps and
           readiness score for your trip.
         </p>
@@ -45,7 +45,7 @@ export default function AssistantPage() {
           <AssistantWizard initialPurpose={params.get('purpose')} initialCountry={initialCountry} />
         </div>
 
-        <p className="mt-6 text-center text-xs leading-relaxed text-ink-400">
+        <p className="mt-6 text-xs leading-relaxed text-ink-400">
           The readiness score is an estimate based on your answers — it is not a prediction of visa approval.
           Visa decisions are made solely by the destination&apos;s authorities.
         </p>

@@ -76,15 +76,15 @@ export default function HomePage() {
   return (
     <div className="overflow-hidden">
       {/* ------------------------------ HERO ------------------------------ */}
-      <section className="relative">
+      <section className="zc-hero relative">
         <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
 
-        <div className="container-page relative py-12 sm:py-24 lg:py-28">
+        <div className="container-page zc-hero-inner relative py-12 sm:py-24 lg:py-28">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto max-w-3xl text-center"
+            className="zc-hero-copy max-w-4xl"
           >
             <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-brand-200/70 bg-brand-50 px-4 py-1.5 text-center text-xs font-semibold text-brand-700">
               <Plane className="h-3.5 w-3.5" aria-hidden="true" />
@@ -92,10 +92,10 @@ export default function HomePage() {
               <Flag code="tn" size="sm" />
             </span>
 
-            <h1 className="mt-6 font-display text-3xl leading-tight font-extrabold tracking-tight text-ink-900 text-balance sm:text-5xl lg:text-6xl">
+            <h1 className="zc-hero-title mt-6 font-display text-ink-900 text-balance">
               {t('home.heroTitle')}
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink-500 sm:text-xl">
+            <p className="zc-hero-lede mt-7 text-base leading-relaxed text-ink-500 sm:text-lg">
               {t('home.heroSubtitle')}
             </p>
           </motion.div>
@@ -104,7 +104,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto mt-10 max-w-2xl"
+            className="zc-hero-search mt-10 max-w-2xl"
           >
             <CountrySearch size="lg" placeholder={t('home.searchPlaceholder')} />
           </motion.div>
@@ -113,7 +113,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
+            className="zc-hero-actions mt-6 flex flex-col gap-3 sm:flex-row sm:gap-4"
           >
             <button type="button" onClick={scrollToMap} className="btn-secondary w-full sm:w-auto">
               <Map className="h-4.5 w-4.5 text-brand-600" aria-hidden="true" />
@@ -129,7 +129,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.45 }}
-            className="mx-auto mt-6 flex max-w-xl items-center justify-center gap-2 text-center text-xs font-medium text-ink-400 sm:text-sm"
+            className="zc-hero-trust mt-6 flex max-w-xl items-center gap-2 text-xs font-medium text-ink-400 sm:text-sm"
           >
             <ShieldCheck className="h-4 w-4 shrink-0 text-success-500" aria-hidden="true" />
             {t('home.trustMessage')}
@@ -145,7 +145,7 @@ export default function HomePage() {
             title={t('home.statsTitle')}
             subtitle={t('home.statsSubtitle')}
           />
-          <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="zc-stats mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {!stats &&
               Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className="card h-28 animate-pulse bg-ink-100/60" aria-hidden="true" />
@@ -168,7 +168,7 @@ export default function HomePage() {
                 )
               })}
           </div>
-          <p className="mx-auto mt-6 flex max-w-xl items-center justify-center gap-1.5 text-center text-xs text-ink-400">
+          <p className="mt-6 flex max-w-xl items-center gap-1.5 text-xs text-ink-400">
             <Info className="h-3.5 w-3.5" aria-hidden="true" />
             {stats?.note || 'Based on our tracked map dataset.'}
           </p>
@@ -219,7 +219,7 @@ export default function HomePage() {
             </div>
           )}
           {popular && (
-            <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="zc-popular-grid mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {popular.map((country, i) => (
                 <CountryCard key={country.code} country={country} index={i} />
               ))}
@@ -235,7 +235,7 @@ export default function HomePage() {
           title={t('home.howTitle')}
           subtitle="Three steps between you and your next trip."
         />
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="zc-steps mt-10 grid gap-5 md:grid-cols-3">
           {HOW_STEPS.map((step, i) => (
             <motion.div
               key={step.title}
@@ -265,7 +265,7 @@ export default function HomePage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.4 }}
-          className="relative overflow-hidden rounded-3xl bg-ink-900 px-6 py-12 text-center sm:px-12 sm:py-16"
+          className="zc-cta relative overflow-hidden bg-ink-900"
         >
           <div
             className="pointer-events-none absolute inset-0"
@@ -277,10 +277,10 @@ export default function HomePage() {
               <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
               Free · No sign-up required
             </span>
-            <h2 className="mx-auto mt-5 max-w-2xl font-display text-3xl font-bold text-white text-balance sm:text-4xl">
+            <h2 className="mt-5 max-w-2xl font-display text-3xl text-white text-balance sm:text-4xl">
               {t('home.assistantCtaTitle')}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base text-ink-300">{t('home.assistantCtaText')}</p>
+            <p className="mt-3 max-w-xl text-base text-ink-300">{t('home.assistantCtaText')}</p>
             <Link to="/assistant" className="btn-primary mt-7 bg-white text-ink-900 hover:bg-ink-100">
               {t('home.assistantCtaButton')}
               <ArrowRight className="h-4.5 w-4.5" aria-hidden="true" />
@@ -297,7 +297,7 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------- DISCLAIMER -------------------------- */}
-      <div className="border-t border-ink-200/70 bg-white">
+      <div className="zc-disclaimer bg-white">
         <div className="container-page flex items-start gap-3 py-6">
           <Wallet className="mt-0.5 h-5 w-5 shrink-0 text-warning-500" aria-hidden="true" />
           <p className="max-w-4xl text-xs leading-relaxed text-ink-500 sm:text-sm">{t('home.demoNote')}</p>

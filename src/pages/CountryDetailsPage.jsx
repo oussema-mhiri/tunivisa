@@ -154,7 +154,7 @@ export default function CountryDetailsPage() {
 
       {/* Meta grid */}
       <section className="mt-8" aria-label="Visa details">
-        <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <dl className="zc-meta-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {metaItems.map(({ label, value, icon: Icon }, i) => (
             <motion.div
               key={label}
