@@ -166,17 +166,11 @@ export default function CountriesPage() {
                 aria-pressed={active}
                 onClick={() => setStatus(key)}
                 className={cn(
-                  'inline-flex items-center gap-1.5 rounded-none border px-3 py-1.5 text-xs font-semibold transition-colors',
+                  'inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors',
                   active
                     ? key === 'all'
-                      ? 'border-ink-900 bg-ink-900 text-paper'
-                      : key === 'visa_free'
-                        ? 'border-ink-900 bg-brand-200 text-ink-900'
-                        : key === 'visa_on_arrival'
-                          ? 'border-ink-900 bg-ink-200 text-ink-900'
-                          : key === 'evisa_eta'
-                            ? 'border-ink-900 bg-ink-900 text-paper'
-                            : 'border-ink-900 bg-danger-600 text-paper'
+                      ? 'border-transparent bg-ink-900 text-paper'
+                      : cn('border-transparent ring-2 ring-brand-500/25', visaStatusMeta(key).chip)
                     : 'border-ink-200 bg-white text-ink-600 hover:border-ink-300 hover:bg-ink-50',
                 )}
               >

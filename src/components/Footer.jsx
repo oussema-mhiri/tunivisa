@@ -18,8 +18,8 @@ export default function Footer() {
   const resourceLinks = [
     { to: '/assistant', label: 'Visa Assistant' },
     { to: '/countries', label: 'Popular destinations' },
-    { to: '/profile', label: 'My profile' },
-    { to: '/admin', label: 'Admin dashboard' },
+    { to: '/my-space', label: t('nav.mySpace') },
+    { to: '/about', label: 'About TuniVisa' },
   ]
 
   const legalLinks = [

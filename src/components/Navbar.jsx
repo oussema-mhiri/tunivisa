@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown, Globe, LogOut, Menu, Search, UserRound, X } from 'lucide-react'
+import { ChevronDown, Globe, Heart, Menu, Search, X } from 'lucide-react'
 import Logo from './Logo'
 import ThemeToggle from './ThemeToggle'
 import { useApp } from '../context/AppContext'
@@ -17,20 +17,11 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const { t, lang, setLang, languages } = useI18n()
-  const { user, isAuthenticated, logout } = useApp()
-  const navigate = useNavigate()
+  const { saved } = useApp()
   const [menuOpen, setMenuOpen] = useState(false)
   const [langOpen, setLangOpen] = useState(false)
-  const [profileOpen, setProfileOpen] = useState(false)
 
   const currentLang = languages.find((l) => l.code === lang) || languages[0]
-
-  const handleLogout = () => {
-    setProfileOpen(false)
-    setMenuOpen(false)
-    logout()
-    navigate('/')
-  }
 
   return (
     <>
@@ -46,8 +37,8 @@ export default function Navbar() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    'rounded-none px-3.5 py-2 text-sm font-semibold transition-colors',
-                    isActive ? 'bg-brand-200 text-ink-900' : 'text-ink-600 hover:bg-ink-100 hover:text-ink-900',
+                    'rounded-full px-3.5 py-2 text-sm font-semibold transition-colors',
+                    isActive ? 'bg-brand-50 text-brand-700' : 'text-ink-600 hover:bg-brand-50 hover:text-brand-700',
                   )
                 }
               >
@@ -60,12 +51,12 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event('tunivisa:open-search'))}
-              className="hidden h-10 items-center gap-2 rounded-none border border-ink-900 bg-white px-3 text-sm font-medium text-ink-500 transition-colors hover:bg-celadon-100 hover:text-ink-900 sm:flex"
+              className="hidden h-10 items-center gap-2 rounded-full border border-ink-200 bg-white px-3.5 text-sm font-medium text-ink-500 transition-colors hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700 sm:flex"
               aria-label={t('nav.openSearch')}
             >
               <Search className="h-4 w-4" aria-hidden="true" />
               <span className="hidden xl:inline">Search…</span>
-              <kbd className="hidden rounded-none border border-ink-200 bg-ink-50 px-1.5 py-0.5 text-[10px] font-semibold text-ink-400 xl:inline">
+              <kbd className="hidden rounded-md border border-ink-200 bg-ink-50 px-1.5 py-0.5 text-[10px] font-semibold text-ink-400 xl:inline">
                 ⌘K
               </kbd>
             </button>
@@ -77,7 +68,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setLangOpen((o) => !o)}
-                className="flex h-10 items-center gap-1.5 rounded-none px-2.5 text-sm font-semibold text-ink-600 transition-colors hover:bg-ink-100"
+                className="flex h-10 items-center gap-1.5 rounded-full px-2.5 text-sm font-semibold text-ink-600 transition-colors hover:bg-brand-50 hover:text-brand-700"
                 aria-haspopup="listbox"
                 aria-expanded={langOpen}
                 aria-label="Select language"
@@ -95,7 +86,7 @@ export default function Navbar() {
                     transition={{ duration: 0.14 }}
                     role="listbox"
                     aria-label="Language options"
-                    className="absolute right-0 z-40 mt-2 w-44 overflow-hidden rounded-none border border-ink-200 bg-white py-1 shadow-pop"
+                    className="absolute right-0 z-40 mt-2 w-44 overflow-hidden rounded-xl border border-ink-200 bg-white py-1 shadow-pop"
                   >
                     {languages.map((l) => (
                       <li key={l.code} role="option" aria-selected={l.code === lang}>
@@ -120,66 +111,24 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {isAuthenticated ? (
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setProfileOpen((o) => !o)}
-                  className="flex h-10 items-center gap-2 rounded-none px-2 transition-colors hover:bg-ink-100"
-                  aria-haspopup="menu"
-                  aria-expanded={profileOpen}
-                  aria-label="Account menu"
-                >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-none bg-brand-200 text-sm font-bold text-ink-900">
-                    {(user?.name || 'U').charAt(0).toUpperCase()}
-                  </span>
-                </button>
-                <AnimatePresence>
-                  {profileOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -6, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                      transition={{ duration: 0.14 }}
-                      role="menu"
-                      className="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-none border border-ink-200 bg-white py-1.5 shadow-pop"
-                    >
-                      <div className="border-b border-ink-100 px-4 py-3">
-                        <p className="truncate text-sm font-bold text-ink-900">{user?.name}</p>
-                        <p className="truncate text-xs text-ink-500">{user?.email}</p>
-                      </div>
-                      <Link
-                        to="/profile"
-                        onClick={() => setProfileOpen(false)}
-                        role="menuitem"
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium text-ink-600 transition-colors hover:bg-ink-50"
-                      >
-                        <UserRound className="h-4 w-4" aria-hidden="true" />
-                        My profile
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={handleLogout}
-                        role="menuitem"
-                        className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm font-medium text-danger-600 transition-colors hover:bg-danger-50"
-                      >
-                        <LogOut className="h-4 w-4" aria-hidden="true" />
-                        {t('common.logout')}
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ) : (
-              <Link to="/login" className="btn-primary ml-1 hidden sm:inline-flex">
-                {t('common.login')}
-              </Link>
-            )}
+            <Link
+              to="/my-space"
+              className="flex h-10 items-center gap-2 rounded-full border border-ink-200 bg-white px-2.5 text-sm font-semibold text-ink-600 transition-colors hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700"
+              aria-label={t('nav.mySpace')}
+            >
+              <Heart className="h-4 w-4" aria-hidden="true" />
+              <span className="hidden xl:inline">{t('nav.mySpace')}</span>
+              {saved.length > 0 && (
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-600 px-1.5 text-[10px] font-bold text-white">
+                  {saved.length > 99 ? '99+' : saved.length}
+                </span>
+              )}
+            </Link>
 
             <button
               type="button"
               onClick={() => setMenuOpen((o) => !o)}
-              className="flex h-10 w-10 items-center justify-center rounded-none text-ink-600 transition-colors hover:bg-ink-100 lg:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-ink-600 transition-colors hover:bg-brand-50 hover:text-brand-700 lg:hidden"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
             >
@@ -208,8 +157,8 @@ export default function Navbar() {
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
                       cn(
-                        'block rounded-none px-4 py-3 text-base font-semibold',
-                        isActive ? 'bg-brand-200 text-ink-900' : 'text-ink-700 hover:bg-ink-50',
+                        'block rounded-xl px-4 py-3 text-base font-semibold',
+                        isActive ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-brand-50 hover:text-brand-700',
                       )
                     }
                   >
@@ -222,11 +171,24 @@ export default function Navbar() {
                     setMenuOpen(false)
                     window.dispatchEvent(new Event('tunivisa:open-search'))
                   }}
-                  className="flex w-full items-center gap-3 rounded-none px-4 py-3 text-base font-semibold text-ink-700 hover:bg-ink-50"
+                  className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold text-ink-700 hover:bg-brand-50 hover:text-brand-700"
                 >
                   <Search className="h-5 w-5 text-ink-400" aria-hidden="true" />
                   {t('nav.openSearch')}
                 </button>
+                <Link
+                  to="/my-space"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold text-ink-700 hover:bg-brand-50 hover:text-brand-700"
+                >
+                  <Heart className="h-5 w-5 text-ink-400" aria-hidden="true" />
+                  {t('nav.mySpace')}
+                  {saved.length > 0 && (
+                    <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-600 px-1.5 text-[10px] font-bold text-white">
+                      {saved.length > 99 ? '99+' : saved.length}
+                    </span>
+                  )}
+                </Link>
                 <div className="border-t border-ink-100 px-2 pt-3">
                   <p className="px-2 pb-2 text-xs font-semibold tracking-wide text-ink-400 uppercase">Language</p>
                   <div className="flex flex-wrap gap-2">
@@ -240,9 +202,9 @@ export default function Navbar() {
                         }}
                         aria-pressed={l.code === lang}
                         className={cn(
-                          'rounded-none border px-3 py-1.5 text-sm font-semibold transition-colors',
+                          'rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors',
                           l.code === lang
-                            ? 'border-ink-900 bg-brand-200 text-ink-900'
+                            ? 'border-transparent bg-brand-600 text-white'
                             : 'border-ink-200 text-ink-600 hover:bg-ink-50',
                         )}
                       >
@@ -250,27 +212,6 @@ export default function Navbar() {
                       </button>
                     ))}
                   </div>
-                </div>
-                <div className="flex items-center gap-2 border-t border-ink-100 px-2 pt-3">
-                  {isAuthenticated ? (
-                    <>
-                      <Link to="/profile" onClick={() => setMenuOpen(false)} className="btn-secondary flex-1">
-                        Profile
-                      </Link>
-                      <button type="button" onClick={handleLogout} className="btn-ghost flex-1">
-                        {t('common.logout')}
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <Link to="/login" onClick={() => setMenuOpen(false)} className="btn-secondary flex-1">
-                        {t('common.login')}
-                      </Link>
-                      <Link to="/register" onClick={() => setMenuOpen(false)} className="btn-primary flex-1">
-                        {t('common.register')}
-                      </Link>
-                    </>
-                  )}
                 </div>
               </div>
             </motion.nav>

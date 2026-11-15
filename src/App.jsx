@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Plane } from 'lucide-react'
 import PublicLayout from './layouts/PublicLayout'
 import AdminLayout from './layouts/AdminLayout'
@@ -15,10 +15,7 @@ const CountryDetailsPage = lazy(() => import('./pages/CountryDetailsPage'))
 const VisaDetailsPage = lazy(() => import('./pages/VisaDetailsPage'))
 const AssistantPage = lazy(() => import('./pages/AssistantPage'))
 const SavedPage = lazy(() => import('./pages/SavedPage'))
-const ProfilePage = lazy(() => import('./pages/ProfilePage'))
-const LoginPage = lazy(() => import('./pages/LoginPage'))
-const RegisterPage = lazy(() => import('./pages/RegisterPage'))
-const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'))
+const MySpacePage = lazy(() => import('./pages/MySpacePage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
@@ -33,7 +30,7 @@ function PageLoader() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center" role="status" aria-label="Loading page">
       <div className="flex flex-col items-center gap-3">
-        <div className="h-9 w-9 animate-spin rounded-none border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
+        <div className="h-9 w-9 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
         <p className="text-sm font-medium text-ink-500">Loading…</p>
       </div>
     </div>
@@ -51,10 +48,11 @@ export default function App() {
           <Route path="/countries/:code/visa/:visaType" element={<VisaDetailsPage />} />
           <Route path="/assistant" element={<AssistantPage />} />
           <Route path="/saved" element={<SavedPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/my-space" element={<MySpacePage />} />
+          <Route path="/profile" element={<Navigate to="/my-space" replace />} />
+          <Route path="/login" element={<Navigate to="/" replace />} />
+          <Route path="/register" element={<Navigate to="/" replace />} />
+          <Route path="/forgot-password" element={<Navigate to="/" replace />} />
           <Route path="/about" element={<AboutPage />} />
 
           <Route path="/admin" element={<AdminLayout />}>

@@ -1,7 +1,7 @@
 // Country profiles for the 20 destinations with full visa guides.
 // -----------------------------------------------------------------------------
 // Visa statuses and maximum stays were checked against official government and
-// embassy sources on 2026-11-13 (see visaRules.js for fees and source links).
+// embassy sources on 2026-11-14 (see visaRules.js for fees and source links).
 // This is guidance, not legal advice — always verify on official websites.
 // -----------------------------------------------------------------------------
 
@@ -181,10 +181,10 @@ export const COUNTRIES = [
     currency: 'UAE dirham (AED)',
     timezone: 'GST (UTC+4)',
     visaStatus: 'visa_required',
-    maxStayDays: 90,
+    maxStayDays: 30,
     popular: false,
     description:
-      'Dubai and Abu Dhabi — modern skylines, shopping and Gulf hospitality. Tunisians must arrange a visa before travel.',
+      'Dubai and Abu Dhabi — modern skylines, shopping and Gulf hospitality. Tunisians must arrange a visa before travel; single-entry tourist visas are usually issued for 30 or 60 days.',
   },
   {
     code: 'sa',

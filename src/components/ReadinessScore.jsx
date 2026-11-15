@@ -6,10 +6,10 @@ const CIRCLE_RADIUS = 52
 const CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS
 
 function scoreColor(score) {
-  if (score >= 80) return '#10b981'
-  if (score >= 60) return '#f59e0b'
-  if (score >= 40) return '#f97316'
-  return '#ef4444'
+  if (score >= 80) return 'var(--color-celadon-500)'
+  if (score >= 60) return 'var(--color-warning-500)'
+  if (score >= 40) return 'var(--color-warning-600)'
+  return 'var(--color-danger-600)'
 }
 
 export default function ReadinessScore({ score, breakdown, className }) {
@@ -37,7 +37,7 @@ export default function ReadinessScore({ score, breakdown, className }) {
       <div className="grid gap-6 p-5 sm:grid-cols-[auto_1fr] sm:items-center">
         <div className="relative mx-auto h-36 w-36 sm:h-40 sm:w-40">
           <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90" role="img" aria-label={`Application readiness score ${pct} out of 100`}>
-            <circle cx="60" cy="60" r={CIRCLE_RADIUS} fill="none" stroke="#e2e8f0" strokeWidth="10" />
+            <circle cx="60" cy="60" r={CIRCLE_RADIUS} fill="none" stroke="var(--color-ink-200)" strokeWidth="10" />
             <motion.circle
               cx="60"
               cy="60"
@@ -65,9 +65,9 @@ export default function ReadinessScore({ score, breakdown, className }) {
                 <span className="font-medium text-ink-700">{item.label}</span>
                 <span className="font-semibold text-ink-900">{item.value}%</span>
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-none bg-ink-200/70">
+              <div className="h-2 w-full overflow-hidden rounded-full bg-ink-200/70">
                 <motion.div
-                  className={cn('h-full rounded-none', item.value >= 70 ? 'bg-success-500' : item.value >= 45 ? 'bg-warning-500' : 'bg-danger-500')}
+                  className={cn('h-full rounded-full', item.value >= 70 ? 'bg-success-500' : item.value >= 45 ? 'bg-warning-500' : 'bg-danger-500')}
                   initial={{ width: 0 }}
                   whileInView={{ width: `${item.value}%` }}
                   viewport={{ once: true }}

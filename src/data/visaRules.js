@@ -1,7 +1,7 @@
 // Visa rules for the 20 detailed destinations.
 // -----------------------------------------------------------------------------
 // Fees, processing times and official links were checked against official
-// government / embassy sources on 2026-11-13 (see LAST_VERIFIED per country).
+// government / embassy sources on 2026-11-14 (see LAST_VERIFIED per country).
 // Long-stay and transit fees are not published consistently, so they are shown
 // as "Varies" instead of being estimated. This is still guidance, not legal
 // advice — always confirm on the official government website before applying.
@@ -44,7 +44,7 @@ export const FEE_BY_COUNTRY = {
   qa: { amount: 100, currency: 'QAR', processing: 'Apply online via Hayya before travel; approval time not published' },
   my: { amount: 0, currency: 'MYR', processing: 'No visa required — complete the MDAC within 3 days before arrival' },
   ae: { amount: null, currency: 'AED', processing: 'Apply online via ICP, airline or hotel before travel' },
-  eg: { amount: 105, currency: 'TND', processing: 'About 4 working days (may be longer)' },
+  eg: { amount: 111, currency: 'TND', processing: 'About 4 working days (may be longer)' },
   sa: { amount: null, currency: 'SAR', processing: 'Apply at the Saudi embassy in Tunis; timing varies' },
   ca: { amount: 100, currency: 'CAD', processing: 'About 34 days (IRCC average), plus biometrics' },
   gb: { amount: 135, currency: 'GBP', processing: 'About 3 weeks' },
@@ -53,26 +53,26 @@ export const FEE_BY_COUNTRY = {
 }
 
 export const LAST_VERIFIED = {
-  fr: '2026-11-13',
-  it: '2026-11-13',
-  de: '2026-11-13',
-  tr: '2026-11-13',
-  dz: '2026-11-13',
-  ma: '2026-11-13',
-  es: '2026-11-13',
-  be: '2026-11-13',
-  ca: '2026-11-13',
-  gb: '2026-11-13',
-  ae: '2026-11-13',
-  sa: '2026-11-13',
-  eg: '2026-11-13',
-  qa: '2026-11-13',
-  ch: '2026-11-13',
-  nl: '2026-11-13',
-  us: '2026-11-13',
-  gr: '2026-11-13',
-  my: '2026-11-13',
-  jp: '2026-11-13',
+  fr: '2026-11-14',
+  it: '2026-11-14',
+  de: '2026-11-14',
+  tr: '2026-11-14',
+  dz: '2026-11-14',
+  ma: '2026-11-14',
+  es: '2026-11-14',
+  be: '2026-11-14',
+  ca: '2026-11-14',
+  gb: '2026-11-14',
+  ae: '2026-11-14',
+  sa: '2026-11-14',
+  eg: '2026-11-14',
+  qa: '2026-11-14',
+  ch: '2026-11-14',
+  nl: '2026-11-14',
+  us: '2026-11-14',
+  gr: '2026-11-14',
+  my: '2026-11-14',
+  jp: '2026-11-14',
 }
 
 export const OFFICIAL_SOURCE = {

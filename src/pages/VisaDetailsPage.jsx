@@ -119,12 +119,12 @@ export default function VisaDetailsPage() {
       >
         <div
           className="zc-glow pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(50% 120% at 0% 0%, rgba(99,102,241,0.08) 0%, rgba(255,255,255,0) 60%)' }}
+          style={{ background: 'radial-gradient(50% 120% at 0% 0%, rgba(29,122,140,0.10) 0%, rgba(255,255,255,0) 60%)' }}
           aria-hidden="true"
         />
         <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-none border border-ink-200/70 bg-white shadow-card">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl border border-ink-200/70 bg-white shadow-card">
               <Flag code={country.code} size="lg" />
             </div>
             <div className="min-w-0">
@@ -141,7 +141,7 @@ export default function VisaDetailsPage() {
       </motion.div>
 
       {/* Source-check notice */}
-      <div className="mt-6 flex items-start gap-2.5 rounded-none border border-warning-500/30 bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
+      <div className="mt-6 flex items-start gap-2.5 rounded-xl border border-warning-500/25 bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
         <FileWarning className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
         <p>
           This guide was checked against official government and embassy sources on the date shown below.

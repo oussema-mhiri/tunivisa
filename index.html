@@ -2,9 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f2efe6" />
+    <meta name="theme-color" content="#F4EFE4" />
+    <script>
+      (function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) {
+              return s.replace(/~and~/g, '&')
+            })
+            .join('?')
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash)
+        }
+      })(window.location)
+    </script>
     <script>
       // Apply the saved (or system) theme before first paint to avoid a flash.
       (function () {
@@ -17,7 +31,7 @@
           if (theme === 'dark') document.documentElement.classList.add('dark')
           document.documentElement.style.colorScheme = theme
           var meta = document.querySelector('meta[name="theme-color"]')
-          if (meta && theme === 'dark') meta.setAttribute('content', '#0d0d0b')
+          if (meta && theme === 'dark') meta.setAttribute('content', '#0B1420')
         } catch (e) {}
       })()
     </script>
@@ -38,7 +52,7 @@
       property="og:description"
       content="Discover visa requirements, application procedures and travel information for destinations around the world."
     />
-    <meta property="og:image" content="/favicon.svg" />
+    <meta property="og:image" content="https://oussema-mhiri.github.io/tunivisa/favicon.svg" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
@@ -51,7 +65,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>

@@ -1,7 +1,7 @@
 import { cn } from '../utils/formatters'
 
 const TONES = {
-  gray: 'bg-ink-100 text-ink-700 ring-ink-300/50',
+  gray: 'bg-ink-100 text-ink-600 ring-ink-300/50',
   brand: 'bg-brand-50 text-brand-700 ring-brand-600/20',
   success: 'bg-success-50 text-success-700 ring-success-600/20',
   warning: 'bg-warning-50 text-warning-700 ring-warning-600/20',
@@ -13,7 +13,7 @@ export default function Badge({ children, tone = 'gray', className }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold tracking-[0.09em] uppercase ring-1 ring-inset',
+        'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.09em] uppercase ring-1 ring-inset',
         TONES[tone] || TONES.gray,
         className,
       )}

@@ -117,10 +117,9 @@ export default function AboutPage() {
       </section>
 
       {/* ----------------------------- VALUES ----------------------------- */}
-      <section className="border-y border-ink-900 bg-white">
+      <section className="border-y border-ink-100 bg-white">
         <div className="container-page max-w-6xl py-16 sm:py-20">
           <SectionHeading
-            className="lg:ml-10"
             eyebrow="Why TuniVisa"
             title="A travel companion built around the Tunisian passport"
             subtitle="Visa rules are written for tourists, workers, students and families. We present them clearly, in one place, for one passport."
@@ -135,10 +134,10 @@ export default function AboutPage() {
                 transition={{ duration: 0.35, delay: i * 0.08 }}
                 className="card p-6"
               >
-                <span className="flex h-11 w-11 items-center justify-center border border-ink-900 bg-brand-200 text-ink-900">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
                   <item.icon className="h-5 w-5" aria-hidden="true" />
                 </span>
-                <h3 className="mt-4 font-display text-lg font-bold text-ink-900">{item.title}</h3>
+                <h3 className="mt-4 font-display text-lg font-semibold text-ink-900">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-500">{item.text}</p>
               </motion.div>
             ))}
@@ -147,9 +146,8 @@ export default function AboutPage() {
       </section>
 
       {/* -------------------------- STATUS COLORS ------------------------- */}
-      <section className="container-page max-w-5xl py-10 sm:py-24">
+      <section className="container-page max-w-5xl py-16 sm:py-20">
         <SectionHeading
-          className="lg:ml-16"
           eyebrow="At a glance"
           title="Four statuses, one colour code"
           subtitle="The same colour language is used across the map, country cards and visa pages, so it never takes more than a second to know where you stand."
@@ -172,8 +170,8 @@ export default function AboutPage() {
       </section>
 
       {/* --------------------------- DATA & TRUST ------------------------- */}
-      <section className="border-y border-ink-900 bg-white">
-        <div className="container-page max-w-[86rem] py-20 sm:py-16">
+      <section className="border-y border-ink-100 bg-white">
+        <div className="container-page max-w-[86rem] py-16 sm:py-20">
           <div className="zc-data-layout grid items-start gap-10 lg:grid-cols-[0.85fr_1.35fr]">
             <div>
               <SectionHeading
@@ -182,7 +180,7 @@ export default function AboutPage() {
                 title="Serious about accuracy, honest about limits"
                 subtitle="TuniVisa is a guide, not a guarantee. We mark every figure as verified, due for review or limited so you always know what you are looking at."
               />
-              <div className="mt-8 flex items-start gap-2.5 border border-ink-900 bg-warning-50 px-4 py-3 text-sm leading-relaxed text-warning-700 shadow-[3px_3px_0_0_var(--color-ink-900)]">
+              <div className="mt-8 flex items-start gap-2.5 rounded-xl border border-warning-500/25 bg-warning-50 px-4 py-3 text-sm leading-relaxed text-warning-700">
                 <ShieldCheck className="mt-0.5 h-4.5 w-4.5 shrink-0" aria-hidden="true" />
                 <p>
                   Visa rules change. Always confirm the latest requirements on the official government or
@@ -201,10 +199,10 @@ export default function AboutPage() {
                   transition={{ duration: 0.3, delay: i * 0.06 }}
                   className="card p-5"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center border border-ink-900 bg-brand-200 text-ink-900">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
                     <point.icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <h3 className="mt-3.5 font-display text-base font-bold text-ink-900">{point.title}</h3>
+                  <h3 className="mt-3.5 font-display text-base font-semibold text-ink-900">{point.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-ink-500">{point.text}</p>
                 </motion.div>
               ))}
@@ -216,7 +214,6 @@ export default function AboutPage() {
       {/* ----------------------------- ROADMAP ---------------------------- */}
       <section className="container-page max-w-6xl py-12 sm:py-20">
         <SectionHeading
-          className="lg:ml-16"
           eyebrow="Where it’s heading"
           title="A platform that grows with its users"
           subtitle="The roadmap is shaped around real travellers, official sources and multilingual support."
@@ -235,11 +232,11 @@ export default function AboutPage() {
               transition={{ duration: 0.3, delay: i * 0.06 }}
               className="card flex items-start gap-4 p-5"
             >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-ink-900 bg-brand-200 text-ink-900">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
                   <item.icon className="h-5 w-5" aria-hidden="true" />
                 </span>
               <div>
-                <h3 className="font-display text-base font-bold text-ink-900">{item.title}</h3>
+                <h3 className="font-display text-base font-semibold text-ink-900">{item.title}</h3>
                 <p className="mt-1 text-sm leading-relaxed text-ink-500">{item.text}</p>
               </div>
             </motion.div>
@@ -270,7 +267,7 @@ export default function AboutPage() {
               </Link>
               <Link
                 to="/assistant"
-                className="inline-flex items-center justify-center gap-2 rounded-none border border-white/20 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
               >
                 <Compass className="h-4.5 w-4.5" aria-hidden="true" />
                 Visa Assistant

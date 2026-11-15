@@ -13,7 +13,7 @@ import { useTheme } from '../context/ThemeContext'
 import { cn } from '../utils/formatters'
 
 const STATUS_FILTERS = ['all', 'visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required']
-const HOME_COLOR = '#e6ff32'
+const HOME_COLOR = 'var(--color-warning-400)'
 
 function MapTooltip({ tooltip }) {
   if (!tooltip) return null
@@ -92,16 +92,16 @@ function CountryPath({ geo, mapData, statusFilter, regionFilter, dark, onHover, 
         className="tunivisa-country"
         style={{
           default: {
-            fill: entry ? (entry.home ? HOME_COLOR : meta.color) : dark ? '#2a2824' : '#c6bfb2',
-            stroke: dark ? '#0d0d0b' : '#0d0d0b',
-            strokeWidth: 0.45,
+            fill: entry ? (entry.home ? HOME_COLOR : meta.color) : dark ? '#1a2a3a' : '#d2cabc',
+            stroke: entry?.home ? (dark ? '#f4efe4' : '#0b2545') : dark ? '#2c4054' : '#0b2545',
+            strokeWidth: entry?.home ? 0.9 : 0.45,
             outline: 'none',
             opacity: dimmed ? (dark ? 0.22 : 0.18) : 1,
             transition: 'opacity 200ms ease, fill 200ms ease',
           },
           hover: {
-            fill: '#e6ff32',
-            stroke: '#0d0d0b',
+            fill: 'var(--color-brand-700)',
+            stroke: dark ? '#f4efe4' : '#0b2545',
             strokeWidth: 0.7,
             outline: 'none',
             cursor: 'pointer',
@@ -173,7 +173,7 @@ export default function WorldMap({ showFilters = true }) {
     return { total: entries.length, detailed: entries.filter((entry) => entry.detailed).length }
   }, [mapData])
 
-  const chipBase = 'inline-flex items-center border border-ink-900 px-3 py-1.5 text-[10px] font-bold tracking-[0.07em] uppercase transition-all duration-150'
+  const chipBase = 'inline-flex items-center rounded-full border px-3 py-1.5 text-[10px] font-bold tracking-[0.07em] uppercase transition-all duration-150'
 
   return (
     <div className="zc-map relative overflow-hidden bg-white">
@@ -181,7 +181,7 @@ export default function WorldMap({ showFilters = true }) {
         {!mapData && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/80 backdrop-blur-[2px]">
             <div className="flex flex-col items-center gap-3">
-              <div className="h-8 w-8 animate-spin rounded-none border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
               <p className="text-sm font-medium text-ink-500">Loading world map…</p>
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function WorldMap({ showFilters = true }) {
 
         <svg className="h-[240px] w-full sm:h-auto" viewBox="0 0 800 450" role="img" aria-label="Interactive world map of visa requirements for Tunisian passport holders">
           <ComposableMap projection="geoEqualEarth" projectionConfig={{ scale: 147, center: [0, 15] }}>
-            <Sphere fill={dark ? '#161512' : '#e8e3d6'} stroke={dark ? '#4a463f' : '#0d0d0b'} strokeWidth={0.6} />
+            <Sphere fill={dark ? '#0b1420' : '#e7e1d6'} stroke={dark ? '#2c4054' : '#0b2545'} strokeWidth={0.6} />
             <ZoomableGroup zoom={zoom} center={center} minZoom={1} maxZoom={8} translateExtent={[[-400, -225], [1200, 675]]}>
               <Geographies geography={worldAtlas}>
                 {({ geographies }) =>
@@ -253,7 +253,7 @@ export default function WorldMap({ showFilters = true }) {
           <VisaStatusLegend compact />
           <span className="hidden h-6 w-px bg-ink-200 lg:block" aria-hidden="true" />
           <div className="flex items-center gap-2.5">
-            <span className="h-3 w-3 border border-ink-900" style={{ backgroundColor: HOME_COLOR }} aria-hidden="true" />
+            <span className="h-3 w-3 rounded-full border border-ink-200" style={{ backgroundColor: HOME_COLOR }} aria-hidden="true" />
             <span className="text-sm font-medium text-ink-700">Home (Tunisia)</span>
           </div>
         </div>
@@ -269,7 +269,6 @@ export default function WorldMap({ showFilters = true }) {
             {STATUS_FILTERS.map((key) => {
               const label = key === 'all' ? 'All' : visaStatusMeta(key).label
               const active = statusFilter === key
-              const color = visaStatusMeta(key).color
               return (
                 <button
                   key={key}
@@ -278,11 +277,10 @@ export default function WorldMap({ showFilters = true }) {
                   onClick={() => setStatusFilter(key)}
                   className={cn(
                     chipBase,
-                    active && key === 'all' && 'border-ink-900 bg-ink-900 text-white',
-                    active && key !== 'all' && (key === 'visa_free' || key === 'visa_on_arrival' ? 'border-ink-900 text-ink-900' : 'border-ink-900 text-white'),
+                    active && key === 'all' && 'border-transparent bg-ink-900 text-white',
+                    active && key !== 'all' && cn('border-transparent ring-2 ring-brand-500/25', visaStatusMeta(key).chip),
                     !active && 'border-ink-200 bg-white text-ink-600 hover:border-ink-300 hover:bg-ink-50',
                   )}
-                  style={active && key !== 'all' ? { backgroundColor: color } : undefined}
                 >
                   {label}
                 </button>
@@ -303,7 +301,7 @@ export default function WorldMap({ showFilters = true }) {
                   className={cn(
                     chipBase,
                     active
-                      ? 'border-brand-600 bg-brand-600 text-white'
+                      ? 'border-transparent bg-brand-600 text-white'
                       : 'border-ink-200 bg-white text-ink-600 hover:border-ink-300 hover:bg-ink-50',
                   )}
                 >

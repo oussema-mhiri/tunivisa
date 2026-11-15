@@ -2,64 +2,15 @@ import { createContext, useCallback, useContext, useMemo } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { useToast } from './ToastContext'
 
-// -----------------------------------------------------------------------------
-// Mock authentication & user state.
-// There is NO backend — login/register simulate a network round-trip and store
-// a fake user profile in localStorage. Swap for a real API later via
-// services/api.js (auth endpoints).
-// -----------------------------------------------------------------------------
-
 const AppContext = createContext(null)
-
-function simulateDelay(ms = 600) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
 
 export function AppProvider({ children }) {
   const toast = useToast()
 
-  const [user, setUser] = useLocalStorage('tunivisa.user', null)
   const [saved, setSaved] = useLocalStorage('tunivisa.saved', [])
   const [recentSearches, setRecentSearches] = useLocalStorage('tunivisa.recent', [])
   const [checklists, setChecklists] = useLocalStorage('tunivisa.checklists', {})
-  const [profile, setProfile] = useLocalStorage('tunivisa.profile', null)
 
-  // ---- Auth (mock) -------------------------------------------------------
-  const login = useCallback(
-    async (email) => {
-      await simulateDelay()
-      const nameFromEmail = email.split('@')[0]?.replace(/[._-]+/g, ' ') || 'Traveler'
-      const next = {
-        name: nameFromEmail.replace(/\b\w/g, (c) => c.toUpperCase()),
-        email,
-        joined: new Date().toISOString(),
-      }
-      setUser(next)
-      setProfile((prev) => prev || { name: next.name, email, nationality: 'Tunisia' })
-      toast.success('Welcome back! You are now logged in (demo).')
-      return next
-    },
-    [setUser, setProfile, toast],
-  )
-
-  const register = useCallback(
-    async ({ name, email }) => {
-      await simulateDelay()
-      const next = { name, email, joined: new Date().toISOString() }
-      setUser(next)
-      setProfile({ name, email, nationality: 'Tunisia' })
-      toast.success(`Account created. Welcome to TuniVisa, ${name.split(' ')[0]}! (demo)`)
-      return next
-    },
-    [setUser, setProfile, toast],
-  )
-
-  const logout = useCallback(() => {
-    setUser(null)
-    toast.info('You have been logged out.')
-  }, [setUser, toast])
-
-  // ---- Saved countries ----------------------------------------------------
   const isSaved = useCallback((code) => saved.includes(code), [saved])
 
   const toggleSaved = useCallback(
@@ -77,7 +28,6 @@ export function AppProvider({ children }) {
     [setSaved, toast],
   )
 
-  // ---- Recent searches -----------------------------------------------------
   const addRecentSearch = useCallback(
     (term) => {
       const cleaned = String(term).trim()
@@ -89,7 +39,6 @@ export function AppProvider({ children }) {
 
   const clearRecentSearches = useCallback(() => setRecentSearches([]), [setRecentSearches])
 
-  // ---- Saved document checklists ------------------------------------------
   const checklistKey = (countryCode, visaType) => `${countryCode}:${visaType}`
 
   const getChecklistDone = useCallback(
@@ -120,23 +69,8 @@ export function AppProvider({ children }) {
     [setChecklists],
   )
 
-  // ---- Profile --------------------------------------------------------------
-  const updateProfile = useCallback(
-    (patch) => {
-      setProfile((prev) => ({ ...(prev || {}), ...patch }))
-      toast.success('Profile updated (demo).')
-    },
-    [setProfile, toast],
-  )
-
   const value = useMemo(
     () => ({
-      user,
-      profile,
-      isAuthenticated: Boolean(user),
-      login,
-      register,
-      logout,
       saved,
       isSaved,
       toggleSaved,
@@ -147,14 +81,8 @@ export function AppProvider({ children }) {
       getChecklistDone,
       toggleChecklistDoc,
       resetChecklist,
-      updateProfile,
     }),
     [
-      user,
-      profile,
-      login,
-      register,
-      logout,
       saved,
       isSaved,
       toggleSaved,
@@ -165,7 +93,6 @@ export function AppProvider({ children }) {
       getChecklistDone,
       toggleChecklistDoc,
       resetChecklist,
-      updateProfile,
     ],
   )
 

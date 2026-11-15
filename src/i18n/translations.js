@@ -5,9 +5,6 @@
 
 const en = {
   common: {
-    login: 'Log in',
-    register: 'Sign up',
-    logout: 'Log out',
     search: 'Search',
     save: 'Save',
     saved: 'Saved',
@@ -29,6 +26,7 @@ const en = {
     explore: 'Explore Countries',
     assistant: 'Visa Assistant',
     about: 'About',
+    mySpace: 'My space',
     menu: 'Menu',
     openSearch: 'Open search',
   },
@@ -97,9 +95,6 @@ const en = {
 
 const fr = {
   common: {
-    login: 'Se connecter',
-    register: "S'inscrire",
-    logout: 'Se déconnecter',
     search: 'Rechercher',
     continue: 'Continuer',
     back: 'Retour',
@@ -110,6 +105,7 @@ const fr = {
     explore: 'Explorer les pays',
     assistant: 'Assistant visa',
     about: 'À propos',
+    mySpace: 'Mon espace',
   },
   home: {
     heroTitle: 'Où pouvez-vous voyager avec votre passeport tunisien ?',

@@ -293,7 +293,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
   return (
     <div className="card relative overflow-hidden">
       <div className="flex items-center gap-3 border-b border-ink-100 px-5 py-4 sm:px-6">
-        <span className="flex h-10 w-10 items-center justify-center rounded-none bg-brand-50 text-brand-600">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
           {stepDef ? <stepDef.icon className="h-5 w-5" aria-hidden="true" /> : <Briefcase className="h-5 w-5" aria-hidden="true" />}
         </span>
         <div className="min-w-0 flex-1">
@@ -375,7 +375,7 @@ function ResultView({ result, answers, onRestart }) {
 
   return (
     <div className="space-y-6">
-      <div className="zc-glow border border-ink-900 bg-ink-50 p-5 shadow-[3px_3px_0_0_var(--color-ink-900)] sm:p-6">
+      <div className="zc-glow rounded-2xl border border-ink-200 bg-white p-5 shadow-card sm:p-6">
         <div className="flex flex-wrap items-center gap-3">
           <Flag code={country.code} size="lg" />
           <div className="min-w-0 flex-1">
@@ -385,9 +385,9 @@ function ResultView({ result, answers, onRestart }) {
           <VisaStatusBadge status={rule.status} size="md" />
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          <span className="rounded-none bg-white px-3 py-1 text-xs font-semibold text-ink-700 shadow-sm">{rule.visaTypeLabel} visa</span>
-          <span className="rounded-none bg-white px-3 py-1 text-xs font-semibold text-ink-700 shadow-sm">{rule.duration}</span>
-          <span className="rounded-none bg-white px-3 py-1 text-xs font-semibold text-ink-700 shadow-sm">{rule.processingTime}</span>
+          <span className="rounded-full bg-ink-50 px-3 py-1 text-xs font-semibold text-ink-700">{rule.visaTypeLabel} visa</span>
+          <span className="rounded-full bg-ink-50 px-3 py-1 text-xs font-semibold text-ink-700">{rule.duration}</span>
+          <span className="rounded-full bg-ink-50 px-3 py-1 text-xs font-semibold text-ink-700">{rule.processingTime}</span>
         </div>
       </div>
 
@@ -400,7 +400,7 @@ function ResultView({ result, answers, onRestart }) {
             { label: 'Processing', value: rule.processingTime },
             { label: 'Method', value: rule.applicationMethod },
           ].map((item) => (
-            <li key={item.label} className="flex items-start gap-2.5 rounded-none border border-ink-200/70 bg-white px-3.5 py-2.5">
+            <li key={item.label} className="flex items-start gap-2.5 rounded-lg border border-ink-200/70 bg-white px-3.5 py-2.5">
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success-500" aria-hidden="true" />
               <div>
                 <p className="text-xs font-medium text-ink-400 uppercase">{item.label}</p>
@@ -431,7 +431,7 @@ function ResultView({ result, answers, onRestart }) {
       </div>
 
       {embassy && (
-        <div className="rounded-none border border-ink-200/70 bg-white p-4">
+        <div className="rounded-xl border border-ink-200/70 bg-white p-4">
           <p className="text-sm font-semibold text-ink-800">{embassy.name}</p>
           <p className="mt-0.5 text-xs text-ink-500">{embassy.city} · {embassy.type}</p>
         </div>
@@ -440,7 +440,7 @@ function ResultView({ result, answers, onRestart }) {
       <OfficialSourceCard links={links} embassyWebsite={embassy?.website} sourceName={rule.officialSource} />
       <LastVerified date={rule.lastVerified} source={rule.officialSource} />
 
-      <div className="rounded-none border border-warning-500/30 bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
+      <div className="rounded-xl border border-warning-500/25 bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
         This guide reflects current entry rules ({meta.label}) but visa decisions are always made by the
         destination authority. Verify the fee, documents and processing time on the official government
         website before applying.

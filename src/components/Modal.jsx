@@ -65,7 +65,7 @@ export default function Modal({
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
-              'flex max-h-[92vh] w-full flex-col overflow-hidden rounded-none bg-white shadow-pop focus:outline-none',
+              'flex max-h-[92vh] w-full flex-col overflow-hidden rounded-2xl bg-white shadow-pop focus:outline-none',
               sizes[size],
               className,
             )}
@@ -79,7 +79,7 @@ export default function Modal({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded-none p-1.5 text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700"
+                  className="rounded-full p-1.5 text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700"
                   aria-label="Close dialog"
                 >
                   <X className="h-5 w-5" />

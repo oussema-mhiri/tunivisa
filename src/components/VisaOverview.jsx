@@ -31,7 +31,7 @@ export default function VisaOverview({ rule }) {
       <dl className="grid divide-y divide-ink-100 sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3">
         {FIELDS.map(({ key, label, icon: Icon }) => (
           <div key={key} className="flex items-start gap-3 px-5 py-4 sm:border-b sm:border-ink-100 lg:[&:nth-last-child(-n+2)]:border-b-0">
-            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-none bg-brand-50 text-brand-600">
+            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
               <Icon className="h-4 w-4" aria-hidden="true" />
             </span>
             <div>

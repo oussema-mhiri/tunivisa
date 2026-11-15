@@ -55,11 +55,11 @@ export default function CountryDetailsPage() {
       <div className="container-page py-10">
         <Skeleton className="h-5 w-48" />
         <div className="mt-6">
-          <Skeleton className="h-44 w-full rounded-none" />
+          <Skeleton className="h-44 w-full rounded-2xl" />
         </div>
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 rounded-none" />
+            <Skeleton key={i} className="h-24 rounded-xl" />
           ))}
         </div>
       </div>
@@ -117,7 +117,7 @@ export default function CountryDetailsPage() {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.05 }}
-        className="card relative z-10 -mt-5 overflow-hidden p-6 sm:-mt-8 sm:p-8"
+        className="card relative z-10 mt-6 overflow-hidden p-6 sm:p-8"
       >
         <div className="relative flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 items-center gap-4">
@@ -140,7 +140,7 @@ export default function CountryDetailsPage() {
           </div>
         </div>
         {!country.detailed && (
-          <p className="relative mt-5 rounded-none bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
+          <p className="relative mt-5 rounded-xl bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
             This country appears on our map but does not have a full verified guide yet. The status and stay
             details below are illustrative and should be confirmed with an official source.
           </p>
@@ -173,7 +173,7 @@ export default function CountryDetailsPage() {
       <section className="mt-16">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h2 className="font-display text-2xl font-bold tracking-tight text-ink-900">
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-ink-900">
               Choose your travel purpose
             </h2>
             <p className="mt-1 text-sm text-ink-500">
@@ -192,7 +192,7 @@ export default function CountryDetailsPage() {
         </div>
       </section>
 
-      <div className="mt-14 flex items-start gap-2.5 rounded-none bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
+      <div className="mt-14 flex items-start gap-2.5 rounded-xl bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
         <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
         Visa rules change frequently — always confirm with the official embassy or government website of
         {' '}{country.name} before planning your trip.

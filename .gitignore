@@ -5,6 +5,7 @@ dist-ssr
 .vite
 .DS_Store
 *.log
+screenshots/
 .env
 .env.*
 !.env.example

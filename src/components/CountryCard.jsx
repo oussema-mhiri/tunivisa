@@ -18,10 +18,10 @@ export default function CountryCard({ country, layout = 'grid', index = 0 }) {
       aria-pressed={saved}
       aria-label={saved ? `Remove ${country.name} from saved` : `Save ${country.name}`}
       className={cn(
-        'inline-flex h-9 w-9 items-center justify-center border border-ink-900 transition-all duration-200',
+        'inline-flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-200',
         saved
-          ? 'bg-danger-50 text-danger-600'
-          : 'bg-ink-100/80 text-ink-500 hover:bg-ink-900 hover:text-paper',
+          ? 'border-danger-100 bg-danger-50 text-danger-600'
+          : 'border-ink-200 bg-white/90 text-ink-500 hover:border-brand-600 hover:bg-brand-600 hover:text-white',
       )}
     >
       <Heart className={cn('h-4.5 w-4.5', saved && 'fill-current')} aria-hidden="true" />
@@ -35,11 +35,11 @@ export default function CountryCard({ country, layout = 'grid', index = 0 }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.25, delay: Math.min(index * 0.04, 0.3) }}
-        className="card flex items-center gap-4 p-4 transition-shadow duration-200 hover:shadow-card-hover"
+        className="card flex items-center gap-4 p-4"
       >
         <Flag code={country.code} size="lg" />
         <div className="min-w-0 flex-1">
-          <Link to={`/countries/${country.code}`} className="font-display font-bold text-ink-900 hover:text-brand-700">
+          <Link to={`/countries/${country.code}`} className="font-display font-semibold text-ink-900 hover:text-brand-700">
             {country.name}
           </Link>
           <p className="mt-0.5 flex items-center gap-1 text-sm text-ink-500">
@@ -72,13 +72,13 @@ export default function CountryCard({ country, layout = 'grid', index = 0 }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.4) }}
-      className="group relative flex flex-col overflow-hidden border border-ink-900 bg-white shadow-[4px_4px_0_0_var(--color-ink-900)] transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[7px_7px_0_0_var(--color-celadon-500)]"
+      className="card group relative flex flex-col overflow-hidden"
     >
-      <div className="zc-flag-field relative flex h-28 items-center justify-center overflow-hidden border-b border-ink-900 bg-ink-100">
+      <div className="zc-flag-field relative flex h-28 items-center justify-center overflow-hidden border-b border-ink-100 bg-ink-50">
         <Flag
           code={country.code}
           size="xl"
-          className="rotate-[-2deg] drop-shadow-sm transition-transform duration-300 group-hover:rotate-0 group-hover:scale-125"
+          className="drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute top-3 right-3">{SaveButton}</div>
       </div>
@@ -105,7 +105,7 @@ export default function CountryCard({ country, layout = 'grid', index = 0 }) {
           </span>
           <Link
             to={`/countries/${country.code}`}
-            className="inline-flex items-center gap-1 text-xs font-bold tracking-[0.06em] text-ink-900 uppercase transition-colors hover:text-danger-600"
+            className="inline-flex items-center gap-1 text-xs font-bold tracking-[0.06em] text-ink-900 uppercase transition-colors hover:text-brand-600"
             aria-label={`View requirements for ${country.name}`}
           >
             View requirements

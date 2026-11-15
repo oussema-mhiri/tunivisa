@@ -92,7 +92,7 @@ export default function HomePage() {
               <Flag code="tn" size="sm" />
             </span>
 
-            <h1 className="zc-hero-title mt-6 font-display text-ink-900 text-balance">
+            <h1 className="zc-hero-title zc-hero-title--compact mt-6 font-display text-ink-900 text-balance">
               {t('home.heroTitle')}
             </h1>
             <p className="zc-hero-lede mt-7 text-base leading-relaxed text-ink-500 sm:text-lg">
@@ -138,10 +138,9 @@ export default function HomePage() {
       </section>
 
       {/* --------------------------- STATISTICS --------------------------- */}
-      <section className="relative z-10 -mt-8 border-y border-ink-900 bg-white sm:-mt-12">
-        <div className="container-page max-w-6xl py-10 sm:py-16">
+      <section className="relative z-10 border-y border-ink-100 bg-white">
+        <div className="container-page max-w-6xl py-14 sm:py-20">
           <SectionHeading
-            className="lg:ml-12"
             eyebrow="At a glance"
             title={t('home.statsTitle')}
             subtitle={t('home.statsSubtitle')}
@@ -179,7 +178,6 @@ export default function HomePage() {
       {/* ----------------------------- WORLD MAP -------------------------- */}
       <section id="world-map" className="container-page scroll-mt-20 py-16 sm:py-24 lg:max-w-[82rem]">
         <SectionHeading
-          className="lg:ml-16"
           eyebrow="Interactive map"
           title={t('home.mapTitle')}
           subtitle={t('home.mapSubtitle')}
@@ -187,9 +185,9 @@ export default function HomePage() {
         <div className="mt-10">
           <Suspense
             fallback={
-              <div className="flex h-[420px] items-center justify-center rounded-none border border-ink-200/80 bg-white shadow-card">
+              <div className="flex h-[420px] items-center justify-center rounded-2xl border border-ink-200 bg-white shadow-card">
                 <div className="flex flex-col items-center gap-3">
-                  <div className="h-8 w-8 animate-spin rounded-none border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
+                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
                   <p className="text-sm font-medium text-ink-500">Preparing the map…</p>
                 </div>
               </div>
@@ -201,8 +199,8 @@ export default function HomePage() {
       </section>
 
       {/* -------------------------- POPULAR DESTINATIONS ------------------- */}
-      <section className="border-y border-ink-900 bg-white">
-        <div className="container-page max-w-[88rem] py-20 sm:py-14">
+      <section className="border-y border-ink-100 bg-white">
+        <div className="container-page max-w-[88rem] py-16 sm:py-20">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <SectionHeading
               align="left"
@@ -233,7 +231,6 @@ export default function HomePage() {
       {/* ---------------------------- HOW IT WORKS ------------------------- */}
       <section className="container-page max-w-5xl py-10 sm:py-24">
         <SectionHeading
-          className="lg:pl-16"
           eyebrow="Simple by design"
           title={t('home.howTitle')}
           subtitle="Three steps between you and your next trip."
@@ -251,10 +248,10 @@ export default function HomePage() {
               <span className="absolute top-6 right-6 font-display text-4xl font-bold text-ink-100" aria-hidden="true">
                 0{i + 1}
               </span>
-              <span className="flex h-11 w-11 items-center justify-center border border-ink-900 bg-brand-200 text-ink-900">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
                 <step.icon className="h-5 w-5" aria-hidden="true" />
               </span>
-              <h3 className="mt-4 font-display text-lg font-bold text-ink-900">{step.title}</h3>
+              <h3 className="mt-4 font-display text-lg font-semibold text-ink-900">{step.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-ink-500">{step.text}</p>
             </motion.div>
           ))}
@@ -275,7 +272,7 @@ export default function HomePage() {
               <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
               Free · No sign-up required
             </span>
-            <h2 className="mt-5 max-w-2xl font-display text-3xl text-white text-balance sm:text-4xl">
+            <h2 className="mt-5 max-w-2xl font-display text-3xl font-semibold text-white text-balance sm:text-4xl">
               {t('home.assistantCtaTitle')}
             </h2>
             <p className="mt-3 max-w-xl text-base text-ink-300">{t('home.assistantCtaText')}</p>

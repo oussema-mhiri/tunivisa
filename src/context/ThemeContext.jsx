@@ -21,7 +21,7 @@ function applyTheme(theme) {
   root.classList.toggle('dark', theme === 'dark')
   root.style.colorScheme = theme
   const meta = document.querySelector('meta[name="theme-color"]')
-  if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b1120' : '#ffffff')
+  if (meta) meta.setAttribute('content', theme === 'dark' ? '#0B1420' : '#F4EFE4')
 }
 
 export function ThemeProvider({ children }) {

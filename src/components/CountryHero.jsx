@@ -16,7 +16,7 @@ export default function CountryHero({ country, demo = false }) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
-          className="flex h-20 w-20 shrink-0 items-center justify-center border border-ink-900 bg-brand-200 shadow-[3px_3px_0_0_var(--color-ink-900)]"
+          className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border border-ink-100 bg-brand-50"
         >
           <Flag code={country.code} size="lg" />
         </motion.div>
