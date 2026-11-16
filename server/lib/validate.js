@@ -1,0 +1,76 @@
+export const MAX_MESSAGE_LENGTH = 500
+export const MAX_HISTORY_MESSAGES = 6
+export const MAX_HISTORY_CONTENT = 1200
+export const MAX_BODY_LENGTH = 20000
+
+export class HttpError extends Error {
+  constructor(status, message, code = 'bad_request') {
+    super(message)
+    this.name = 'HttpError'
+    this.status = status
+    this.code = code
+  }
+}
+
+function parseBody(body) {
+  if (!body) throw new HttpError(400, 'Request body is required.', 'missing_body')
+  if (typeof body === 'string') {
+    if (body.length > MAX_BODY_LENGTH) throw new HttpError(413, 'Request body is too large.', 'body_too_large')
+    try {
+      return JSON.parse(body)
+    } catch {
+      throw new HttpError(400, 'Request body must be valid JSON.', 'invalid_json')
+    }
+  }
+  if (typeof body === 'object') return body
+  throw new HttpError(400, 'Request body must be a JSON object.', 'invalid_body')
+}
+
+function normalizeLanguage(value) {
+  const language = String(value || '').trim().toLowerCase()
+  return language === 'fr' ? 'fr' : 'en'
+}
+
+function normalizeHistory(history) {
+  if (!Array.isArray(history)) return []
+
+  return history
+    .filter((item) => item && (item.role === 'user' || item.role === 'assistant'))
+    .map((item) => ({
+      role: item.role,
+      content: String(item.content || '').replace(/\s+/g, ' ').trim().slice(0, MAX_HISTORY_CONTENT),
+    }))
+    .filter((item) => item.content.length > 0)
+    .slice(-MAX_HISTORY_MESSAGES)
+}
+
+function normalizeContext(context) {
+  if (!context || typeof context !== 'object') return {}
+
+  const countryCode = String(context.countryCode || '').trim().toLowerCase()
+  const visaType = String(context.visaType || '').trim().toLowerCase()
+
+  return {
+    countryCode: /^[a-z]{2}$/.test(countryCode) ? countryCode : undefined,
+    visaType: /^[a-z]{3,20}$/.test(visaType) ? visaType : undefined,
+  }
+}
+
+export function parseChatRequest(body) {
+  const payload = parseBody(body)
+  const message = String(payload.message || '').replace(/\s+/g, ' ').trim()
+
+  if (!message) {
+    throw new HttpError(400, 'Message is required.', 'missing_message')
+  }
+  if (message.length > MAX_MESSAGE_LENGTH) {
+    throw new HttpError(400, `Message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`, 'message_too_long')
+  }
+
+  return {
+    message,
+    language: normalizeLanguage(payload.language),
+    history: normalizeHistory(payload.history),
+    context: normalizeContext(payload.context),
+  }
+}

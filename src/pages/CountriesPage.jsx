@@ -34,7 +34,12 @@ export default function CountriesPage() {
 
   useEffect(() => {
     const q = searchParams.get('q')
+    const nextStatus = searchParams.get('status')
+    const nextRegion = searchParams.get('region')
+
     if (q) setQuery(q)
+    if (nextStatus && STATUS_ORDER.includes(nextStatus)) setStatus(nextStatus)
+    if (nextRegion && REGIONS.includes(nextRegion)) setRegion(nextRegion)
   }, [searchParams])
 
   useEffect(() => {

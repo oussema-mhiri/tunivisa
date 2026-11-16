@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "build:knowledge": "node scripts/build-chat-knowledge.mjs",
+    "preview": "vite preview",
+    "test": "npm run test:server",
+    "test:server": "node --test server/lib/retrieval.test.js server/lib/providers/shared.test.js"
   },
   "dependencies": {
     "framer-motion": "^13.1.0",

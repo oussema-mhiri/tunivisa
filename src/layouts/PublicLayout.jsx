@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import SearchPalette from '../components/SearchPalette'
+import ChatWidget from '../components/chat/ChatWidget'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -34,6 +35,7 @@ export default function PublicLayout() {
         <Outlet />
       </motion.main>
       <Footer />
+      <ChatWidget />
       <SearchPalette />
     </div>
   )

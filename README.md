@@ -12,6 +12,7 @@ TuniVisa helps Tunisian travellers understand where they can travel and what the
 - **20 full destination guides** with visa status, maximum stay, fees, processing time, application method, last verification date and official sources.
 - **8 travel purposes** (tourism, study, work, business, family visit, medical, and more) with dedicated requirements.
 - **Visa Assistant**: a short guided questionnaire that generates a personalised document checklist, application steps and readiness score.
+- **AI visa chatbot**: a floating EN/FR assistant that answers from the TuniVisa knowledge base, cites official sources and falls back between two free-tier LLM providers.
 - **Country explorer**: search, filter by visa status and region, sort alphabetically, switch between grid and list views, and load more results.
 - **Document checklists** with progress saved locally per country and visa type.
 - **Embassy and visa application centre** information for the 20 detailed destinations.
@@ -28,6 +29,9 @@ TuniVisa helps Tunisian travellers understand where they can travel and what the
 - Framer Motion
 - Lucide React
 - react-simple-maps with world-atlas
+- Vercel Functions for the chat API
+- Gemini 3.5 Flash-Lite with Groq GPT-OSS-120B fallback (RAG, no vector database)
+- Optional Upstash Redis for rate limiting and response caching
 - GitHub Actions and GitHub Pages
 
 ## Routes
@@ -56,6 +60,9 @@ VITE_API_URL=http://localhost:4000/api
 
 # Set to "false" to call the real REST API instead of bundled mock data
 VITE_USE_MOCK=true
+
+# Base URL of the deployed chat API (Vercel project, Root Directory = server)
+VITE_CHAT_API_URL=http://localhost:3000/api
 ```
 
 Expected endpoints:
@@ -71,9 +78,59 @@ GET /api/popular-countries
 GET /api/visa-statistics
 GET /api/map
 GET /api/visa-types
+POST /api/chat
+GET /api/health
 ```
 
 The mock adapter simulates network latency so loading, empty and error states behave like a real API. Visa data was last checked against official government and embassy sources on **2026-11-14**.
+
+## Chat API
+
+The chatbot backend lives in `server/` and is designed to be deployed as a separate Vercel project with **Root Directory = `server`**. It never exposes API keys to the browser.
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `GEMINI_API_KEY` | Yes | Primary provider. |
+| `GEMINI_MODEL` | No | Defaults to `gemini-3.5-flash-lite`. |
+| `GROQ_API_KEY` | Yes | Fallback provider. |
+| `GROQ_MODEL` | No | Defaults to `openai/gpt-oss-120b`. |
+| `ALLOWED_ORIGINS` | No | Defaults to `https://oussema-mhiri.github.io,http://localhost:5173`. |
+| `UPSTASH_REDIS_REST_URL` | No | Enables distributed rate limiting and caching. |
+| `UPSTASH_REDIS_REST_TOKEN` | No | Upstash REST token. |
+| `PROVIDER_TIMEOUT_MS` | No | Per-provider timeout, defaults to `11000`. |
+| `RATE_LIMIT_DISABLED` | No | Local testing only; never disable in production. |
+
+The API accepts:
+
+```json
+{
+  "message": "Do I need a visa for France?",
+  "language": "en",
+  "history": [{ "role": "user", "content": "..." }],
+  "context": { "countryCode": "fr", "visaType": "tourism" }
+}
+```
+
+It returns `answer`, `sources`, `suggestedFollowUps`, `relatedLinks`, `provider`, `cached` and `requestId`. Limits are 12 requests per minute and 80 per day per IP, plus a 1,000 requests/day global cap. First-turn responses are cached for 24 hours when Redis is configured.
+
+The knowledge base is generated from `src/data/`:
+
+```bash
+npm run build:knowledge
+```
+
+Run this after changing countries, visa rules, documents, embassies or map data, then commit `server/data/knowledge.js`.
+
+Local backend development:
+
+```bash
+cd server
+npm run dev
+```
+
+This starts a small Node server on `http://localhost:3000` for `/api/chat` and `/api/health`, using `server/.env`. In development, the frontend defaults to `http://localhost:3000/api`, so no root `.env` is needed. For a Vercel-compatible runtime, use `npx vercel dev` when the CLI works on your OS.
+
+For production builds, set `VITE_CHAT_API_URL` in the frontend environment. Without it, the widget is hidden.
 
 ## Local storage
 
@@ -99,8 +156,10 @@ npm run dev
 The dev server runs at `http://localhost:5173/`.
 
 ```bash
-npm run build    # production build in dist/
-npm run preview  # preview the production build
+npm run build          # production build in dist/
+npm run preview        # preview the production build
+npm run build:knowledge
+npm run test           # server tests (Node built-in test runner)
 ```
 
 ## Deployment
@@ -111,20 +170,29 @@ The site is deployed to GitHub Pages at https://oussema-mhiri.github.io/tunivisa
 - The router uses `import.meta.env.BASE_URL` as its basename.
 - `public/404.html` provides the SPA fallback for deep links on GitHub Pages.
 - The GitHub Actions workflow builds the app and deploys the `dist/` folder.
+- Set the repository variable `VITE_CHAT_API_URL` to the deployed Vercel API base (for example `https://tunivisa-chat.vercel.app/api`) so the widget appears on the live site.
+- Deploy `server/` separately on Vercel: import the repository, set **Root Directory** to `server`, add the variables from `server/.env.example`, and deploy. GitHub Pages cannot host serverless functions or keep provider keys secret.
 
 ## Project structure
 
 ```text
 src/
   components/   Reusable UI components
+  components/chat/  Floating chatbot widget and message UI
   context/      App, theme and toast providers
   data/         Mock countries, visa rules, documents, embassies and map data
-  hooks/        Local storage, debounce and SEO hooks
+  hooks/        Local storage, debounce, SEO and chat hooks
   i18n/         Language context and translations
   layouts/      Public and admin layouts
   pages/        Public and admin route pages
-  services/     API service layer
+  services/     API and chat service layer
   utils/        Formatting and country metadata helpers
+server/
+  api/          Vercel Functions: chat and health
+  data/         Generated chat knowledge base
+  lib/          Retrieval, validation, rate limiting, cache and providers
+scripts/
+  build-chat-knowledge.mjs  Generates server/data/knowledge.js from src/data
 public/
   404.html      GitHub Pages SPA fallback
 .github/
@@ -134,5 +202,6 @@ public/
 ## Notes
 
 - Visa rules change frequently. TuniVisa is guidance, not legal advice; always confirm requirements with the destination's official embassy or government website.
-- The `/admin` area is a frontend-only preview. It has no authentication and no persistence.
-- English is fully translated; French is partially translated and Arabic is scaffolded, with missing keys falling back to English.
+- The `/admin` area is a frontend-only preview. It has no authentication and no persistence. The chat widget is hidden there.
+- English is fully translated; French is partially translated and Arabic is scaffolded, with missing keys falling back to English. The chatbot answers in English or French.
+- The chatbot is informational only. It cannot predict approval. Questions and recent chat history are sent to the configured AI providers, so never include passport numbers, bank details or other sensitive personal data.
