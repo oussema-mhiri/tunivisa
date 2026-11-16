@@ -15,6 +15,7 @@ export default function NotFoundPage({
   text = "The page you're looking for doesn't exist or may have been moved.",
 }) {
   useSeo({
+    noindex: true,
     title: '404 — Page not found',
     description: 'The TuniVisa page you are looking for could not be found. Head back to explore visa guides.',
   })

@@ -18,6 +18,7 @@ const PAGE_SIZE = 12
 export default function CountriesPage() {
   const { t } = useI18n()
   useSeo({
+    path: '/countries',
     title: 'Explore countries',
     description: 'Search and filter every destination with visa information for Tunisian passport holders.',
   })

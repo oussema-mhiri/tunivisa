@@ -70,6 +70,7 @@ const STATUS_ROWS = [
 
 export default function AboutPage() {
   useSeo({
+    path: '/about',
     title: 'About TuniVisa',
     description:
       'TuniVisa is a visa and travel assistant for Tunisian passport holders: discover where you can travel, check requirements and learn how to apply.',

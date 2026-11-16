@@ -9,6 +9,7 @@ export default function AssistantPage() {
   const [initialCountry, setInitialCountry] = useState(null)
 
   useSeo({
+    path: '/assistant',
     title: 'Visa Assistant',
     description:
       'Answer a few questions and get a personalised visa guide for your Tunisian passport: status, documents and application steps.',

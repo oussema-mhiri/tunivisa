@@ -1673,3 +1673,17 @@ body::after {
   opacity: 0.03;
 }
 
+
+/* Print styles: focus on checklist/exportable content */
+@media print {
+  body { background: #fff !important; background-image: none !important; }
+  header, footer, nav, .chat-widget, button[aria-label*="assistant"], [role="dialog"],
+  .print\\:hidden { display: none !important; }
+  .card { box-shadow: none !important; }
+  a[href]::after { content: ""; }
+}
+
+/* Basic RTL helpers */
+[dir="rtl"] .text-left { text-align: right; }
+[dir="rtl"] .text-right { text-align: left; }
+[dir="rtl"] input, [dir="rtl"] textarea, [dir="rtl"] select { text-align: inherit; }

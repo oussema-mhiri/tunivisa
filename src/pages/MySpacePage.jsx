@@ -10,6 +10,7 @@ import { useSeo } from '../hooks/useSeo'
 export default function MySpacePage() {
   useSeo({
     title: 'My space',
+    path: '/my-space',
     description: 'Your local TuniVisa space: saved destinations, visa checklists and recent searches.',
   })
   const { saved, recentSearches, clearRecentSearches, checklists } = useApp()

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { AlertCircle, Scale } from 'lucide-react'
+import { useLocation, useSearchParams } from 'react-router-dom'
+import { AlertCircle, Link2, Scale, Share2 } from 'lucide-react'
 import CompareSelector from '../components/compare/CompareSelector'
 import CompareTable from '../components/compare/CompareTable'
 import CompareCard from '../components/compare/CompareCard'
@@ -10,6 +10,7 @@ import { buildComparison } from '../utils/compare'
 import { VISA_TYPE_IDS } from '../data/visaTypes'
 import { useI18n } from '../i18n/LanguageContext'
 import { useSeo } from '../hooks/useSeo'
+import { useToast } from '../context/ToastContext'
 
 const DEFAULT_CODES = ['fr', 'it', 'es']
 const DEFAULT_PURPOSE = 'tourism'
@@ -20,6 +21,8 @@ function parseCodes(param) {
 
 export default function ComparePage() {
   const { t } = useI18n()
+  const toast = useToast()
+  const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const [countries, setCountries] = useState([])
   const [items, setItems] = useState([])
@@ -34,6 +37,7 @@ export default function ComparePage() {
   useSeo({
     title: t('compare.seoTitle'),
     description: t('compare.seoDescription'),
+    path: `${location.pathname}${location.search || ''}`,
   })
 
   useEffect(() => {
@@ -80,6 +84,38 @@ export default function ComparePage() {
     return buildComparison({ items, visaType })
   }, [items, visaType])
 
+  async function copyShareLink() {
+    const url = `${window.location.origin}${import.meta.env.BASE_URL || '/'}${location.pathname.slice(1)}${location.search || ''}`
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url)
+      } else {
+        const ta = document.createElement('textarea')
+        ta.value = url
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand('copy')
+        document.body.removeChild(ta)
+      }
+      toast.success(t('compare.linkCopied'))
+    } catch {
+      toast.error(t('compare.copyFailed'))
+    }
+  }
+
+  async function shareLink() {
+    const url = `${window.location.origin}${import.meta.env.BASE_URL || '/'}${location.pathname.slice(1)}${location.search || ''}`
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: t('compare.title'), url })
+        return
+      } catch {
+        /* user cancelled or share failed */
+      }
+    }
+    await copyShareLink()
+  }
+
   function handleChange({ codes: nextCodes, visaType: nextPurpose }) {
     const cleaned = [...new Set((nextCodes || []).map((c) => String(c).toLowerCase()))].slice(0, 4)
     const params = new URLSearchParams(searchParams)
@@ -90,10 +126,22 @@ export default function ComparePage() {
 
   return (
     <div className="container-page max-w-7xl py-10 sm:py-14">
-      <div className="mb-8">
-        <span className="zc-tag mb-4 inline-flex items-center gap-2"><Scale className="h-3.5 w-3.5" aria-hidden="true" />{t('nav.compare')}</span>
-        <h1 className="font-display text-3xl text-ink-900 sm:text-4xl">{t('compare.title')}</h1>
-        <p className="mt-3 max-w-3xl text-base leading-relaxed text-ink-500">{t('compare.subtitle')}</p>
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <span className="zc-tag mb-4 inline-flex items-center gap-2"><Scale className="h-3.5 w-3.5" aria-hidden="true" />{t('nav.compare')}</span>
+          <h1 className="font-display text-3xl text-ink-900 sm:text-4xl">{t('compare.title')}</h1>
+          <p className="mt-3 max-w-3xl text-base leading-relaxed text-ink-500">{t('compare.subtitle')}</p>
+        </div>
+        <div className="flex shrink-0 flex-wrap gap-2 print:hidden">
+          <button type="button" onClick={copyShareLink} className="btn-secondary text-sm">
+            <Link2 className="h-4 w-4" aria-hidden="true" />
+            {t('compare.copyLink')}
+          </button>
+          <button type="button" onClick={shareLink} className="btn-secondary text-sm">
+            <Share2 className="h-4 w-4" aria-hidden="true" />
+            {t('compare.shareLink')}
+          </button>
+        </div>
       </div>
 
       <CompareSelector countries={countries} selectedCodes={selectedCodes} visaType={visaType} onChange={handleChange} />

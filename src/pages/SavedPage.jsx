@@ -9,7 +9,8 @@ import { getCountries } from '../services/api'
 import { useSeo } from '../hooks/useSeo'
 
 export default function SavedPage() {
-  useSeo({ title: 'Saved destinations', description: 'Your saved visa guides and destinations on TuniVisa.' })
+  useSeo({
+    path: '/saved', title: 'Saved destinations', description: 'Your saved visa guides and destinations on TuniVisa.' })
   const { saved } = useApp()
   const [countries, setCountries] = useState(null)
 

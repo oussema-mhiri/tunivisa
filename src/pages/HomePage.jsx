@@ -49,6 +49,7 @@ function SearchIcon(props) {
 export default function HomePage() {
   const { t } = useI18n()
   useSeo({
+    path: '/',
     title: 'Where can you travel with your Tunisian passport?',
     description:
       'Discover visa-free destinations, visa on arrival countries, eVisa options and visa requirements for Tunisian passport holders around the world.',

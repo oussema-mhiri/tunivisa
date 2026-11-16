@@ -22,6 +22,7 @@ export default function CountryDetailsPage() {
   const [notFound, setNotFound] = useState(false)
 
   useSeo({
+    path: country ? `/countries/${country.code}` : '/countries',
     title: country ? `Visas for ${country.name}` : undefined,
     description: country
       ? `Visa requirements for Tunisian passport holders travelling to ${country.name}: status, maximum stay, fees and how to apply.`

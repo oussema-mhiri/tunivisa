@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react'
+﻿import { ExternalLink } from 'lucide-react'
 import { useI18n } from '../../i18n/LanguageContext'
 
 export default function ChatSources({ sources }) {
@@ -10,21 +10,21 @@ export default function ChatSources({ sources }) {
       <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-ink-500">
         {t('chat.sources')}
       </p>
-      <ul className="space-y-1">
+      <ul className="space-y-1.5">
         {sources.map((source) => (
-          <li key={source.url}>
+          <li key={source.url || source.title}>
             <a
               href={source.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start gap-1.5 text-[11px] leading-snug text-brand-700 hover:underline"
+              className="group flex items-start gap-1.5 rounded-md p-1 text-[11px] leading-snug text-brand-700 hover:bg-brand-50 hover:underline"
             >
               <ExternalLink className="mt-0.5 h-3 w-3 shrink-0" aria-hidden="true" />
-              <span>
-                {source.title}
+              <span className="min-w-0">
+                <span className="font-medium">{source.title}</span>
                 {source.lastVerified ? (
-                  <span className="ml-1 whitespace-nowrap text-ink-400">
-                    Â· {t('chat.verifiedOn', { date: source.lastVerified })}
+                  <span className="ml-1 block text-ink-400 sm:inline sm:whitespace-nowrap">
+                    · {t('chat.verifiedOn', { date: source.lastVerified })}
                   </span>
                 ) : null}
               </span>

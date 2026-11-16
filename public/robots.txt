@@ -1,0 +1,5 @@
+﻿User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://oussema-mhiri.github.io/tunivisa/sitemap.xml

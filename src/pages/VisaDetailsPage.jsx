@@ -23,6 +23,7 @@ export default function VisaDetailsPage() {
 
   useSeo({
     title: data ? `${data.country.name} — ${data.rule.visaTypeLabel} Visa` : undefined,
+    path: data ? `/countries/${data.country.code}/visa/${data.rule.visaType}` : undefined,
     description: data
       ? `Everything about the ${data.rule.visaTypeLabel.toLowerCase()} visa for ${data.country.name}: overview, documents, application steps and official sources.`
       : undefined,
