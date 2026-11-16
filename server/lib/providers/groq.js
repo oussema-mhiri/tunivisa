@@ -1,5 +1,6 @@
 import { GROQ_RESPONSE_SCHEMA } from '../prompt.js'
 import { fetchWithTimeout, normalizeModelResult, parseModelJson, ProviderError } from './shared.js'
+import { createSseParser } from '../stream.js'
 
 export async function generateWithGroq({ messages }) {
   const apiKey = process.env.GROQ_API_KEY
@@ -60,4 +61,78 @@ export async function generateWithGroq({ messages }) {
   } catch (error) {
     throw new ProviderError('groq', `Groq returned an invalid answer: ${error.message}`)
   }
+}
+
+export async function streamGroq({ messages, signal, onDelta, onFirstToken }) {
+  const apiKey = process.env.GROQ_API_KEY
+  if (!apiKey) {
+    throw new ProviderError('groq', 'GROQ_API_KEY is not configured.', { retryable: false })
+  }
+
+  const model = process.env.GROQ_MODEL || 'openai/gpt-oss-120b'
+
+  let response
+  try {
+    response = await fetchWithTimeout('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        temperature: 0.2,
+        max_tokens: 700,
+        stream: true,
+      }),
+      signal,
+    })
+  } catch (error) {
+    if (error.name === 'AbortError') throw error
+    throw new ProviderError('groq', `Groq stream failed: ${error.name || 'network error'}`)
+  }
+
+  if (!response.ok) {
+    throw new ProviderError('groq', `Groq stream failed with status ${response.status}.`, {
+      status: response.status,
+      retryable: response.status === 429 || response.status >= 500,
+    })
+  }
+
+  const reader = response.body?.getReader()
+  if (!reader) throw new ProviderError('groq', 'Groq stream body unavailable.')
+
+  let text = ''
+  let first = false
+  const parser = createSseParser(({ data }) => {
+    if (!data || data === '[DONE]') return
+    let payload
+    try {
+      payload = JSON.parse(data)
+    } catch {
+      return
+    }
+    const delta = payload?.choices?.[0]?.delta?.content
+    if (!delta) return
+    if (!first) {
+      first = true
+      onFirstToken?.()
+    }
+    text += delta
+    onDelta?.(delta)
+  })
+
+  try {
+    while (true) {
+      const { value, done } = await reader.read()
+      if (done) break
+      if (value) parser.push(value)
+    }
+    parser.flush()
+  } finally {
+    reader.releaseLock?.()
+  }
+
+  return { text }
 }

@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { AlertCircle, Loader2, MessageCircle, Send, ShieldCheck, Trash2, X } from 'lucide-react'
+import { AlertCircle, History, Loader2, MessageCircle, Plus, Send, ShieldCheck, Trash2, X } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 import { useChat } from '../../hooks/useChat'
+import { useChatHistory } from '../../hooks/useChatHistory'
 import { useI18n } from '../../i18n/LanguageContext'
-import { CHAT_ENABLED } from '../../services/chat'
+import { CHAT_ENABLED, sendFeedback } from '../../services/chat'
 import ChatMessage from './ChatMessage'
 import ChatSuggestions from './ChatSuggestions'
+import { cn } from '../../utils/formatters'
 
 function useChatContext() {
   const { pathname, search } = useLocation()
@@ -14,7 +16,7 @@ function useChatContext() {
   return useMemo(() => {
     const match = pathname.match(/\/countries\/([a-z]{2})(?:\/visa\/([a-z]+))?\/?$/i)
     const params = new URLSearchParams(search)
-    const countryCode = (match?.[1] || params.get('country') || '').toLowerCase()
+    const countryCode = (match?.[1] || params.get('country') || params.get('countries')?.split(',')[0] || '').toLowerCase()
     const visaType = (match?.[2] || params.get('purpose') || '').toLowerCase()
 
     return {
@@ -36,8 +38,20 @@ export default function ChatWidget() {
   const { pathname } = useLocation()
   const { lang, t } = useI18n()
   const context = useChatContext()
-  const { messages, loading, error, send, clear } = useChat({ language: lang, context })
+  const {
+    conversations,
+    activeId,
+    messages,
+    setMessages,
+    updateMessage,
+    createNew,
+    selectConversation,
+    deleteConversation,
+    clearAll,
+  } = useChatHistory({ language: lang, context })
+  const { loading, streaming, error, send, stop, clear } = useChat({ language: lang, context, messages, setMessages })
   const [open, setOpen] = useState(false)
+  const [historyOpen, setHistoryOpen] = useState(false)
   const [input, setInput] = useState('')
   const inputRef = useRef(null)
   const endRef = useRef(null)
@@ -66,16 +80,19 @@ export default function ChatWidget() {
   useEffect(() => {
     if (!open) return
     endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
-  }, [messages, loading, error, open])
+  }, [messages, loading, error, open, historyOpen])
 
   useEffect(() => {
     if (!open) return
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') setOpen(false)
+      if (event.key === 'Escape') {
+        if (historyOpen) setHistoryOpen(false)
+        else setOpen(false)
+      }
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [open])
+  }, [open, historyOpen])
 
   if (!CHAT_ENABLED || hidden) return null
 
@@ -92,10 +109,27 @@ export default function ChatWidget() {
     send(value)
   }
 
-  const handleClear = () => {
+  const handleNew = () => {
     clear()
+    createNew()
     setInput('')
+    setHistoryOpen(false)
     inputRef.current?.focus()
+  }
+
+  const handleClearAll = () => {
+    clear()
+    clearAll()
+    setInput('')
+    setHistoryOpen(false)
+  }
+
+  const handleFeedback = async (message, vote) => {
+    const next = message.feedback === vote ? null : vote
+    updateMessage(message.id, { feedback: next })
+    if (next) {
+      sendFeedback({ requestId: message.requestId, vote: next, messageId: message.id, context })
+    }
   }
 
   return (
@@ -123,16 +157,23 @@ export default function ChatWidget() {
                 </div>
               </div>
               <div className="flex shrink-0 items-center gap-1">
-                {messages.length > 0 ? (
-                  <button
-                    type="button"
-                    onClick={handleClear}
-                    aria-label={t('chat.clear')}
-                    className="rounded-full p-1.5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-                  >
-                    <Trash2 className="h-4 w-4" aria-hidden="true" />
-                  </button>
-                ) : null}
+                <button
+                  type="button"
+                  onClick={handleNew}
+                  aria-label={t('chat.newConversation')}
+                  className="rounded-full p-1.5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  <Plus className="h-4 w-4" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setHistoryOpen((v) => !v)}
+                  aria-label={t('chat.history')}
+                  aria-expanded={historyOpen}
+                  className={cn('rounded-full p-1.5 transition-colors hover:bg-white/10 hover:text-white', historyOpen ? 'bg-white/10 text-white' : 'text-white/70')}
+                >
+                  <History className="h-4 w-4" aria-hidden="true" />
+                </button>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
@@ -143,6 +184,33 @@ export default function ChatWidget() {
                 </button>
               </div>
             </header>
+
+            {historyOpen ? (
+              <div className="border-b border-ink-200 bg-white p-3">
+                <div className="mb-2 flex items-center justify-between">
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink-500">{t('chat.history')}</p>
+                  <button type="button" onClick={handleClearAll} className="inline-flex items-center gap-1 text-xs font-medium text-danger-600 hover:text-danger-700">
+                    <Trash2 className="h-3.5 w-3.5" /> {t('chat.clearAll')}
+                  </button>
+                </div>
+                <ul className="max-h-40 space-y-1 overflow-auto">
+                  {conversations.map((c) => (
+                    <li key={c.id} className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => { selectConversation(c.id); setHistoryOpen(false) }}
+                        className={cn('min-w-0 flex-1 rounded-lg px-2 py-1.5 text-left text-sm transition-colors', c.id === activeId ? 'bg-brand-50 text-brand-800' : 'text-ink-700 hover:bg-ink-50')}
+                      >
+                        <span className="block truncate font-medium">{c.title || t('chat.newConversation')}</span>
+                      </button>
+                      <button type="button" onClick={() => deleteConversation(c.id)} aria-label={t('chat.deleteConversation')} className="rounded p-1 text-ink-400 hover:bg-ink-100 hover:text-danger-600">
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
 
             <div
               className="flex-1 space-y-3 overflow-y-auto bg-ink-50 px-3.5 py-4"
@@ -167,6 +235,7 @@ export default function ChatWidget() {
                     message={message}
                     showSuggestions={message.id === lastAssistantId && !loading}
                     onSuggestion={handleSuggestion}
+                    onFeedback={handleFeedback}
                   />
                 ))
               )}
@@ -207,18 +276,25 @@ export default function ChatWidget() {
                   autoComplete="off"
                   className="min-w-0 flex-1 rounded-xl border border-ink-200 bg-ink-50 px-3 py-2.5 text-sm text-ink-800 placeholder:text-ink-400 focus:border-brand-400 focus:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
                 />
-                <button
-                  type="submit"
-                  disabled={!input.trim() || loading}
-                  aria-label={t('chat.send')}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-600 text-white transition-colors hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-brand-800 dark:hover:bg-brand-900"
-                >
-                  {loading ? (
-                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                  ) : (
+                {loading || streaming ? (
+                  <button
+                    type="button"
+                    onClick={stop}
+                    aria-label={t('chat.stop')}
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ink-700 text-white transition-colors hover:bg-ink-800"
+                  >
+                    <X className="h-4 w-4" aria-hidden="true" />
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={!input.trim()}
+                    aria-label={t('chat.send')}
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-600 text-white transition-colors hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-brand-800 dark:hover:bg-brand-900"
+                  >
                     <Send className="h-4 w-4" aria-hidden="true" />
-                  )}
-                </button>
+                  </button>
+                )}
               </div>
               <div className="mt-1.5 flex items-start justify-between gap-2 text-[10px] leading-snug text-ink-400">
                 <span>{t('chat.disclaimer')}</span>
@@ -250,4 +326,3 @@ export default function ChatWidget() {
     </>
   )
 }
-

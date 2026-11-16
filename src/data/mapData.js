@@ -1,25 +1,48 @@
 // World map dataset.
 // -----------------------------------------------------------------------------
 // Maps ISO numeric country codes (as used by the bundled world-atlas TopoJSON)
-// to a visa status for Tunisian passport holders.
+// to visa metadata for Tunisian passport holders.
 //
-// Statuses were checked on 2026-11-14 against the Timatic-based visa requirements
-// table on Wikipedia, with official-source confirmation for the 20 detailed
-// destinations and the most consequential changes. Borders still decide admission:
-// this is travel guidance, not legal advice. Re-verify before booking.
-//
-// In production this data is served by the API (see src/services/api.js):
-//   GET /api/map  →  { [isoNumeric]: { code, name, region, status, maxStayDays } }
+// Statuses are synced from the passport-index dataset (MIT) into
+// src/data/visaMatrix.generated.js via `npm run sync:visa`. Curated metadata
+// (names, regions, iso numeric codes) stays here; the 20 detailed destinations
+// keep their curated status/max stay in countries.js/visaRules.js.
 // -----------------------------------------------------------------------------
 
-import { COUNTRIES } from './countries'
+import { COUNTRIES } from './countries.js'
+import { VISA_MATRIX_ENTRIES, VISA_MATRIX_META } from './visaMatrix.generated.js'
+
+const CURATED_CODES = new Set(COUNTRIES.map((c) => String(c.code).toLowerCase()))
+
+export { VISA_MATRIX_META }
+
+function mergeVisaData(base) {
+  if (!base || base.home) return base
+  const code = String(base.code || '').toLowerCase()
+  const synced = VISA_MATRIX_ENTRIES[code]
+  if (!synced || CURATED_CODES.has(code)) return base
+
+  const datasetHasDays = synced.maxStayDays !== null && synced.maxStayDays !== undefined
+  const maxStayDays = datasetHasDays
+    ? synced.maxStayDays
+    : base.maxStayDays != null
+      ? base.maxStayDays
+      : null
+
+  return {
+    ...base,
+    status: synced.status,
+    maxStayDays,
+    rawStatus: synced.rawStatus || null,
+    synced: true,
+  }
+}
 
 /**
- * { isoNumeric: { code, name, region, status, maxStayDays, home } }
- * Status values: visa_free | visa_on_arrival | evisa_eta | visa_required
- * Countries not listed here render as "Unknown" (gray) on the map.
+ * Base metadata: { isoNumeric: { code, name, region, status, maxStayDays, home } }
+ * Status values: visa_free | visa_on_arrival | evisa_eta | visa_required | no_admission
  */
-const MAP_COUNTRIES = {
+const MAP_COUNTRIES_BASE = {
   // ---------- Home ----------
   '788': { code: 'tn', name: 'Tunisia', region: 'Africa', status: 'visa_free', maxStayDays: null, home: true },
 
@@ -236,6 +259,10 @@ const MAP_COUNTRIES = {
 }
 
 const DETAILED_CODES = new Set(COUNTRIES.map((c) => c.code))
+
+const MAP_COUNTRIES = Object.fromEntries(
+  Object.entries(MAP_COUNTRIES_BASE).map(([isoNumeric, entry]) => [isoNumeric, mergeVisaData(entry)]),
+)
 
 export const WORLD_MAP_DATA = Object.fromEntries(
   Object.entries(MAP_COUNTRIES).map(([isoNumeric, entry]) => [

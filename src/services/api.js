@@ -167,6 +167,24 @@ export async function getVisaDetails(countryCode, visaType) {
   return mockResponse({ country, rule, documents, embassy, links, isMock: true })
 }
 
+export async function getCountryComparison({ codes = [], visaType = 'tourism' } = {}) {
+  const normalized = [...new Set((codes || []).map((c) => String(c || '').toLowerCase()).filter(Boolean))].slice(0, 4)
+  if (!USE_MOCK) {
+    return apiRequest(`/compare?countries=${normalized.join(',')}&purpose=${encodeURIComponent(visaType)}`)
+  }
+  const details = await Promise.all(
+    normalized.map(async (code) => {
+      const country = findCountry(code)
+      if (!country) return null
+      const rule = buildVisaRule(countryToRuleSource(country), visaType)
+      const documents = getDocuments(rule.documents)
+      const embassy = country.detailed ? await getEmbassy(country.code) : null
+      return { country, rule, documents, embassy }
+    }),
+  )
+  return mockResponse(details.filter(Boolean), { min: 180, max: 360 })
+}
+
 export async function getEmbassy(countryCode) {
   if (!USE_MOCK) return apiRequest(`/countries/${countryCode}/embassy`)
   return mockResponse(getEmbassyData(countryCode))
@@ -194,6 +212,7 @@ export async function getVisaStatistics() {
     visa_on_arrival: 0,
     evisa_eta: 0,
     visa_required: 0,
+    no_admission: 0,
     unknown: 0,
   }
 

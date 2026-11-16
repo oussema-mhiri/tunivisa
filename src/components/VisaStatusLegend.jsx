@@ -1,8 +1,8 @@
-import { visaStatusMeta } from '../utils/countryMeta'
+import { STATUS_ORDER, visaStatusMeta } from '../utils/countryMeta'
 import { cn } from '../utils/formatters'
 
 export default function VisaStatusLegend({ compact = false, className }) {
-  const items = ['visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required', 'unknown']
+  const items = STATUS_ORDER
   return (
     <ul className={cn(compact ? 'flex flex-wrap items-center gap-x-4 gap-y-2' : 'space-y-2', className)}>
       {items.map((key) => {

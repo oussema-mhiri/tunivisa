@@ -50,10 +50,10 @@ function normalizeContext(context) {
   const countryCode = String(context.countryCode || '').trim().toLowerCase()
   const visaType = String(context.visaType || '').trim().toLowerCase()
 
-  return {
-    countryCode: /^[a-z]{2}$/.test(countryCode) ? countryCode : undefined,
-    visaType: /^[a-z]{3,20}$/.test(visaType) ? visaType : undefined,
-  }
+  const out = {}
+  if (/^[a-z]{2}$/.test(countryCode)) out.countryCode = countryCode
+  if (/^[a-z]{3,20}$/.test(visaType)) out.visaType = visaType
+  return out
 }
 
 export function parseChatRequest(body) {
@@ -71,6 +71,31 @@ export function parseChatRequest(body) {
     message,
     language: normalizeLanguage(payload.language),
     history: normalizeHistory(payload.history),
+    context: normalizeContext(payload.context),
+    stream: Boolean(payload.stream),
+  }
+}
+
+export function parseFeedbackRequest(body) {
+  const payload = parseBody(body)
+  const requestId = String(payload.requestId || '').trim()
+  const vote = String(payload.vote || '').trim().toLowerCase()
+  const messageId = payload.messageId == null ? '' : String(payload.messageId).trim()
+
+  if (!requestId || requestId.length > 120) {
+    throw new HttpError(400, 'A valid requestId is required.', 'invalid_request_id')
+  }
+  if (vote !== 'up' && vote !== 'down') {
+    throw new HttpError(400, 'A valid vote is required.', 'invalid_vote')
+  }
+  if (messageId && messageId.length > 120) {
+    throw new HttpError(400, 'Invalid messageId.', 'invalid_message_id')
+  }
+
+  return {
+    requestId,
+    vote,
+    ...(messageId ? { messageId } : {}),
     context: normalizeContext(payload.context),
   }
 }

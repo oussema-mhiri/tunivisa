@@ -89,6 +89,33 @@ ${message}
 Return a JSON object with the answer, 2-3 suggested follow-up questions, and up to 3 related TuniVisa links from the context. Use an empty array when there are no valid links.`
 }
 
+export function buildStreamingSystemPrompt(language) {
+  const languageName = LANGUAGE_NAME[language] || LANGUAGE_NAME.en
+
+  return `You are TuniVisa Assistant, a careful visa-information assistant for Tunisian passport holders.
+
+Follow these rules:
+1. Answer in ${languageName}.
+2. Use ONLY the CONTEXT provided in the user message. Do not use outside knowledge, assumptions or memory.
+3. If the context does not contain the answer, say that TuniVisa does not have that detail and point the user to the official source or a TuniVisa page from the context.
+4. Never predict, estimate or guarantee visa approval, entry or processing outcomes. Never present TuniVisa's readiness checklist as an approval probability.
+5. Never ask for or repeat passport numbers, bank details, home addresses or other sensitive personal data.
+6. Be concise: 2 to 5 short paragraphs or a short bullet list. Prefer exact fees, durations, documents and steps only when they appear in the context.
+7. Do not invent fees, deadlines, phone numbers or URLs. Only cite official links from the context.
+8. The UI displays official sources and related TuniVisa links separately, so do not dump a long reference list in the answer.
+9. Reply with plain text only (no JSON, no markdown fences).
+
+Data context: TuniVisa's 20 detailed destination guides were last checked on ${KNOWLEDGE_META.dataLastVerified}. The current date is ${new Date().toISOString().slice(0, 10)}.`
+}
+
+export function buildStreamingUserPrompt({ message, context }) {
+  return `CONTEXT:
+${context || 'No matching TuniVisa knowledge was found.'}
+
+USER QUESTION:
+${message}`
+}
+
 export function buildGroqMessages({ system, history, prompt }) {
   return [
     { role: 'system', content: system },

@@ -11,6 +11,7 @@ const STATUS_LABELS = {
   visa_on_arrival: 'Visa on arrival for Tunisian passport holders',
   evisa_eta: 'eVisa or eTA available for Tunisian passport holders',
   visa_required: 'Visa required before travel for Tunisian passport holders',
+  no_admission: 'No admission for Tunisian passport holders',
   unknown: 'Visa status not confirmed',
 }
 
@@ -19,6 +20,7 @@ const STATUS_SHORT = {
   visa_on_arrival: 'visa on arrival',
   evisa_eta: 'eVisa or eTA',
   visa_required: 'visa required before travel',
+  no_admission: 'no admission',
   unknown: 'unconfirmed status',
 }
 
@@ -228,8 +230,10 @@ function makeStatusDoc(status, entries) {
       status === 'visa_on_arrival' ? 'visa a l arrivee' : '',
       status === 'evisa_eta' ? 'evisa eta electronic visa' : '',
       status === 'evisa_eta' ? 'e visa' : '',
-      status === 'visa_required' ? 'visa required' : '',
-      status === 'visa_required' ? 'visa requis' : '',
+      status === 'visa_required' ? 'visa required' :
+      status === 'no_admission' ? 'no admission' : '',
+      status === 'visa_required' ? 'visa requis' :
+      status === 'no_admission' ? 'admission refusee' : '',
       'countries',
       'destinations',
       'list',
@@ -308,7 +312,7 @@ async function main() {
     }
 
     for (const entry of mapOnly) docs.push(makeMapDoc(entry))
-    for (const status of ['visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required']) {
+    for (const status of ['visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required', 'no_admission']) {
       const entries = mapData.ALL_MAP_COUNTRIES.filter((entry) => !entry.home && entry.status === status)
       docs.push(makeStatusDoc(status, entries))
     }

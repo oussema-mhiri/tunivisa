@@ -41,6 +41,16 @@ export const VISA_STATUSES = {
     dot: 'bg-danger-600',
     bar: 'bg-danger-600',
   },
+  no_admission: {
+    key: 'no_admission',
+    label: 'No Admission',
+    shortLabel: 'No Admission',
+    description: 'Entry is not permitted for holders of this passport under current rules.',
+    color: '#6b7280',
+    chip: 'bg-ink-900 text-paper ring-ink-900/30',
+    dot: 'bg-ink-900',
+    bar: 'bg-ink-900',
+  },
   unknown: {
     key: 'unknown',
     label: 'Unknown',
@@ -53,7 +63,7 @@ export const VISA_STATUSES = {
   },
 }
 
-export const STATUS_ORDER = ['visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required', 'unknown']
+export const STATUS_ORDER = ['visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required', 'no_admission', 'unknown']
 
 export function visaStatusMeta(key) {
   return VISA_STATUSES[key] || VISA_STATUSES.unknown

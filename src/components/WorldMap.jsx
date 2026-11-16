@@ -12,7 +12,7 @@ import { visaStatusMeta, REGIONS } from '../utils/countryMeta'
 import { useTheme } from '../context/ThemeContext'
 import { cn } from '../utils/formatters'
 
-const STATUS_FILTERS = ['all', 'visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required']
+const STATUS_FILTERS = ['all', 'visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required', 'no_admission']
 const HOME_COLOR = 'var(--color-warning-400)'
 
 function MapTooltip({ tooltip }) {

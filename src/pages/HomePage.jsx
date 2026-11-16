@@ -21,6 +21,7 @@ const STAT_ICONS = {
   visa_on_arrival: Globe2,
   evisa_eta: FileText,
   visa_required: Map,
+  no_admission: ShieldCheck,
 }
 
 const HOW_STEPS = [
@@ -162,7 +163,7 @@ export default function HomePage() {
                     value={value}
                     label={t(`status.${key}`)}
                     sub={`${stats.percentages[key]}% of tracked countries`}
-                    accent={key === 'visa_free' ? 'success' : key === 'visa_on_arrival' ? 'warning' : key === 'evisa_eta' ? 'info' : 'danger'}
+                    accent={key === 'visa_free' ? 'success' : key === 'visa_on_arrival' ? 'warning' : key === 'evisa_eta' ? 'info' : key === 'no_admission' ? 'danger' : 'danger'}
                     index={i}
                   />
                 )
@@ -283,12 +284,11 @@ export default function HomePage() {
           </div>
         </motion.div>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-          {['Visa Free', 'Visa on Arrival', 'eVisa / eTA', 'Visa Required'].map((label, i) => {
-            const status = ['visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required'][i]
-            return <VisaStatusBadge key={status} status={status} />
-          })}
-        </div>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            {['visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required', 'no_admission'].map((status) => (
+              <VisaStatusBadge key={status} status={status} />
+            ))}
+          </div>
       </section>
 
       {/* ----------------------------- DISCLAIMER -------------------------- */}

@@ -7,7 +7,7 @@
 // advice — always confirm on the official government website before applying.
 // -----------------------------------------------------------------------------
 
-import { LONG_STAY_TYPES } from './visaTypes'
+import { LONG_STAY_TYPES } from './visaTypes.js'
 
 // Approximate exchange rates (TND per 1 unit) used only for the optional
 // "~TND" display next to foreign-currency fees. Not financial advice.
@@ -215,6 +215,11 @@ export const DOCS_BY_TYPE = {
 }
 
 const MODE_STEPS = {
+  denied: [
+    { title: 'Check official guidance', text: 'Entry is not permitted for Tunisian passport holders under current rules.' },
+    { title: 'Verify with official sources', text: 'Confirm the latest position with the destination authorities or nearest embassy before making plans.' },
+    { title: 'Do not travel without authorisation', text: 'Airlines and border officers may refuse boarding or entry.' },
+  ],
   free: [
     { title: 'Confirm passport validity', text: 'Your passport must be valid for your entire stay (check the entry rule for your destination).' },
     { title: 'Prepare entry documents', text: 'Have your return ticket, accommodation booking and proof of funds ready to show if asked.' },
@@ -277,11 +282,12 @@ const TYPE_NOTES = {
 }
 
 const APPLICATION_METHOD = {
-  free: 'No visa required — present passport on arrival',
+  free: 'No visa required - present passport on arrival',
   voa: 'On arrival at the airport or border crossing',
   evisa: 'Fully online application',
   short: 'Online application + embassy/visa centre appointment',
   long: 'Online/paper application + embassy appointment & biometrics',
+  denied: 'Entry not permitted under current rules',
 }
 
 const MODE_FOR_STATUS = {
@@ -289,6 +295,7 @@ const MODE_FOR_STATUS = {
   visa_on_arrival: 'voa',
   evisa_eta: 'evisa',
   visa_required: 'short',
+  no_admission: 'denied',
   unknown: 'short',
 }
 

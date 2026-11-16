@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Globe2, Mail, ShieldAlert } from 'lucide-react'
 import Logo from './Logo'
 import Flag from './Flag'
+import { VISA_MATRIX_META } from '../data/mapData'
 import { useI18n } from '../i18n/LanguageContext'
 
 export default function Footer() {
@@ -93,10 +94,15 @@ export default function Footer() {
             <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-warning-500" aria-hidden="true" />
             {t('footer.disclaimer')}
           </p>
-          <p className="flex shrink-0 items-center gap-1.5 text-xs font-medium text-ink-400">
-            © {year} TuniVisa · {t('footer.madeIn')}
-            <Flag code="tn" size="xs" />
-          </p>
+                    <div className="flex shrink-0 flex-col items-start gap-1 text-xs font-medium text-ink-400 lg:items-end">
+            <p className="flex items-center gap-1.5">
+              © {year} TuniVisa · {t('footer.madeIn')}
+              <Flag code="tn" size="xs" />
+            </p>
+            <p>
+              Visa data: <a href={VISA_MATRIX_META.url} target="_blank" rel="noreferrer" className="underline hover:text-brand-600">passport-index-dataset</a> (MIT), synced {String(VISA_MATRIX_META.fetchedAt||'').slice(0,10)}
+            </p>
+          </div>
         </div>
       </div>
     </footer>

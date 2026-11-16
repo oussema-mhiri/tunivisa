@@ -76,6 +76,7 @@ const STATUS_KEYWORDS = {
   visa_on_arrival: ['visa on arrival', 'visa a l arrivee', 'visa at arrival'],
   evisa_eta: ['evisa', 'e visa', 'eta', 'electronic visa', 'visa electronique'],
   visa_required: ['visa required', 'visa requis', 'need a visa', 'besoin d un visa'],
+  no_admission: ['no admission', 'admission refused', 'entry banned', 'not allowed entry', 'interdit d entree', 'admission refusee'],
 }
 
 const STATUS_PHRASES = Object.entries(STATUS_KEYWORDS).flatMap(([id, keywords]) =>

@@ -13,6 +13,7 @@ const HomePage = lazy(() => import('./pages/HomePage'))
 const CountriesPage = lazy(() => import('./pages/CountriesPage'))
 const CountryDetailsPage = lazy(() => import('./pages/CountryDetailsPage'))
 const VisaDetailsPage = lazy(() => import('./pages/VisaDetailsPage'))
+const ComparePage = lazy(() => import('./pages/ComparePage'))
 const AssistantPage = lazy(() => import('./pages/AssistantPage'))
 const SavedPage = lazy(() => import('./pages/SavedPage'))
 const MySpacePage = lazy(() => import('./pages/MySpacePage'))
@@ -44,6 +45,7 @@ export default function App() {
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/countries" element={<CountriesPage />} />
+          <Route path="/compare" element={<ComparePage />} />
           <Route path="/countries/:code" element={<CountryDetailsPage />} />
           <Route path="/countries/:code/visa/:visaType" element={<VisaDetailsPage />} />
           <Route path="/assistant" element={<AssistantPage />} />

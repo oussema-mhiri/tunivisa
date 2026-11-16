@@ -1,0 +1,44 @@
+name: Sync visa data
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Sync visa dataset
+        run: npm run sync:visa
+      - name: Rebuild chat knowledge
+        run: npm run build:knowledge
+      - name: Run tests
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/sync-visa-data
+          delete-branch: true
+          title: 'chore: sync visa dataset'
+          commit-message: 'chore: sync visa dataset'
+          body: |
+            Automated weekly sync of Tunisian visa statuses from the passport-index dataset.
+
+            - Runs `npm run sync:visa` and `npm run build:knowledge`
+            - Curated 20-destination statuses/stays are preserved; review script-reported differences
+            - Fees, delays, and document requirements remain curated
+            - Review required before merge (no automatic publication)
+          labels: data, automated

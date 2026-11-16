@@ -9,8 +9,11 @@
     "build": "vite build",
     "build:knowledge": "node scripts/build-chat-knowledge.mjs",
     "preview": "vite preview",
-    "test": "npm run test:server",
-    "test:server": "node --test server/lib/retrieval.test.js server/lib/providers/shared.test.js"
+    "sync:visa": "node scripts/sync-visa-data.mjs",
+    "sync:visa:check": "node scripts/sync-visa-data.mjs --check",
+    "test": "npm run test:server && npm run test:app",
+    "test:server": "node --test server/lib/retrieval.test.js server/lib/providers/shared.test.js server/lib/validate.test.js server/lib/stream.test.js",
+    "test:app": "node --test src/utils/compare.test.js src/utils/chatHistory.test.js"
   },
   "dependencies": {
     "framer-motion": "^13.1.0",

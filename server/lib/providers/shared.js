@@ -12,11 +12,19 @@ export async function fetchWithTimeout(url, options = {}) {
   const timeout = Number(process.env.PROVIDER_TIMEOUT_MS || 11000)
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), timeout)
+  const external = options.signal
+
+  const onAbort = () => controller.abort(external?.reason)
+  if (external) {
+    if (external.aborted) controller.abort(external.reason)
+    else external.addEventListener('abort', onAbort, { once: true })
+  }
 
   try {
     return await fetch(url, { ...options, signal: controller.signal })
   } finally {
     clearTimeout(timer)
+    if (external) external.removeEventListener('abort', onAbort)
   }
 }
 

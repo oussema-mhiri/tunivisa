@@ -11,6 +11,7 @@ import { cn } from '../utils/formatters'
 const NAV_ITEMS = [
   { to: '/', key: 'home', end: true },
   { to: '/countries', key: 'explore', end: false },
+  { to: '/compare', key: 'compare', end: false },
   { to: '/assistant', key: 'assistant', end: false },
   { to: '/about', key: 'about', end: false },
 ]

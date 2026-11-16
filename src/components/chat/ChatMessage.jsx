@@ -1,10 +1,11 @@
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../i18n/LanguageContext'
 import ChatSources from './ChatSources'
 import ChatSuggestions from './ChatSuggestions'
+import { cn } from '../../utils/formatters'
 
-export default function ChatMessage({ message, showSuggestions = false, onSuggestion }) {
+export default function ChatMessage({ message, showSuggestions = false, onSuggestion, onFeedback }) {
   const { t } = useI18n()
   const isUser = message.role === 'user'
 
@@ -19,11 +20,16 @@ export default function ChatMessage({ message, showSuggestions = false, onSugges
     )
   }
 
+  const feedback = message.feedback || null
+
   return (
     <div className="flex justify-start">
       <div className="max-w-[92%] rounded-2xl rounded-bl-md border border-ink-100 bg-white px-3.5 py-2.5 text-sm leading-relaxed text-ink-800 shadow-sm">
         <span className="sr-only">{t('chat.assistantLabel')}: </span>
-        <p className="whitespace-pre-wrap break-words">{message.content}</p>
+        <p className="whitespace-pre-wrap break-words" aria-live={message.streaming ? 'polite' : undefined}>
+          {message.content}
+          {message.streaming && <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse rounded-sm bg-brand-500 align-[-2px]" aria-hidden="true" />}
+        </p>
 
         <ChatSources sources={message.sources} />
 
@@ -48,6 +54,36 @@ export default function ChatMessage({ message, showSuggestions = false, onSugges
         ) : null}
 
         {showSuggestions ? <ChatSuggestions items={message.suggestedFollowUps} onSelect={onSuggestion} /> : null}
+
+        {message.requestId ? (
+          <div className="mt-2 flex items-center gap-1 border-t border-ink-100 pt-2">
+            <span className="mr-1 text-[11px] text-ink-400">{t('chat.feedbackLabel')}</span>
+            <button
+              type="button"
+              aria-label={t('chat.feedbackUp')}
+              aria-pressed={feedback === 'up'}
+              onClick={() => onFeedback?.(message, 'up')}
+              className={cn(
+                'rounded-md p-1 transition-colors',
+                feedback === 'up' ? 'bg-celadon-100 text-celadon-700' : 'text-ink-400 hover:bg-ink-100 hover:text-ink-600',
+              )}
+            >
+              <ThumbsUp className="h-3.5 w-3.5" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              aria-label={t('chat.feedbackDown')}
+              aria-pressed={feedback === 'down'}
+              onClick={() => onFeedback?.(message, 'down')}
+              className={cn(
+                'rounded-md p-1 transition-colors',
+                feedback === 'down' ? 'bg-danger-100 text-danger-700' : 'text-ink-400 hover:bg-ink-100 hover:text-ink-600',
+              )}
+            >
+              <ThumbsDown className="h-3.5 w-3.5" aria-hidden="true" />
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   )

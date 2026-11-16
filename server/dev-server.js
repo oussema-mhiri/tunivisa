@@ -1,6 +1,7 @@
 import http from 'node:http'
 import { loadEnvFile } from 'node:process'
 import chatHandler from './api/chat.js'
+import feedbackHandler from './api/feedback.js'
 import healthHandler from './api/health.js'
 
 try {
@@ -9,6 +10,7 @@ try {
 
 const routes = {
   '/api/chat': chatHandler,
+  '/api/feedback': feedbackHandler,
   '/api/health': healthHandler,
 }
 

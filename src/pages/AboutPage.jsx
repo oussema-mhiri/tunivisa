@@ -17,6 +17,7 @@ import {
 import SectionHeading from '../components/SectionHeading'
 import VisaStatusBadge from '../components/VisaStatusBadge'
 import { useSeo } from '../hooks/useSeo'
+import { VISA_MATRIX_META } from '../data/mapData'
 
 const VALUES = [
   {
@@ -64,6 +65,7 @@ const STATUS_ROWS = [
   { key: 'visa_on_arrival', label: 'countries where a visa is issued on arrival' },
   { key: 'evisa_eta', label: 'countries where an eVisa / eTA must be obtained online' },
   { key: 'visa_required', label: 'countries where a visa is needed before travel' },
+  { key: 'no_admission', label: 'countries where entry is not permitted under current rules' },
 ]
 
 export default function AboutPage() {
@@ -185,6 +187,16 @@ export default function AboutPage() {
                 <p>
                   Visa rules change. Always confirm the latest requirements on the official government or
                   embassy website of your destination before booking anything.
+                </p>
+              </div>
+              <div className="mt-4 rounded-xl border border-ink-100 bg-ink-50/60 px-4 py-3 text-sm leading-relaxed text-ink-600">
+                <p>
+                  Visa status data synced from{' '}
+                  <a href={VISA_MATRIX_META.url} target="_blank" rel="noreferrer" className="font-medium text-brand-700 underline">
+                    passport-index-dataset
+                  </a>{' '}
+                  (MIT licence), last synced {String(VISA_MATRIX_META.fetchedAt || '').slice(0, 10)}. Fees, delays and document
+                  requirements remain curated and must be verified with official sources.
                 </p>
               </div>
             </div>
