@@ -24,22 +24,10 @@ const STAT_ICONS = {
   no_admission: ShieldCheck,
 }
 
-const HOW_STEPS = [
-  {
-    icon: SearchIcon,
-    title: 'Search a destination',
-    text: 'Type any country and instantly see what Tunisian passport holders need to enter.',
-  },
-  {
-    icon: BadgeCheck,
-    title: 'Check the requirements',
-    text: 'Review the visa status, allowed stay, fees, documents and official sources for your trip.',
-  },
-  {
-    icon: Compass,
-    title: 'Get a personalised plan',
-    text: 'Use the Visa Assistant for a step-by-step guide and document checklist built around you.',
-  },
+const getHowSteps = (t) => [
+  { icon: SearchIcon, title: t('home.step1Title'), text: t('home.step1Text') },
+  { icon: BadgeCheck, title: t('home.step2Title'), text: t('home.step2Text') },
+  { icon: Compass, title: t('home.step3Title'), text: t('home.step3Text') },
 ]
 
 function SearchIcon(props) {
@@ -48,6 +36,7 @@ function SearchIcon(props) {
 
 export default function HomePage() {
   const { t } = useI18n()
+  const steps = getHowSteps(t)
   useSeo({
     path: '/',
     title: 'Where can you travel with your Tunisian passport?',
@@ -90,7 +79,7 @@ export default function HomePage() {
           >
             <span className="zc-tag max-w-full flex-wrap">
               <Plane className="h-3.5 w-3.5" aria-hidden="true" />
-              Visa & travel guide for Tunisian passport holders
+              {t('home.heroTag')}
               <Flag code="tn" size="sm" />
             </span>
 
@@ -238,7 +227,7 @@ export default function HomePage() {
           subtitle="Three steps between you and your next trip."
         />
         <div className="zc-steps mt-10 grid gap-5 md:grid-cols-3">
-          {HOW_STEPS.map((step, i) => (
+          {steps.map((step, i) => (
             <motion.div
               key={step.title}
               initial={{ opacity: 0, y: 16 }}

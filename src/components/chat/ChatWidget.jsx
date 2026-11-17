@@ -6,6 +6,7 @@ import { useChat } from '../../hooks/useChat'
 import { useChatHistory } from '../../hooks/useChatHistory'
 import { useI18n } from '../../i18n/LanguageContext'
 import { CHAT_ENABLED, sendFeedback } from '../../services/chat'
+import { useToast } from '../../context/ToastContext'
 import ChatMessage from './ChatMessage'
 import ChatSuggestions from './ChatSuggestions'
 import { cn } from '../../utils/formatters'
@@ -37,6 +38,7 @@ function errorText(error, t) {
 export default function ChatWidget() {
   const { pathname } = useLocation()
   const { lang, t } = useI18n()
+  const toast = useToast()
   const context = useChatContext()
   const {
     conversations,
@@ -129,6 +131,7 @@ export default function ChatWidget() {
     updateMessage(message.id, { feedback: next })
     if (next) {
       sendFeedback({ requestId: message.requestId, vote: next, messageId: message.id, context })
+      toast.success(t('chat.feedbackSaved'))
     }
   }
 

@@ -92,7 +92,7 @@ The chatbot backend lives in `server/` and is designed to be deployed as a separ
 | --- | --- | --- |
 | `GEMINI_API_KEY` | Yes | Primary provider. |
 | `GEMINI_MODEL` | No | Defaults to `gemini-3.5-flash-lite`. |
-| `GROQ_API_KEY` | Yes | Fallback provider. |
+| `GROQ_API_KEY` | Recommended | Fallback provider if Gemini is unavailable (optional for local dev). |
 | `GROQ_MODEL` | No | Defaults to `openai/gpt-oss-120b`. |
 | `ALLOWED_ORIGINS` | No | Defaults to `https://oussema-mhiri.github.io,http://localhost:5173`. |
 | `UPSTASH_REDIS_REST_URL` | No | Enables distributed rate limiting and caching. |
@@ -128,7 +128,7 @@ cd server
 npm run dev
 ```
 
-This starts a small Node server on `http://localhost:3000` for `/api/chat` and `/api/health`, using `server/.env`. In development, the frontend defaults to `http://localhost:3000/api`, so no root `.env` is needed. For a Vercel-compatible runtime, use `npx vercel dev` when the CLI works on your OS.
+This starts a small Node server on `http://localhost:3000` for `/api/chat` and `/api/health`, using `server/.env`. Configure at least `GEMINI_API_KEY` in `server/.env`; set `GROQ_API_KEY` as a fallback if Gemini is rate-limited/unavailable. In development, the frontend defaults to `http://localhost:3000/api`, so no root `.env` is needed. For a Vercel-compatible runtime, use `npx vercel dev` when the CLI works on your OS.
 
 For production builds, set `VITE_CHAT_API_URL` in the frontend environment. Without it, the widget is hidden.
 
