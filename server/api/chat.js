@@ -251,7 +251,7 @@ export default async function handler(req, res) {
     return
   }
 
-  if (req.headers.origin && !isOriginAllowed(req.headers.origin)) {
+  if (req.headers.origin && !isOriginAllowed(req.headers.origin, req)) {
     res.status(403).json({ error: 'Origin not allowed.', code: 'origin_not_allowed', requestId })
     return
   }
