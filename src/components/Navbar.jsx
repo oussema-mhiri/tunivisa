@@ -30,7 +30,7 @@ export default function Navbar() {
         <div className="container-page flex h-16 items-center justify-between gap-2 sm:gap-4">
           <Logo />
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-1 lg:flex" aria-label={t('nav.primary')}>
             {NAV_ITEMS.map((item) => (
               <NavLink
                 key={item.to}
@@ -56,7 +56,7 @@ export default function Navbar() {
               aria-label={t('nav.openSearch')}
             >
               <Search className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden xl:inline">Search…</span>
+              <span className="hidden xl:inline">{t('common.search')}…</span>
               <kbd className="hidden rounded-md border border-ink-200 bg-ink-50 px-1.5 py-0.5 text-[10px] font-semibold text-ink-400 xl:inline">
                 ⌘K
               </kbd>
@@ -72,7 +72,7 @@ export default function Navbar() {
                 className="flex h-10 items-center gap-1.5 rounded-full px-2.5 text-sm font-semibold text-ink-600 transition-colors hover:bg-brand-50 hover:text-brand-700"
                 aria-haspopup="listbox"
                 aria-expanded={langOpen}
-                aria-label="Select language"
+                aria-label={t('nav.selectLanguage')}
               >
                 <Globe className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden sm:inline">{currentLang.code.toUpperCase()}</span>
@@ -86,7 +86,7 @@ export default function Navbar() {
                     exit={{ opacity: 0, y: -6, scale: 0.98 }}
                     transition={{ duration: 0.14 }}
                     role="listbox"
-                    aria-label="Language options"
+                    aria-label={t('nav.languageOptions')}
                     className="absolute right-0 z-40 mt-2 w-44 overflow-hidden rounded-xl border border-ink-200 bg-white py-1 shadow-pop"
                   >
                     {languages.map((l) => (
@@ -130,7 +130,7 @@ export default function Navbar() {
               type="button"
               onClick={() => setMenuOpen((o) => !o)}
               className="flex h-10 w-10 items-center justify-center rounded-full text-ink-600 transition-colors hover:bg-brand-50 hover:text-brand-700 lg:hidden"
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={menuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
               aria-expanded={menuOpen}
             >
               {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -147,7 +147,7 @@ export default function Navbar() {
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden border-t border-ink-200/70 bg-white lg:hidden"
-              aria-label="Mobile"
+              aria-label={t('nav.mobile')}
             >
               <div className="container-page max-h-[calc(100dvh-4rem)] space-y-1 overflow-y-auto py-3">
                 {NAV_ITEMS.map((item) => (
@@ -191,7 +191,7 @@ export default function Navbar() {
                   )}
                 </Link>
                 <div className="border-t border-ink-100 px-2 pt-3">
-                  <p className="px-2 pb-2 text-xs font-semibold tracking-wide text-ink-400 uppercase">Language</p>
+                  <p className="px-2 pb-2 text-xs font-semibold tracking-wide text-ink-400 uppercase">{t('nav.language')}</p>
                   <div className="flex flex-wrap gap-2">
                     {languages.map((l) => (
                       <button

@@ -34,33 +34,34 @@ import ReadinessScore from './ReadinessScore'
 import EmptyState from './EmptyState'
 import { getVisaDetails } from '../services/api'
 import { VISA_TYPES } from '../data/visaTypes'
-import { visaStatusMeta } from '../utils/countryMeta'
+import { useI18n } from '../i18n/LanguageContext'
+import { localizedDuration } from '../utils/countryMeta'
 import { cn } from '../utils/formatters'
 
 const STAY_OPTIONS = [
-  { id: '<15', label: 'Less than 15 days' },
-  { id: '15-30', label: '15 – 30 days' },
-  { id: '30-90', label: '30 – 90 days' },
-  { id: '90+', label: '3 months – 1 year' },
-  { id: '1y+', label: 'More than 1 year' },
+  { id: '<15', key: 'stayLt15' },
+  { id: '15-30', key: 'stay15to30' },
+  { id: '30-90', key: 'stay30to90' },
+  { id: '90+', key: 'stay3to12' },
+  { id: '1y+', key: 'stay1yPlus' },
 ]
 
 const SITUATIONS = [
-  { id: 'student', label: 'Student', icon: UserRound },
-  { id: 'employee', label: 'Employee', icon: Briefcase },
-  { id: 'self-employed', label: 'Self-employed', icon: Briefcase },
-  { id: 'business-owner', label: 'Business owner', icon: Banknote },
-  { id: 'other', label: 'Other', icon: FileQuestion },
+  { id: 'student', key: 'situationStudent', icon: UserRound },
+  { id: 'employee', key: 'situationEmployee', icon: Briefcase },
+  { id: 'self-employed', key: 'situationSelfEmployed', icon: Briefcase },
+  { id: 'business-owner', key: 'situationBusinessOwner', icon: Banknote },
+  { id: 'other', key: 'situationOther', icon: FileQuestion },
 ]
 
 const FINANCE_OPTIONS = [
-  { id: 'myself', label: 'Myself', icon: Banknote },
-  { id: 'family', label: 'Family', icon: HeartHandshake },
-  { id: 'employer', label: 'Employer', icon: Briefcase },
-  { id: 'other', label: 'Other', icon: FileQuestion },
+  { id: 'myself', key: 'financeMyself', icon: Banknote },
+  { id: 'family', key: 'financeFamily', icon: HeartHandshake },
+  { id: 'employer', key: 'financeEmployer', icon: Briefcase },
+  { id: 'other', key: 'financeOther', icon: FileQuestion },
 ]
 
-function computeReadiness(answers) {
+function computeReadiness(answers, t) {
   const financial = { myself: 88, employer: 82, family: 62, other: 50 }[answers.finances] || 55
   const purposeScore = { business: 88, study: 86, work: 84, family: 82 }[answers.purpose] || (answers.invitation ? 80 : 70)
   const accommodation = answers.invitation ? 92 : 70
@@ -72,27 +73,28 @@ function computeReadiness(answers) {
   return {
     score,
     breakdown: [
-      { label: 'Financial documents', value: financial },
-      { label: 'Travel purpose', value: purposeScore },
-      { label: 'Accommodation', value: accommodation },
-      { label: 'Supporting documents', value: supporting },
-      { label: 'Travel history', value: travelHistory },
+      { label: t('wizard.breakdownFinancial'), value: financial },
+      { label: t('wizard.breakdownPurpose'), value: purposeScore },
+      { label: t('wizard.breakdownAccommodation'), value: accommodation },
+      { label: t('wizard.breakdownSupporting'), value: supporting },
+      { label: t('wizard.breakdownHistory'), value: travelHistory },
     ],
   }
 }
 
 const STEP_META = [
-  { key: 'country', title: 'What is your destination?', subtitle: 'Start typing to search 100+ countries.', icon: MapPin },
-  { key: 'purpose', title: 'What is the purpose of your trip?', subtitle: 'Choose the option that best matches.', icon: Briefcase },
-  { key: 'stay', title: 'How long do you plan to stay?', subtitle: 'Be as accurate as you can.', icon: CalendarDays },
-  { key: 'situation', title: 'What is your current situation?', subtitle: 'Consulates care about your ties to home.', icon: UserRound },
-  { key: 'invitation', title: 'Do you have an invitation?', subtitle: 'From family, a host or a company.', icon: HeartHandshake },
-  { key: 'finances', title: 'Who will finance your trip?', subtitle: 'This affects the documents you prepare.', icon: Banknote },
+  { key: 'destination', icon: MapPin },
+  { key: 'purpose', icon: Briefcase },
+  { key: 'stay', icon: CalendarDays },
+  { key: 'situation', icon: UserRound },
+  { key: 'invitation', icon: HeartHandshake },
+  { key: 'finances', icon: Banknote },
 ]
 
 const TOTAL_STEPS = 7
 
 export default function AssistantWizard({ initialPurpose, initialCountry }) {
+  const { t } = useI18n()
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState({
     country: initialCountry || null,
@@ -156,21 +158,22 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
     setError(null)
     try {
       const data = await getVisaDetails(answers.country.code, answers.purpose)
-      const readiness = computeReadiness(answers)
+      const readiness = computeReadiness(answers, t)
       setResult({ ...data, readiness })
       setStep(6)
     } catch {
-      setError('The visa guide service is temporarily unavailable. Please try again.')
+      setError(t('wizard.serviceError'))
     } finally {
       setLoading(false)
     }
-  }, [answers])
+  }, [answers, t])
 
   const optionGrid = (options, key, iconMap) => (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
       {options.map((opt) => {
         const selected = answers[key] === opt.id
         const Icon = iconMap?.[opt.id] || opt.icon
+        const label = key === 'purpose' ? t(`purpose.${opt.id}`) : t(`wizard.${opt.key}`)
         return (
           <button
             key={opt.id}
@@ -185,7 +188,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
             )}
           >
             {Icon && <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />}
-            <span>{opt.label}</span>
+            <span>{label}</span>
             {selected && <CheckCircle2 className="ml-auto h-5 w-5 shrink-0 text-brand-600" aria-hidden="true" />}
           </button>
         )
@@ -198,7 +201,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
       return (
         <div className="flex flex-col items-center gap-4 py-16">
           <Loader2 className="h-10 w-10 animate-spin text-brand-600" aria-hidden="true" />
-          <p className="text-sm font-medium text-ink-500">Building your personalised visa guide…</p>
+          <p className="text-sm font-medium text-ink-500">{t('wizard.building')}</p>
         </div>
       )
     }
@@ -206,9 +209,9 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
       return (
         <EmptyState
           icon={FileQuestion}
-          title="Could not load the visa guide"
+          title={t('wizard.loadError')}
           text={error}
-          action={<button type="button" onClick={restart} className="btn-primary">Start over</button>}
+          action={<button type="button" onClick={restart} className="btn-primary">{t('wizard.startOver')}</button>}
         />
       )
     }
@@ -220,10 +223,10 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
             <CountrySearch
               size="lg"
               onSelect={(country) => setAnswer('country', country)}
-              placeholder="Search a country…"
+              placeholder={t('search.countryPlaceholder')}
               autoFocus
             />
-            <p className="mt-3 text-xs text-ink-400">Tip: pick a country that is high on your wish list.</p>
+            <p className="mt-3 text-xs text-ink-400">{t('wizard.tip')}</p>
           </div>
         )
       case 1:
@@ -247,7 +250,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
                   )}
                 >
                   <CalendarDays className="h-5 w-5 shrink-0" aria-hidden="true" />
-                  {opt.label}
+                  {t(`wizard.${opt.key}`)}
                   {selected && <CheckCircle2 className="ml-auto h-5 w-5 shrink-0 text-brand-600" aria-hidden="true" />}
                 </button>
               )
@@ -275,7 +278,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
                   )}
                 >
                   <HeartHandshake className="h-5 w-5" aria-hidden="true" />
-                  {val}
+                  {t(`common.${val}`)}
                 </button>
               )
             })}
@@ -284,7 +287,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
       case 5:
         return optionGrid(FINANCE_OPTIONS, 'finances')
       case 6:
-        return result ? <ResultView result={result} answers={answers} onRestart={restart} /> : null
+        return result ? <ResultView result={result} answers={answers} onRestart={restart} t={t} /> : null
       default:
         return null
     }
@@ -298,10 +301,10 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-xs font-semibold tracking-wide text-brand-600 uppercase">
-            {step === 6 ? 'Your visa guide' : `Step ${stepNumber} of ${TOTAL_STEPS - 1}`}
+            {step === 6 ? t('wizard.yourGuide') : t('wizard.step', { current: stepNumber, total: TOTAL_STEPS - 1 })}
           </p>
           <h2 className="truncate font-display text-base font-bold text-ink-900 sm:text-lg">
-            {step === 6 ? 'Here is your personalised guide' : stepDef?.title}
+            {step === 6 ? t('wizard.guideReady') : t(`wizard.${stepDef?.key}Title`)}
           </h2>
         </div>
         {step > 0 && step < 6 && (
@@ -309,10 +312,10 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
             type="button"
             onClick={restart}
             className="inline-flex items-center gap-1.5 rounded-none px-2.5 py-1.5 text-xs font-semibold text-ink-500 transition-colors hover:bg-ink-100 hover:text-ink-700"
-            aria-label="Restart assistant"
+            aria-label={t('wizard.restartAssistant')}
           >
             <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-            Restart
+            {t('wizard.restart')}
           </button>
         )}
       </div>
@@ -331,7 +334,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
           >
             {!loading && !error && step < 6 && (
-              <p className="mb-5 text-sm text-ink-500">{stepDef?.subtitle}</p>
+              <p className="mb-5 text-sm text-ink-500">{t(`wizard.${stepDef?.key}Subtitle`)}</p>
             )}
             {renderStep()}
           </motion.div>
@@ -342,7 +345,7 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
         <div className="flex items-center justify-between gap-2 border-t border-ink-100 bg-ink-50/60 px-4 py-4 sm:gap-3 sm:px-6">
           <button type="button" onClick={back} disabled={step === 0} className="btn-ghost disabled:opacity-40">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Back
+            {t('wizard.back')}
           </button>
           <div className="flex items-center gap-2">
             {answers.country && (
@@ -354,11 +357,11 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
             <button type="button" onClick={next} disabled={!canNext || loading} className="btn-primary">
               {step === 5 ? (
                 <>
-                  <span className="sm:hidden">Generate</span>
-                  <span className="hidden sm:inline">Generate my visa guide</span>
+                  <span className="sm:hidden">{t('wizard.generateShort')}</span>
+                  <span className="hidden sm:inline">{t('wizard.generateLong')}</span>
                 </>
               ) : (
-                'Continue'
+                t('wizard.continue')
               )}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
@@ -369,9 +372,9 @@ export default function AssistantWizard({ initialPurpose, initialCountry }) {
   )
 }
 
-function ResultView({ result, answers, onRestart }) {
+function ResultView({ result, answers, onRestart, t }) {
   const { country, rule, documents, embassy, links, readiness } = result
-  const meta = visaStatusMeta(rule.status)
+  const duration = localizedDuration(rule, t)
 
   return (
     <div className="space-y-6">
@@ -379,26 +382,26 @@ function ResultView({ result, answers, onRestart }) {
         <div className="flex flex-wrap items-center gap-3">
           <Flag code={country.code} size="lg" />
           <div className="min-w-0 flex-1">
-            <p className="text-sm text-ink-500">Destination</p>
+            <p className="text-sm text-ink-500">{t('wizard.destination')}</p>
             <h3 className="font-display text-xl font-bold text-ink-900 sm:text-2xl">{country.name}</h3>
           </div>
           <VisaStatusBadge status={rule.status} size="md" />
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          <span className="rounded-full bg-ink-50 px-3 py-1 text-xs font-semibold text-ink-700">{rule.visaTypeLabel} visa</span>
-          <span className="rounded-full bg-ink-50 px-3 py-1 text-xs font-semibold text-ink-700">{rule.duration}</span>
+          <span className="rounded-full bg-ink-50 px-3 py-1 text-xs font-semibold text-ink-700">{t('wizard.visaLabel', { label: t(`purpose.short.${rule.visaType}`) })}</span>
+          <span className="rounded-full bg-ink-50 px-3 py-1 text-xs font-semibold text-ink-700">{duration}</span>
           <span className="rounded-full bg-ink-50 px-3 py-1 text-xs font-semibold text-ink-700">{rule.processingTime}</span>
         </div>
       </div>
 
       <div>
-        <h4 className="mb-2 font-display text-base font-bold text-ink-900">Important requirements</h4>
+        <h4 className="mb-2 font-display text-base font-bold text-ink-900">{t('wizard.importantRequirements')}</h4>
         <ul className="grid gap-2 sm:grid-cols-2">
           {[
-            { label: 'Maximum stay', value: rule.duration },
-            { label: 'Fee', value: rule.fee },
-            { label: 'Processing', value: rule.processingTime },
-            { label: 'Method', value: rule.applicationMethod },
+            { label: t('wizard.maxStay'), value: duration },
+            { label: t('wizard.fee'), value: rule.fee },
+            { label: t('wizard.processing'), value: rule.processingTime },
+            { label: t('wizard.method'), value: rule.applicationMethod },
           ].map((item) => (
             <li key={item.label} className="flex items-start gap-2.5 rounded-lg border border-ink-200/70 bg-white px-3.5 py-2.5">
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-success-500" aria-hidden="true" />
@@ -423,7 +426,7 @@ function ResultView({ result, answers, onRestart }) {
       <div>
         <h4 className="mb-2 flex items-center gap-2 font-display text-base font-bold text-ink-900">
           <ClipboardCheck className="h-4.5 w-4.5 text-brand-600" aria-hidden="true" />
-          How to apply
+          {t('wizard.howToApply')}
         </h4>
         <div className="card p-5">
           <ApplicationSteps steps={rule.steps} />
@@ -441,15 +444,13 @@ function ResultView({ result, answers, onRestart }) {
       <LastVerified date={rule.lastVerified} source={rule.officialSource} />
 
       <div className="rounded-xl border border-warning-500/25 bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
-        This guide reflects current entry rules ({meta.label}) but visa decisions are always made by the
-        destination authority. Verify the fee, documents and processing time on the official government
-        website before applying.
+        {t('wizard.guideNote', { status: t(`status.${rule.status}`) })}
       </div>
 
       <div className="flex items-center justify-center">
         <button type="button" onClick={onRestart} className="btn-secondary">
           <RotateCcw className="h-4 w-4" aria-hidden="true" />
-          Start a new search
+          {t('wizard.newSearch')}
         </button>
       </div>
     </div>

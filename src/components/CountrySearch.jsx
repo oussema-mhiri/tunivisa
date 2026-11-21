@@ -9,6 +9,7 @@ import { searchCountries } from '../services/api'
 import { useDebounce } from '../hooks/useDebounce'
 import { useApp } from '../context/AppContext'
 import { SUGGESTED_COUNTRIES } from '../data/countries'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 export default function CountrySearch({
@@ -20,6 +21,7 @@ export default function CountrySearch({
   autoFocus = false,
 }) {
   const navigate = useNavigate()
+  const { t } = useI18n()
   const { addRecentSearch } = useApp()
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
@@ -106,9 +108,9 @@ export default function CountrySearch({
         value={query}
         onChange={setQuery}
         size={size}
-        placeholder={placeholder || 'Search a country…'}
+        placeholder={placeholder || t('search.countryPlaceholder')}
         autoFocus={autoFocus}
-        ariaLabel="Search countries"
+        ariaLabel={t('search.ariaCountrySearch')}
         onKeyDown={handleKeyDown}
       />
 
@@ -121,18 +123,18 @@ export default function CountrySearch({
             transition={{ duration: 0.16 }}
             className="absolute top-full z-30 mt-2 max-h-[45vh] w-full overflow-y-auto overscroll-contain rounded-xl border border-ink-200 bg-white shadow-pop"
             role="listbox"
-            aria-label="Country suggestions"
+            aria-label={t('search.ariaSuggestions')}
           >
             {loading && (
               <div className="flex items-center gap-2 px-4 py-3.5 text-sm text-ink-500">
                 <Loader2 className="h-4 w-4 animate-spin text-brand-600" aria-hidden="true" />
-                Searching…
+                {t('search.searching')}
               </div>
             )}
 
             {!loading && visible.length === 0 && (
               <p className="px-4 py-4 text-sm text-ink-500">
-                No countries match “{query}”. Try a different spelling.
+                {t('search.noCountryMatch', { query })}
               </p>
             )}
 
@@ -154,7 +156,7 @@ export default function CountrySearch({
                   <Flag code={country.code} size="md" />
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-semibold text-ink-900">{country.name}</span>
-                    <span className="block text-xs text-ink-400">{country.region}</span>
+                    <span className="block text-xs text-ink-400">{t(`region.${country.region}`)}</span>
                   </span>
                   <VisaStatusBadge status={country.visaStatus} />
                 </button>
@@ -163,7 +165,7 @@ export default function CountrySearch({
             {!loading && visible.length > 0 && (
               <div className="flex items-center gap-1.5 border-t border-ink-100 bg-ink-50 px-4 py-2 text-xs text-ink-400">
                 <Plane className="h-3.5 w-3.5" aria-hidden="true" />
-                {query.trim() ? 'Enter to open the highlighted country' : 'Popular searches for Tunisians'}
+                {query.trim() ? t('search.enterHighlighted') : t('search.popularSearches')}
               </div>
             )}
           </motion.div>

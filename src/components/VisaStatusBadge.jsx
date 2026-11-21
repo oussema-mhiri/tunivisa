@@ -1,7 +1,9 @@
 import { visaStatusMeta } from '../utils/countryMeta'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 export default function VisaStatusBadge({ status, size = 'sm', showDot = true, className }) {
+  const { t } = useI18n()
   const meta = visaStatusMeta(status)
   return (
     <span
@@ -13,7 +15,7 @@ export default function VisaStatusBadge({ status, size = 'sm', showDot = true, c
       )}
     >
       {showDot && <span aria-hidden="true" className={cn('h-1.5 w-1.5 rounded-full', meta.dot)} />}
-      {meta.label}
+      {t(`status.${status || 'unknown'}`)}
     </span>
   )
 }

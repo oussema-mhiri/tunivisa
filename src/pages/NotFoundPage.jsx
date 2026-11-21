@@ -5,19 +5,17 @@ import { ArrowLeft, Compass, Home, MapPin, Search } from 'lucide-react'
 import Flag from '../components/Flag'
 import { getCountries } from '../services/api'
 import { useSeo } from '../hooks/useSeo'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 const DEFAULT_SUGGESTIONS = ['France', 'Turkey', 'Italy', 'Japan']
 
-export default function NotFoundPage({
-  icon: Icon = Compass,
-  title = 'Page not found',
-  text = "The page you're looking for doesn't exist or may have been moved.",
-}) {
+export default function NotFoundPage({ icon: Icon = Compass, title, text }) {
+  const { t } = useI18n()
   useSeo({
     noindex: true,
-    title: '404 — Page not found',
-    description: 'The TuniVisa page you are looking for could not be found. Head back to explore visa guides.',
+    title: t('notFound.seoTitle'),
+    description: t('notFound.seoDescription'),
   })
 
   const [suggestions, setSuggestions] = useState([])
@@ -60,9 +58,9 @@ export default function NotFoundPage({
         className="mt-8 max-w-xl text-center"
       >
         <h1 className="font-display text-3xl font-bold tracking-tight text-ink-900 text-balance sm:text-4xl">
-          {title}
+          {title || t('notFound.title')}
         </h1>
-        <p className="mx-auto mt-3 max-w-md text-base leading-relaxed text-ink-500">{text}</p>
+        <p className="mx-auto mt-3 max-w-md text-base leading-relaxed text-ink-500">{text || t('notFound.text')}</p>
       </motion.div>
 
       <motion.div
@@ -73,11 +71,11 @@ export default function NotFoundPage({
       >
         <Link to="/" className="btn-primary">
           <Home className="h-4.5 w-4.5" aria-hidden="true" />
-          Back to home
+          {t('notFound.backHome')}
         </Link>
         <Link to="/countries" className="btn-secondary">
           <ArrowLeft className="h-4.5 w-4.5" aria-hidden="true" />
-          Explore countries
+          {t('notFound.exploreCountries')}
         </Link>
       </motion.div>
 
@@ -90,7 +88,7 @@ export default function NotFoundPage({
         >
           <p className="flex items-center justify-center gap-2 text-sm font-semibold text-ink-500">
             <Search className="h-4 w-4 text-brand-600" aria-hidden="true" />
-            Popular destinations instead
+            {t('notFound.popular')}
           </p>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {suggestions.map((country) => (

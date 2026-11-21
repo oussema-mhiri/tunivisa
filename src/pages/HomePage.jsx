@@ -39,9 +39,8 @@ export default function HomePage() {
   const steps = getHowSteps(t)
   useSeo({
     path: '/',
-    title: 'Where can you travel with your Tunisian passport?',
-    description:
-      'Discover visa-free destinations, visa on arrival countries, eVisa options and visa requirements for Tunisian passport holders around the world.',
+    title: t('home.heroTitle'),
+    description: t('home.heroSubtitle'),
   })
 
   const [stats, setStats] = useState(null)
@@ -112,7 +111,7 @@ export default function HomePage() {
             </button>
             <Link to="/assistant" className="btn-primary w-full sm:w-auto">
               <Compass className="h-4.5 w-4.5" aria-hidden="true" />
-              Try the Visa Assistant
+              {t('home.tryAssistant')}
             </Link>
           </motion.div>
 
@@ -132,7 +131,7 @@ export default function HomePage() {
       <section className="relative z-10 border-y border-ink-100 bg-white">
         <div className="container-page max-w-6xl py-14 sm:py-20">
           <SectionHeading
-            eyebrow="At a glance"
+            eyebrow={t('home.atAGlance')}
             title={t('home.statsTitle')}
             subtitle={t('home.statsSubtitle')}
           />
@@ -152,7 +151,7 @@ export default function HomePage() {
                     icon={Icon}
                     value={value}
                     label={t(`status.${key}`)}
-                    sub={`${stats.percentages[key]}% of tracked countries`}
+                    sub={t('home.ofTracked', { percent: stats.percentages[key] })}
                     accent={key === 'visa_free' ? 'success' : key === 'visa_on_arrival' ? 'warning' : key === 'evisa_eta' ? 'info' : key === 'no_admission' ? 'danger' : 'danger'}
                     index={i}
                   />
@@ -161,7 +160,7 @@ export default function HomePage() {
           </div>
           <p className="mt-6 flex max-w-xl items-center gap-1.5 text-xs text-ink-400">
             <Info className="h-3.5 w-3.5" aria-hidden="true" />
-            {stats?.note || 'Based on our tracked map dataset.'}
+            {stats?.note || t('home.statsFallback')}
           </p>
         </div>
       </section>
@@ -169,7 +168,7 @@ export default function HomePage() {
       {/* ----------------------------- WORLD MAP -------------------------- */}
       <section id="world-map" className="container-page scroll-mt-20 py-16 sm:py-24 lg:max-w-[82rem]">
         <SectionHeading
-          eyebrow="Interactive map"
+          eyebrow={t('home.interactiveMap')}
           title={t('home.mapTitle')}
           subtitle={t('home.mapSubtitle')}
         />
@@ -179,7 +178,7 @@ export default function HomePage() {
               <div className="flex h-[420px] items-center justify-center rounded-2xl border border-ink-200 bg-white shadow-card">
                 <div className="flex flex-col items-center gap-3">
                   <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
-                  <p className="text-sm font-medium text-ink-500">Preparing the map…</p>
+                  <p className="text-sm font-medium text-ink-500">{t('home.preparingMap')}</p>
                 </div>
               </div>
             }
@@ -199,7 +198,7 @@ export default function HomePage() {
               subtitle={t('home.popularSubtitle')}
             />
             <Link to="/countries" className="btn-secondary shrink-0">
-              Explore all countries
+              {t('home.exploreAll')}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
@@ -222,9 +221,9 @@ export default function HomePage() {
       {/* ---------------------------- HOW IT WORKS ------------------------- */}
       <section className="container-page max-w-5xl py-10 sm:py-24">
         <SectionHeading
-          eyebrow="Simple by design"
+          eyebrow={t('home.simpleByDesign')}
           title={t('home.howTitle')}
-          subtitle="Three steps between you and your next trip."
+          subtitle={t('home.threeSteps')}
         />
         <div className="zc-steps mt-10 grid gap-5 md:grid-cols-3">
           {steps.map((step, i) => (
@@ -261,7 +260,7 @@ export default function HomePage() {
           <div className="relative">
             <span className="zc-tag">
               <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
-              Free · No sign-up required
+              {t('home.freeNoSignup')}
             </span>
             <h2 className="mt-5 max-w-2xl font-display text-3xl font-semibold text-white text-balance sm:text-4xl">
               {t('home.assistantCtaTitle')}

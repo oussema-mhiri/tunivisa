@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { GEMINI_RESPONSE_SCHEMA, GROQ_RESPONSE_SCHEMA } from '../prompt.js'
+import { buildKnowledgeAnswer, GEMINI_RESPONSE_SCHEMA, GROQ_RESPONSE_SCHEMA } from '../prompt.js'
 import { normalizeModelResult, parseModelJson } from './shared.js'
 
 test('parses JSON wrapped in markdown fences', () => {
@@ -20,6 +20,17 @@ test('normalizes model output and caps follow-up suggestions', () => {
 
 test('rejects empty model answers', () => {
   assert.throws(() => normalizeModelResult({ answer: '   ' }), /empty answer/i)
+})
+
+test('builds a knowledge-only answer when providers are unavailable', () => {
+  const answer = buildKnowledgeAnswer({
+    language: 'fr',
+    retrieved: { docs: [{ title: 'France visa requirements', text: 'Eiffel Tower, Louvre Museum.' }] },
+  })
+
+  assert.match(answer, /extrait des guides TuniVisa/)
+  assert.match(answer, /Eiffel Tower/)
+  assert.match(answer, /source officielle/)
 })
 
 test('builds strict Groq and uppercase Gemini schemas', () => {

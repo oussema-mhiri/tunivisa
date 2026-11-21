@@ -8,12 +8,15 @@ import VisaStatusBadge from '../components/VisaStatusBadge'
 import VisaPurposeCard from '../components/VisaPurposeCard'
 import EmptyState from '../components/EmptyState'
 import { Skeleton } from '../components/Skeleton'
+import TourismHighlights from '../components/TourismHighlights'
 import { getCountry, getVisaRules, getVisaTypes, ORIGIN_COUNTRY } from '../services/api'
-import { visaStatusMeta } from '../utils/countryMeta'
+import { localizedDuration } from '../utils/countryMeta'
 import { formatDate } from '../utils/formatters'
 import { useSeo } from '../hooks/useSeo'
+import { useI18n } from '../i18n/LanguageContext'
 
 export default function CountryDetailsPage() {
+  const { t } = useI18n()
   const { code } = useParams()
   const [country, setCountry] = useState(null)
   const [rule, setRule] = useState(null)
@@ -23,10 +26,8 @@ export default function CountryDetailsPage() {
 
   useSeo({
     path: country ? `/countries/${country.code}` : '/countries',
-    title: country ? `Visas for ${country.name}` : undefined,
-    description: country
-      ? `Visa requirements for Tunisian passport holders travelling to ${country.name}: status, maximum stay, fees and how to apply.`
-      : undefined,
+    title: country ? t('country.seoTitle', { name: country.name }) : undefined,
+    description: country ? t('country.seoDescription', { name: country.name }) : undefined,
   })
 
   useEffect(() => {
@@ -72,12 +73,12 @@ export default function CountryDetailsPage() {
       <div className="container-page py-20">
         <EmptyState
           icon={Compass}
-          title="Country not found"
-          text={`We could not find visa information for "${code}". It may not be in our database yet.`}
+          title={t('country.notFound')}
+          text={t('country.notFoundText', { code })}
           action={
             <Link to="/countries" className="btn-primary">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Back to all countries
+              {t('country.backToAll')}
             </Link>
           }
         />
@@ -85,25 +86,31 @@ export default function CountryDetailsPage() {
     )
   }
 
-  const meta = visaStatusMeta(country.visaStatus)
+  const duration = localizedDuration(rule, t)
+  let processingTime = rule?.processingTime || t('country.varies')
+  if (String(processingTime).startsWith('Varies by permit type')) processingTime = t('rule.processingLong')
+  else if (String(processingTime).startsWith('Varies')) processingTime = t('rule.processingVaries')
+  let fee = rule?.fee || t('country.varies')
+  if (fee === 'None') fee = t('common.none')
+  else if (String(fee).startsWith('Varies')) fee = t('rule.feeVaries')
 
   const metaItems = [
-    { label: 'Maximum stay', value: rule ? rule.duration : 'Varies', icon: CalendarClock },
-    { label: 'Visa type', value: 'Tourist / Short stay', icon: FileText },
-    { label: 'Processing time', value: rule?.processingTime || 'Varies', icon: Hourglass },
-    { label: 'Fee', value: rule?.fee || 'Varies', icon: CreditCard },
-    { label: 'Application method', value: rule?.applicationMethod || 'Varies', icon: Link2 },
-    { label: 'Last verified', value: formatDate(rule?.lastVerified), icon: CalendarClock },
-    { label: 'Official source', value: rule?.officialSource || 'Official government source', icon: FileText },
+    { label: t('country.maxStay'), value: duration, icon: CalendarClock },
+    { label: t('country.visaType'), value: t('country.touristShortStay'), icon: FileText },
+    { label: t('country.processingTime'), value: processingTime, icon: Hourglass },
+    { label: t('country.fee'), value: fee, icon: CreditCard },
+    { label: t('country.applicationMethod'), value: rule?.mode ? t(`rule.method.${rule.mode}`) : t('country.varies'), icon: Link2 },
+    { label: t('country.lastVerified'), value: formatDate(rule?.lastVerified), icon: CalendarClock },
+    { label: t('country.officialSource'), value: rule?.officialSource || t('country.officialGovernmentSource'), icon: FileText },
   ]
 
   return (
     <div className="container-page max-w-6xl py-10 sm:py-14">
-      <nav aria-label="Breadcrumb" className="mb-6">
+      <nav aria-label={t('common.breadcrumb')} className="mb-6">
         <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink-500">
           <li>
             <Link to="/countries" className="font-medium transition-colors hover:text-brand-600">
-              Countries
+              {t('country.breadcrumb')}
             </Link>
           </li>
           <li aria-hidden="true">/</li>
@@ -124,14 +131,14 @@ export default function CountryDetailsPage() {
           <div className="flex min-w-0 items-center gap-4">
             <Flag code="tn" size="lg" />
             <div className="min-w-0">
-              <p className="text-xs font-semibold tracking-wide text-ink-400 uppercase">Tunisian passport</p>
+              <p className="text-xs font-semibold tracking-wide text-ink-400 uppercase">{t('country.tunisianPassport')}</p>
               <p className="font-display text-lg font-bold break-words text-ink-900">{ORIGIN_COUNTRY.name}</p>
             </div>
           </div>
           <ArrowRight className="hidden h-6 w-6 text-ink-300 lg:block" aria-hidden="true" />
           <div className="flex min-w-0 items-center gap-4">
             <div className="min-w-0 text-right">
-              <p className="text-xs font-semibold tracking-wide text-ink-400 uppercase">Destination</p>
+              <p className="text-xs font-semibold tracking-wide text-ink-400 uppercase">{t('country.destination')}</p>
               <p className="font-display text-lg font-bold break-words text-ink-900">{country.name}</p>
             </div>
             <Flag code={country.code} size="lg" />
@@ -142,14 +149,15 @@ export default function CountryDetailsPage() {
         </div>
         {!country.detailed && (
           <p className="relative mt-5 rounded-xl bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
-            This country appears on our map but does not have a full verified guide yet. The status and stay
-            details below are illustrative and should be confirmed with an official source.
+            {t('country.limitedGuide')}
           </p>
         )}
       </motion.div>
 
+      <TourismHighlights country={country} />
+
       {/* Meta grid */}
-      <section className="mt-12 sm:mt-16" aria-label="Visa details">
+      <section className="mt-12 sm:mt-16" aria-label={t('country.visaDetails')}>
         <dl className="zc-meta-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {metaItems.map(({ label, value, icon: Icon }, i) => (
             <motion.div
@@ -175,15 +183,15 @@ export default function CountryDetailsPage() {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="font-display text-2xl font-semibold tracking-tight text-ink-900">
-              Choose your travel purpose
+              {t('country.choosePurpose')}
             </h2>
             <p className="mt-1 text-sm text-ink-500">
-              Select the reason for your trip to see the exact requirements for {country.name}.
+              {t('country.choosePurposeText', { name: country.name })}
             </p>
           </div>
           <Link to={`/assistant?country=${country.code}`} className="btn-secondary">
             <Compass className="h-4 w-4" aria-hidden="true" />
-            Get a personalised guide
+            {t('country.personalisedGuide')}
           </Link>
         </div>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -195,8 +203,7 @@ export default function CountryDetailsPage() {
 
       <div className="mt-14 flex items-start gap-2.5 rounded-xl bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
         <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-        Visa rules change frequently — always confirm with the official embassy or government website of
-        {' '}{country.name} before planning your trip.
+        {t('country.rulesChange', { name: country.name })}
       </div>
     </div>
   )

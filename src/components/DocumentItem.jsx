@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, Info } from 'lucide-react'
 import Badge from './Badge'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 export default function DocumentItem({ doc, checked, onToggle, expandable = true }) {
+  const { t } = useI18n()
   const [open, setOpen] = useState(false)
   const toggleDetails = (e) => {
     e.preventDefault()
@@ -25,7 +27,7 @@ export default function DocumentItem({ doc, checked, onToggle, expandable = true
           role="checkbox"
           aria-checked={checked}
           onClick={onToggle}
-          aria-label={`Mark "${doc.label}" as ${checked ? 'not completed' : 'completed'}`}
+          aria-label={checked ? t('document.markNotCompleted', { label: doc.label }) : t('document.markCompleted', { label: doc.label })}
           className={cn(
             'flex h-6 w-6 shrink-0 items-center justify-center rounded-none border-2 transition-all duration-200',
             checked
@@ -41,7 +43,7 @@ export default function DocumentItem({ doc, checked, onToggle, expandable = true
             <p className={cn('text-sm font-semibold', checked ? 'text-ink-500 line-through' : 'text-ink-900')}>
               {doc.label}
             </p>
-            <Badge tone={doc.required ? 'danger' : 'gray'}>{doc.required ? 'Required' : 'Optional'}</Badge>
+            <Badge tone={doc.required ? 'danger' : 'gray'}>{t(doc.required ? 'document.required' : 'document.optional')}</Badge>
           </div>
           <p className="mt-0.5 text-sm text-ink-500">{doc.description}</p>
         </div>
@@ -51,7 +53,7 @@ export default function DocumentItem({ doc, checked, onToggle, expandable = true
             type="button"
             onClick={toggleDetails}
             aria-expanded={open}
-            aria-label={`More information about ${doc.label}`}
+            aria-label={t('document.moreInfo', { label: doc.label })}
             className={cn(
               'flex h-8 w-8 shrink-0 items-center justify-center rounded-none transition-colors',
               open ? 'bg-brand-50 text-brand-600' : 'text-ink-400 hover:bg-ink-100 hover:text-ink-700',

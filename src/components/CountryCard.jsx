@@ -4,19 +4,25 @@ import { ArrowUpRight, CalendarClock, Heart, MapPin } from 'lucide-react'
 import Flag from './Flag'
 import VisaStatusBadge from './VisaStatusBadge'
 import { useApp } from '../context/AppContext'
-import { formatMaxStay } from '../utils/countryMeta'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 export default function CountryCard({ country, layout = 'grid', index = 0 }) {
+  const { t } = useI18n()
   const { isSaved, toggleSaved } = useApp()
   const saved = isSaved(country.code)
+  const maxStay = !country.maxStayDays || country.maxStayDays <= 0
+    ? t('country.notSpecified')
+    : country.maxStayDays >= 365
+      ? t('country.years', { count: Math.round(country.maxStayDays / 365) })
+      : t('country.days', { count: country.maxStayDays })
 
   const SaveButton = (
     <button
       type="button"
       onClick={() => toggleSaved(country.code, country.name)}
       aria-pressed={saved}
-      aria-label={saved ? `Remove ${country.name} from saved` : `Save ${country.name}`}
+      aria-label={saved ? `${t('common.remove')} ${country.name}` : `${t('country.saveDestination')}: ${country.name}`}
       className={cn(
         'inline-flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-200',
         saved
@@ -44,13 +50,11 @@ export default function CountryCard({ country, layout = 'grid', index = 0 }) {
           </Link>
           <p className="mt-0.5 flex items-center gap-1 text-sm text-ink-500">
             <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
-            {country.region}
-            {country.maxStayDays > 0 && (
-              <span className="ml-2 inline-flex items-center gap-1 text-ink-400">
-                <CalendarClock className="h-3.5 w-3.5" aria-hidden="true" />
-                {formatMaxStay(country.maxStayDays)}
-              </span>
-            )}
+            {t(`region.${country.region}`)}
+            <span className="ml-2 inline-flex items-center gap-1 text-ink-400">
+              <CalendarClock className="h-3.5 w-3.5" aria-hidden="true" />
+              {maxStay}
+            </span>
           </p>
         </div>
         <VisaStatusBadge status={country.visaStatus} className="hidden sm:inline-flex" />
@@ -58,9 +62,9 @@ export default function CountryCard({ country, layout = 'grid', index = 0 }) {
         <Link
           to={`/countries/${country.code}`}
           className="btn-secondary hidden md:inline-flex"
-          aria-label={`View details for ${country.name}`}
+          aria-label={`${t('common.viewDetails')}: ${country.name}`}
         >
-          View details
+          {t('common.viewDetails')}
         </Link>
       </motion.div>
     )
@@ -90,25 +94,24 @@ export default function CountryCard({ country, layout = 'grid', index = 0 }) {
                 {country.name}
               </Link>
             </h3>
-            <p className="mt-0.5 text-xs font-medium text-ink-400">{country.region}</p>
+            <p className="mt-0.5 text-xs font-medium text-ink-400">{t(`region.${country.region}`)}</p>
           </div>
           <VisaStatusBadge status={country.visaStatus} />
         </div>
         <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-500">
-          {country.description ||
-            `Visa guidance for Tunisian passport holders travelling to ${country.name}.`}
+          {country.description || t('country.descriptionFallback', { name: country.name })}
         </p>
         <div className="mt-3 flex items-center justify-between border-t border-ink-100 pt-3">
           <span className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-500">
             <CalendarClock className="h-3.5 w-3.5" aria-hidden="true" />
-            {formatMaxStay(country.maxStayDays)}
+            {maxStay}
           </span>
           <Link
             to={`/countries/${country.code}`}
             className="inline-flex items-center gap-1 text-xs font-bold tracking-[0.06em] text-ink-900 uppercase transition-colors hover:text-brand-600"
-            aria-label={`View requirements for ${country.name}`}
+            aria-label={`${t('common.viewDetails')}: ${country.name}`}
           >
-            View requirements
+            {t('common.viewDetails')}
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
           </Link>
         </div>

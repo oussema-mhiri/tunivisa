@@ -1,7 +1,9 @@
 import { STATUS_ORDER, visaStatusMeta } from '../utils/countryMeta'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 export default function VisaStatusLegend({ compact = false, className }) {
+  const { t } = useI18n()
   const items = STATUS_ORDER
   return (
     <ul className={cn(compact ? 'flex flex-wrap items-center gap-x-4 gap-y-2' : 'space-y-2', className)}>
@@ -17,7 +19,7 @@ export default function VisaStatusLegend({ compact = false, className }) {
                 meta.dot,
               )}
             />
-            <span className={cn('font-medium text-ink-700', compact ? 'text-xs' : 'text-sm')}>{meta.label}</span>
+            <span className={cn('font-medium text-ink-700', compact ? 'text-xs' : 'text-sm')}>{t(`status.${key}`)}</span>
           </li>
         )
       })}

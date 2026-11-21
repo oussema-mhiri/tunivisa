@@ -8,6 +8,7 @@ import {
   buildStreamingUserPrompt,
   buildSystemPrompt,
   buildUserPrompt,
+  buildKnowledgeAnswer,
   defaultSuggestions,
   fallbackAnswer,
 } from '../lib/prompt.js'
@@ -79,12 +80,11 @@ async function handleJson(req, res, { requestId, payload, retrieved, cacheKey, l
           groq: groqError.message,
         }),
       )
-      res.status(503).json({
-        error: 'The visa assistant is temporarily unavailable. Please try again later.',
-        code: 'providers_unavailable',
-        requestId,
-      })
-      return
+      result = {
+        answer: buildKnowledgeAnswer({ language: payload.language, retrieved }),
+        suggestedFollowUps: [],
+      }
+      provider = 'knowledge'
     }
   }
 
@@ -142,7 +142,7 @@ async function handleStream(req, res, { requestId, payload, retrieved, cacheKey,
   let clientClosed = false
   const abortController = new AbortController()
 
-  req.on?.('close', () => {
+  res.on?.('close', () => {
     clientClosed = true
     abortController.abort()
   })
@@ -192,9 +192,9 @@ async function handleStream(req, res, { requestId, payload, retrieved, cacheKey,
             groq: groqError.message,
           }),
         )
-        writeSseEvent(res, 'error', { code: 'providers_unavailable', message: 'The visa assistant is temporarily unavailable. Please try again later.' })
-        endSse(res)
-        return
+        text = buildKnowledgeAnswer({ language: payload.language, retrieved })
+        provider = 'knowledge'
+        writeSseEvent(res, 'delta', { text })
       }
     } else if (!clientClosed) {
       writeSseEvent(res, 'error', { code: 'stream_error', message: 'The response stream was interrupted.' })

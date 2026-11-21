@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import SearchPalette from '../components/SearchPalette'
 import ChatWidget from '../components/chat/ChatWidget'
+import { useI18n } from '../i18n/LanguageContext'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -15,6 +16,7 @@ function ScrollToTop() {
 }
 
 export default function PublicLayout() {
+  const { t } = useI18n()
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollToTop />
@@ -22,7 +24,7 @@ export default function PublicLayout() {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:z-[110] focus:rounded-none focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white"
       >
-        Skip to main content
+        {t('layout.skip')}
       </a>
       <Navbar />
       <motion.main

@@ -4,16 +4,18 @@ import Flag from '../../components/Flag'
 import VerificationBadge from '../../components/VerificationBadge'
 import SearchBar from '../../components/SearchBar'
 import EmptyState from '../../components/EmptyState'
-import { buildAdminSources, VERIFICATION_META } from '../../data/admin'
+import { buildAdminSources } from '../../data/admin'
 import { formatDate } from '../../utils/formatters'
 import { useToast } from '../../context/ToastContext'
+import { useI18n } from '../../i18n/LanguageContext'
 import { useDebounce } from '../../hooks/useDebounce'
 import { useSeo } from '../../hooks/useSeo'
 
 const STATUS_KEYS = ['verified', 'needs_review', 'expired']
 
 export default function AdminSourcesPage() {
-  useSeo({ title: 'Admin — Sources', description: 'Review official sources and their verification status.' })
+  const { t } = useI18n()
+  useSeo({ title: t('admin.sourcesSeoTitle'), description: t('admin.sourcesSeoDescription') })
   const toast = useToast()
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState('all')
@@ -32,9 +34,9 @@ export default function AdminSourcesPage() {
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <SearchBar value={query} onChange={setQuery} placeholder="Search sources…" className="sm:max-w-xs" />
-        <div className="flex items-center gap-2" role="group" aria-label="Filter by verification status">
-          {[{ key: 'all', label: 'All' }, ...STATUS_KEYS.map((k) => ({ key: k, label: VERIFICATION_META[k].label }))].map(
+        <SearchBar value={query} onChange={setQuery} placeholder={t('admin.searchSources')} className="sm:max-w-xs" />
+        <div className="flex items-center gap-2" role="group" aria-label={t('admin.filterVerification')}>
+          {[{ key: 'all', label: t('common.all') }, ...STATUS_KEYS.map((k) => ({ key: k, label: t(`verification.${k}`) }))].map(
             (opt) => (
               <button
                 key={opt.key}
@@ -57,8 +59,8 @@ export default function AdminSourcesPage() {
       {rows.length === 0 && (
         <EmptyState
           icon={SearchX}
-          title="No sources match"
-          text="Try a different search term or verification status."
+          title={t('admin.noSourcesMatch')}
+          text={t('admin.noSourcesText')}
           action={
             <button
               type="button"
@@ -68,7 +70,7 @@ export default function AdminSourcesPage() {
                 setFilter('all')
               }}
             >
-              Clear filters
+              {t('common.clearFilters')}
             </button>
           }
         />
@@ -78,15 +80,15 @@ export default function AdminSourcesPage() {
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[720px] text-left text-sm">
-              <caption className="sr-only">Official sources and verification status</caption>
+              <caption className="sr-only">{t('admin.tableSourcesCaption')}</caption>
               <thead>
                 <tr className="border-b border-ink-200/80 bg-ink-50/70 text-xs font-semibold tracking-wide text-ink-500 uppercase">
-                  <th scope="col" className="px-5 py-3.5">Source</th>
-                  <th scope="col" className="px-5 py-3.5">Country</th>
-                  <th scope="col" className="px-5 py-3.5">Category</th>
-                  <th scope="col" className="px-5 py-3.5">Last verified</th>
-                  <th scope="col" className="px-5 py-3.5">Verification</th>
-                  <th scope="col" className="px-5 py-3.5 text-right">Actions</th>
+                  <th scope="col" className="px-5 py-3.5">{t('common.source')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('common.country')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colCategory')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('common.lastVerified')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colVerification')}</th>
+                  <th scope="col" className="px-5 py-3.5 text-right">{t('common.actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink-100">
@@ -101,7 +103,7 @@ export default function AdminSourcesPage() {
                         className="mt-0.5 inline-flex max-w-full items-center gap-1 truncate text-xs text-brand-600 hover:text-brand-700"
                       >
                         <ExternalLink className="h-3 w-3 shrink-0" aria-hidden="true" />
-                        <span className="truncate">{s.url || 'No URL'}</span>
+                        <span className="truncate">{s.url || t('admin.noUrl')}</span>
                       </a>
                     </td>
                     <td className="px-5 py-3.5">
@@ -118,12 +120,12 @@ export default function AdminSourcesPage() {
                     <td className="px-5 py-3.5 text-right">
                       <button
                         type="button"
-                        onClick={() => toast.info(`"${s.name}" re-verification is a demo action — nothing is saved.`)}
+                        onClick={() => toast.info(t('admin.reverifyDemo', { name: s.name }))}
                         className="btn-secondary h-9 px-3 text-xs"
-                        aria-label={`Re-verify ${s.name}`}
+                        aria-label={`${t('admin.reverify')} ${s.name}`}
                       >
                         <ShieldAlert className="h-3.5 w-3.5" aria-hidden="true" />
-                        Re-verify
+                        {t('admin.reverify')}
                       </button>
                     </td>
                   </tr>
@@ -135,7 +137,7 @@ export default function AdminSourcesPage() {
       )}
 
       <p className="text-xs text-ink-400">
-        {rows.length} of {all.length} sources shown. Verification status is derived from the last-checked date.
+        {t('admin.showingSources', { shown: rows.length, total: all.length })}
       </p>
     </div>
   )

@@ -4,17 +4,24 @@ import { useI18n } from '../../i18n/LanguageContext'
 import { cn } from '../../utils/formatters'
 
 function CellContent({ value, rowId }) {
+  const { t } = useI18n()
   if (rowId === 'status' && value?.meta) {
     return <VisaStatusBadge status={value.raw} />
   }
+  let display = value?.display ?? '—'
+  if (['fee', 'processing', 'method'].includes(rowId) && display === 'Varies') display = t('country.varies')
+  if (rowId === 'maxStay' && (display === 'Not specified' || display === 'Varies')) display = t('country.notSpecified')
+  if (rowId === 'lastVerified' && display === 'N/A') display = t('compare.na')
+  if (rowId === 'source' && display === 'Official government source') display = t('country.officialGovernmentSource')
+  if (rowId === 'embassy' && display === 'Not listed') display = t('compare.notListed')
   if (value?.href && value.display && value.display !== 'Not listed') {
     return (
       <a href={value.href} target="_blank" rel="noreferrer" className="font-medium text-brand-700 underline decoration-brand-200 underline-offset-2 hover:text-brand-800">
-        {value.display}
+        {display}
       </a>
     )
   }
-  return <span className="text-sm text-ink-700">{value?.display ?? '—'}</span>
+  return <span className="text-sm text-ink-700">{display}</span>
 }
 
 export default function CompareTable({ comparison, onlyDifferences = false }) {
@@ -46,7 +53,7 @@ export default function CompareTable({ comparison, onlyDifferences = false }) {
               <tr key={row.id} className={cn('border-b border-ink-100 last:border-b-0', row.different && 'bg-warning-50/40')}>
                 <th className="sticky left-0 z-10 bg-white px-4 py-3 align-top text-sm font-semibold text-ink-700">
                   <span className="flex items-center gap-2">
-                    {row.label}
+                    {t(`compare.row${row.id.charAt(0).toUpperCase()}${row.id.slice(1)}`)}
                     {row.different && <span className="h-1.5 w-1.5 rounded-full bg-warning-500" title={t('compare.different')} />}
                   </span>
                 </th>

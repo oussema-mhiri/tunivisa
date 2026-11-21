@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 export default function Modal({
@@ -15,6 +16,7 @@ export default function Modal({
   className,
   ariaLabel,
 }) {
+  const { t } = useI18n()
   const panelRef = useRef(null)
   const previouslyFocused = useRef(null)
 
@@ -80,7 +82,7 @@ export default function Modal({
                   type="button"
                   onClick={onClose}
                   className="rounded-full p-1.5 text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700"
-                  aria-label="Close dialog"
+                  aria-label={t('modal.close')}
                 >
                   <X className="h-5 w-5" />
                 </button>

@@ -6,10 +6,12 @@ import SearchBar from '../../components/SearchBar'
 import EmptyState from '../../components/EmptyState'
 import { EMBASSIES } from '../../data/embassies'
 import { useDebounce } from '../../hooks/useDebounce'
+import { useI18n } from '../../i18n/LanguageContext'
 import { useSeo } from '../../hooks/useSeo'
 
 export default function AdminEmbassiesPage() {
-  useSeo({ title: 'Admin — Embassies', description: 'Review embassy and visa application centre records.' })
+  const { t } = useI18n()
+  useSeo({ title: t('admin.embassiesSeoTitle'), description: t('admin.embassiesSeoDescription') })
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query, 200)
 
@@ -27,16 +29,16 @@ export default function AdminEmbassiesPage() {
 
   return (
     <div className="space-y-5">
-      <SearchBar value={query} onChange={setQuery} placeholder="Search embassies or cities…" className="sm:max-w-xs" />
+      <SearchBar value={query} onChange={setQuery} placeholder={t('admin.searchEmbassies')} className="sm:max-w-xs" />
 
       {rows.length === 0 && (
         <EmptyState
           icon={SearchX}
-          title="No embassy records match"
-          text="Try a different search term."
+          title={t('admin.noEmbassyMatch')}
+          text={t('admin.noEmbassyText')}
           action={
             <button type="button" className="btn-primary" onClick={() => setQuery('')}>
-              Clear search
+              {t('common.clearSearch')}
             </button>
           }
         />
@@ -46,15 +48,15 @@ export default function AdminEmbassiesPage() {
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-left text-sm">
-              <caption className="sr-only">Embassy and visa application centre records</caption>
+              <caption className="sr-only">{t('admin.tableEmbassiesCaption')}</caption>
               <thead>
                 <tr className="border-b border-ink-200/80 bg-ink-50/70 text-xs font-semibold tracking-wide text-ink-500 uppercase">
-                  <th scope="col" className="px-5 py-3.5">Country</th>
-                  <th scope="col" className="px-5 py-3.5">Mission</th>
-                  <th scope="col" className="px-5 py-3.5">Type</th>
-                  <th scope="col" className="px-5 py-3.5">City</th>
-                  <th scope="col" className="px-5 py-3.5">Phone</th>
-                  <th scope="col" className="px-5 py-3.5">Website</th>
+                  <th scope="col" className="px-5 py-3.5">{t('common.country')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colMission')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colType')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('embassy.city')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('embassy.phone')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colWebsite')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink-100">
@@ -87,7 +89,7 @@ export default function AdminEmbassiesPage() {
                         rel="noreferrer"
                         className="inline-flex items-center gap-1 text-xs font-semibold text-brand-600 hover:text-brand-700"
                       >
-                        Visit site
+                        {t('admin.visitSite')}
                         <ExternalLink className="h-3 w-3" aria-hidden="true" />
                       </a>
                     </td>
@@ -100,7 +102,7 @@ export default function AdminEmbassiesPage() {
       )}
 
       <p className="text-xs text-ink-400">
-        {rows.length} of {EMBASSIES.length} records shown. Blank fields are not published on the official page — confirm details on the embassy website.
+        {t('admin.showingEmbassies', { shown: rows.length, total: EMBASSIES.length })}
       </p>
     </div>
   )

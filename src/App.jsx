@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { Plane } from 'lucide-react'
 import PublicLayout from './layouts/PublicLayout'
 import AdminLayout from './layouts/AdminLayout'
+import { useI18n } from './i18n/LanguageContext'
 
 // -----------------------------------------------------------------------------
 // Route table. Pages are lazy-loaded so each route ships its own JS chunk
@@ -28,17 +29,19 @@ const AdminEmbassiesPage = lazy(() => import('./pages/admin/AdminEmbassiesPage')
 const AdminSourcesPage = lazy(() => import('./pages/admin/AdminSourcesPage'))
 
 function PageLoader() {
+  const { t } = useI18n()
   return (
-    <div className="flex min-h-[60vh] items-center justify-center" role="status" aria-label="Loading page">
+    <div className="flex min-h-[60vh] items-center justify-center" role="status" aria-label={t('layout.loadingPage')}>
       <div className="flex flex-col items-center gap-3">
         <div className="h-9 w-9 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
-        <p className="text-sm font-medium text-ink-500">Loading…</p>
+        <p className="text-sm font-medium text-ink-500">{t('layout.loading')}</p>
       </div>
     </div>
   )
 }
 
 export default function App() {
+  const { t } = useI18n()
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
@@ -71,8 +74,8 @@ export default function App() {
             element={
               <NotFoundPage
                 icon={Plane}
-                title="Page not found"
-                text="The page you're looking for doesn't exist or may have been moved."
+                title={t('notFound.title')}
+                text={t('notFound.text')}
               />
             }
           />

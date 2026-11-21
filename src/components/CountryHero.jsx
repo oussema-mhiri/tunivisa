@@ -3,9 +3,11 @@ import { Heart, MapPin } from 'lucide-react'
 import Flag from './Flag'
 import Badge from './Badge'
 import { useApp } from '../context/AppContext'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 export default function CountryHero({ country, demo = false }) {
+  const { t } = useI18n()
   const { isSaved, toggleSaved } = useApp()
   const saved = isSaved(country.code)
 
@@ -26,19 +28,19 @@ export default function CountryHero({ country, demo = false }) {
             <h1 className="font-display text-4xl leading-none text-ink-900 sm:text-6xl">
               {country.name}
             </h1>
-            {country.detailed && <Badge tone="brand">Full guide</Badge>}
-            {demo && <Badge tone="warning">Limited data</Badge>}
+            {country.detailed && <Badge tone="brand">{t('country.fullGuide')}</Badge>}
+            {demo && <Badge tone="warning">{t('country.limitedData')}</Badge>}
           </div>
           <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-ink-500">
             {country.capital && (
               <span className="inline-flex items-center gap-1.5">
                 <span className="zc-emoji" aria-hidden="true">🏛️</span>
-                Capital: <span className="font-medium text-ink-700">{country.capital}</span>
+                {t('country.capital')}: <span className="font-medium text-ink-700">{country.capital}</span>
               </span>
             )}
             <span className="inline-flex items-center gap-1.5">
               <MapPin className="h-4 w-4" aria-hidden="true" />
-              {country.region}
+              {t(`region.${country.region}`) !== `region.${country.region}` ? t(`region.${country.region}`) : country.region}
             </span>
             {country.languages && (
               <span className="inline-flex items-center gap-1.5">
@@ -62,14 +64,14 @@ export default function CountryHero({ country, demo = false }) {
           type="button"
           onClick={() => toggleSaved(country.code, country.name)}
           aria-pressed={saved}
-          aria-label={saved ? `Remove ${country.name} from saved` : `Save ${country.name}`}
+          aria-label={saved ? `${t('common.remove')} ${country.name}` : `${t('country.saveDestination')}: ${country.name}`}
           className={cn(
             'btn shrink-0',
             saved ? 'btn-danger' : 'btn-secondary',
           )}
         >
           <Heart className={cn('h-4.5 w-4.5', saved && 'fill-current')} aria-hidden="true" />
-          {saved ? 'Saved' : 'Save destination'}
+          {saved ? t('common.saved') : t('country.saveDestination')}
         </button>
       </div>
     </div>

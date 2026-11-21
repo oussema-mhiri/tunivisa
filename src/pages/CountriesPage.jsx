@@ -19,8 +19,8 @@ export default function CountriesPage() {
   const { t } = useI18n()
   useSeo({
     path: '/countries',
-    title: 'Explore countries',
-    description: 'Search and filter every destination with visa information for Tunisian passport holders.',
+    title: t('countries.seoTitle'),
+    description: t('countries.seoDescription'),
   })
 
   const [countries, setCountries] = useState(null)
@@ -123,33 +123,33 @@ export default function CountriesPage() {
             className="lg:max-w-md"
           />
           <div className="flex flex-wrap items-center gap-2">
-            <label htmlFor="status-filter" className="sr-only">Filter by visa status</label>
+            <label htmlFor="status-filter" className="sr-only">{t('countries.filterByStatus')}</label>
             <select
               id="status-filter"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               className="input w-auto"
             >
-              <option value="all">All statuses</option>
+              <option value="all">{t('countries.allStatuses')}</option>
               {STATUS_ORDER.filter((s) => s !== 'unknown').map((s) => (
-                <option key={s} value={s}>{visaStatusMeta(s).label}</option>
+                <option key={s} value={s}>{t(`status.${s}`)}</option>
               ))}
             </select>
 
-            <label htmlFor="region-filter" className="sr-only">Filter by region</label>
+            <label htmlFor="region-filter" className="sr-only">{t('countries.filterByRegion')}</label>
             <select
               id="region-filter"
               value={region}
               onChange={(e) => setRegion(e.target.value)}
               className="input w-auto"
             >
-              <option value="all">All regions</option>
+              <option value="all">{t('countries.allRegions')}</option>
               {REGIONS.map((r) => (
-                <option key={r} value={r}>{r}</option>
+                <option key={r} value={r}>{t(`region.${r}`)}</option>
               ))}
             </select>
 
-            <label htmlFor="sort" className="sr-only">Sort countries</label>
+            <label htmlFor="sort" className="sr-only">{t('countries.sortCountries')}</label>
             <select
               id="sort"
               value={sort}
@@ -162,7 +162,7 @@ export default function CountriesPage() {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by visa status">
+        <div className="flex flex-wrap gap-2" role="group" aria-label={t('countries.filterByStatus')}>
           {['all', ...STATUS_ORDER.filter((s) => s !== 'unknown')].map((key) => {
             const active = status === key
             return (
@@ -180,7 +180,7 @@ export default function CountriesPage() {
                     : 'border-ink-200 bg-white text-ink-600 hover:border-ink-300 hover:bg-ink-50',
                 )}
               >
-                {key === 'all' ? t('common.all') : visaStatusMeta(key).label}
+                {key === 'all' ? t('common.all') : t(`status.${key}`)}
               </button>
             )
           })}
@@ -229,7 +229,7 @@ export default function CountriesPage() {
             onClick={() => setVisible((v) => v + PAGE_SIZE)}
             className="btn-secondary"
           >
-            {t('countries.loadMore')} ({filtered.length - visible} left)
+            {t('countries.loadMore', { count: filtered.length - visible })}
           </button>
         </div>
       )}

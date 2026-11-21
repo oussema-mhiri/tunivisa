@@ -1,8 +1,9 @@
 import { createHash } from 'node:crypto'
+import { KNOWLEDGE_META } from '../data/knowledge.js'
 import { redisGet, redisSet } from './redis.js'
 
 const CACHE_TTL_SECONDS = 60 * 60 * 24
-const CACHE_VERSION = 'v1'
+const CACHE_VERSION = `v2-${KNOWLEDGE_META.generatedAt}`
 
 export function buildCacheKey({ message, language, context, history }) {
   if (history && history.length > 0) return null

@@ -8,12 +8,14 @@ import { DOCS_BY_TYPE } from '../../data/visaRules'
 import { VISA_TYPES } from '../../data/visaTypes'
 import { useToast } from '../../context/ToastContext'
 import { useDebounce } from '../../hooks/useDebounce'
+import { useI18n } from '../../i18n/LanguageContext'
 import { useSeo } from '../../hooks/useSeo'
 
 const TOTAL_PURPOSES = VISA_TYPES.length
 
 export default function AdminDocumentsPage() {
-  useSeo({ title: 'Admin — Documents', description: 'Review the document checklist registry.' })
+  const { t } = useI18n()
+  useSeo({ title: t('admin.documentsSeoTitle'), description: t('admin.documentsSeoDescription') })
   const toast = useToast()
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState('all')
@@ -36,12 +38,12 @@ export default function AdminDocumentsPage() {
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <SearchBar value={query} onChange={setQuery} placeholder="Search documents…" className="sm:max-w-xs" />
-        <div className="flex items-center gap-2" role="group" aria-label="Filter documents">
+        <SearchBar value={query} onChange={setQuery} placeholder={t('admin.searchDocuments')} className="sm:max-w-xs" />
+        <div className="flex items-center gap-2" role="group" aria-label={t('admin.filterDocuments')}>
           {[
-            { key: 'all', label: `All (${DOCUMENTS.length})` },
-            { key: 'required', label: `Required (${requiredCount})` },
-            { key: 'optional', label: `Optional (${DOCUMENTS.length - requiredCount})` },
+            { key: 'all', label: t('admin.allCount', { count: DOCUMENTS.length }) },
+            { key: 'required', label: t('admin.requiredCount', { count: requiredCount }) },
+            { key: 'optional', label: t('admin.optionalCount', { count: DOCUMENTS.length - requiredCount }) },
           ].map((opt) => (
             <button
               key={opt.key}
@@ -63,8 +65,8 @@ export default function AdminDocumentsPage() {
       {rows.length === 0 && (
         <EmptyState
           icon={SearchX}
-          title="No documents match"
-          text="Try a different search term or filter."
+          title={t('admin.noDocumentsMatch')}
+          text={t('admin.noDocumentsText')}
           action={
             <button
               type="button"
@@ -74,7 +76,7 @@ export default function AdminDocumentsPage() {
                 setFilter('all')
               }}
             >
-              Clear filters
+              {t('common.clearFilters')}
             </button>
           }
         />
@@ -88,21 +90,21 @@ export default function AdminDocumentsPage() {
                 <FileCheck2 className="h-5 w-5" aria-hidden="true" />
               </span>
               <Badge tone={doc.required ? 'brand' : 'gray'}>
-                {doc.required ? 'Required' : 'Optional'}
+                {t(doc.required ? 'document.required' : 'document.optional')}
               </Badge>
             </div>
             <h2 className="mt-4 font-display text-base font-bold text-ink-900">{doc.label}</h2>
             <p className="mt-1.5 flex-1 text-sm leading-relaxed text-ink-500">{doc.description}</p>
             <div className="mt-4 flex items-center justify-between border-t border-ink-100 pt-3">
               <span className="text-xs font-medium text-ink-400">
-                Used in {doc.usedIn} of {TOTAL_PURPOSES} purposes
+                {t('admin.usedIn', { used: doc.usedIn, total: TOTAL_PURPOSES })}
               </span>
               <button
                 type="button"
-                onClick={() => toast.info(`"${doc.label}": editing is not persisted in this preview.`)}
+                  onClick={() => toast.info(t('admin.editDocDemo', { label: doc.label }))}
                 className="text-xs font-semibold text-brand-600 hover:text-brand-700"
               >
-                Edit →
+                {t('admin.editDoc')}
               </button>
             </div>
           </article>
@@ -110,7 +112,7 @@ export default function AdminDocumentsPage() {
       </div>
 
       <p className="text-xs text-ink-400">
-        {rows.length} of {DOCUMENTS.length} documents shown. Catalogue is general guidance — confirm the official checklist per destination.
+        {t('admin.showingDocuments', { shown: rows.length, total: DOCUMENTS.length })}
       </p>
     </div>
   )

@@ -10,15 +10,16 @@ import VisaStatusLegend from './VisaStatusLegend'
 import { getMapData } from '../services/api'
 import { visaStatusMeta, REGIONS } from '../utils/countryMeta'
 import { useTheme } from '../context/ThemeContext'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 const STATUS_FILTERS = ['all', 'visa_free', 'visa_on_arrival', 'evisa_eta', 'visa_required', 'no_admission']
 const HOME_COLOR = 'var(--color-warning-400)'
 
 function MapTooltip({ tooltip }) {
+  const { t } = useI18n()
   if (!tooltip) return null
   const { country, x, y } = tooltip
-  const meta = visaStatusMeta(country.status || 'unknown')
   return (
     <div
       className="pointer-events-none fixed z-50 w-56 -translate-x-1/2 -translate-y-full"
@@ -36,9 +37,9 @@ function MapTooltip({ tooltip }) {
           <div className="min-w-0">
             <p className="truncate text-sm font-bold text-ink-900">{country.name}</p>
             {country.home ? (
-              <p className="text-xs font-medium text-ink-500">Your home country</p>
+              <p className="text-xs font-medium text-ink-500">{t('map.homeTooltip')}</p>
             ) : (
-              <p className="text-xs text-ink-400">{country.region}</p>
+              <p className="text-xs text-ink-400">{t(`region.${country.region}`)}</p>
             )}
           </div>
         </div>
@@ -46,14 +47,14 @@ function MapTooltip({ tooltip }) {
           <div className="mt-2.5 flex items-center justify-between gap-2 border-t border-ink-100 pt-2">
             <VisaStatusBadge status={country.status || 'unknown'} />
             <span className="text-xs font-semibold text-ink-500">
-              {country.maxStayDays ? `≤ ${country.maxStayDays} days` : 'Varies'}
+              {country.maxStayDays ? t('map.daysShort', { count: country.maxStayDays }) : t('country.notSpecified')}
             </span>
           </div>
         )}
         {country.detailed && (
-          <p className="mt-2 text-[11px] font-medium text-brand-600">Click for full guidance →</p>
+          <p className="mt-2 text-[11px] font-medium text-brand-600">{t('map.fullGuidance')}</p>
         )}
-        {!country.home && <p className="mt-1.5 text-[11px] leading-snug text-ink-400">{meta.description}</p>}
+        {!country.home && <p className="mt-1.5 text-[11px] leading-snug text-ink-400">{t(`statusDescription.${country.status || 'unknown'}`)}</p>}
       </motion.div>
     </div>
   )
@@ -117,6 +118,7 @@ const MemoizedCountryPath = memo(CountryPath)
 
 export default function WorldMap({ showFilters = true }) {
   const navigate = useNavigate()
+  const { t } = useI18n()
   const { theme } = useTheme()
   const dark = theme === 'dark'
   const [mapData, setMapData] = useState(null)
@@ -182,12 +184,12 @@ export default function WorldMap({ showFilters = true }) {
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/80 backdrop-blur-[2px]">
             <div className="flex flex-col items-center gap-3">
               <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden="true" />
-              <p className="text-sm font-medium text-ink-500">Loading world map…</p>
+              <p className="text-sm font-medium text-ink-500">{t('map.loading')}</p>
             </div>
           </div>
         )}
 
-        <svg className="h-[240px] w-full sm:h-auto" viewBox="0 0 800 450" role="img" aria-label="Interactive world map of visa requirements for Tunisian passport holders">
+        <svg className="h-[240px] w-full sm:h-auto" viewBox="0 0 800 450" role="img" aria-label={t('map.aria')}>
           <ComposableMap projection="geoEqualEarth" projectionConfig={{ scale: 147, center: [0, 15] }}>
             <Sphere fill={dark ? '#0b1420' : '#e7e1d6'} stroke={dark ? '#2c4054' : '#0b2545'} strokeWidth={0.6} />
             <ZoomableGroup zoom={zoom} center={center} minZoom={1} maxZoom={8} translateExtent={[[-400, -225], [1200, 675]]}>
@@ -220,7 +222,7 @@ export default function WorldMap({ showFilters = true }) {
             type="button"
             onClick={() => zoomBy(1.5)}
             className="zc-map-control flex h-9 w-9 items-center justify-center text-ink-600 transition-all active:translate-y-0.5 sm:h-10 sm:w-10"
-            aria-label="Zoom in"
+            aria-label={t('map.zoomIn')}
           >
             <Plus className="h-4.5 w-4.5" />
           </button>
@@ -228,7 +230,7 @@ export default function WorldMap({ showFilters = true }) {
             type="button"
             onClick={() => zoomBy(1 / 1.5)}
             className="zc-map-control flex h-9 w-9 items-center justify-center text-ink-600 transition-all active:translate-y-0.5 sm:h-10 sm:w-10"
-            aria-label="Zoom out"
+            aria-label={t('map.zoomOut')}
           >
             <Minus className="h-4.5 w-4.5" />
           </button>
@@ -236,7 +238,7 @@ export default function WorldMap({ showFilters = true }) {
             type="button"
             onClick={resetView}
             className="zc-map-control flex h-9 w-9 items-center justify-center text-ink-600 transition-all active:translate-y-0.5 sm:h-10 sm:w-10"
-            aria-label="Reset map view"
+            aria-label={t('map.resetView')}
           >
             <RotateCcw className="h-4.5 w-4.5" />
           </button>
@@ -244,7 +246,7 @@ export default function WorldMap({ showFilters = true }) {
 
         <div className="zc-map-control absolute top-4 right-4 hidden items-center gap-1.5 px-3 py-2 text-[10px] font-bold tracking-[0.06em] text-ink-700 uppercase sm:flex">
           <Crosshair className="h-3.5 w-3.5 text-brand-600" aria-hidden="true" />
-          {stats.detailed} full visa guides verified
+          {t('map.fullGuides', { count: stats.detailed })}
         </div>
       </div>
 
@@ -254,20 +256,20 @@ export default function WorldMap({ showFilters = true }) {
           <span className="hidden h-6 w-px bg-ink-200 lg:block" aria-hidden="true" />
           <div className="flex items-center gap-2.5">
             <span className="h-3 w-3 rounded-full border border-ink-200" style={{ backgroundColor: HOME_COLOR }} aria-hidden="true" />
-            <span className="text-sm font-medium text-ink-700">Home (Tunisia)</span>
+            <span className="text-sm font-medium text-ink-700">{t('map.home')}</span>
           </div>
         </div>
         <p className="text-xs leading-snug text-ink-400 lg:max-w-xs lg:text-right">
-          Full guides are verified; other country colours are illustrative. Hover for details, click to open a guide.
+          {t('map.legendNote')}
         </p>
       </div>
 
       {showFilters && (
         <div className="space-y-3 border-t border-ink-100 px-5 py-4">
-          <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by visa status">
-            <span className="mr-1 text-xs font-semibold tracking-wide text-ink-400 uppercase">Status</span>
+          <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t('map.filterStatus')}>
+            <span className="mr-1 text-xs font-semibold tracking-wide text-ink-400 uppercase">{t('map.status')}</span>
             {STATUS_FILTERS.map((key) => {
-              const label = key === 'all' ? 'All' : visaStatusMeta(key).label
+              const label = key === 'all' ? t('common.all') : t(`status.${key}`)
               const active = statusFilter === key
               return (
                 <button
@@ -288,8 +290,8 @@ export default function WorldMap({ showFilters = true }) {
             })}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by region">
-            <span className="mr-1 text-xs font-semibold tracking-wide text-ink-400 uppercase">Region</span>
+          <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t('map.filterRegion')}>
+            <span className="mr-1 text-xs font-semibold tracking-wide text-ink-400 uppercase">{t('map.region')}</span>
             {['all', ...REGIONS].map((key) => {
               const active = regionFilter === key
               return (
@@ -305,7 +307,7 @@ export default function WorldMap({ showFilters = true }) {
                       : 'border-ink-200 bg-white text-ink-600 hover:border-ink-300 hover:bg-ink-50',
                   )}
                 >
-                  {key === 'all' ? 'All' : key}
+                  {key === 'all' ? t('common.all') : t(`region.${key}`)}
                 </button>
               )
             })}

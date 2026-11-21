@@ -12,7 +12,7 @@ TuniVisa helps Tunisian travellers understand where they can travel and what the
 - **20 full destination guides** with visa status, maximum stay, fees, processing time, application method, last verification date and official sources.
 - **8 travel purposes** (tourism, study, work, business, family visit, medical, and more) with dedicated requirements.
 - **Visa Assistant**: a short guided questionnaire that generates a personalised document checklist, application steps and readiness score.
-- **AI visa chatbot**: a floating EN/FR assistant that answers from the TuniVisa knowledge base, cites official sources and falls back between two free-tier LLM providers.
+- **AI visa chatbot**: a floating EN/FR/AR assistant that answers from the TuniVisa knowledge base, cites official sources and falls back between two free-tier LLM providers.
 - **Country explorer**: search, filter by visa status and region, sort alphabetically, switch between grid and list views, and load more results.
 - **Document checklists** with progress saved locally per country and visa type.
 - **Embassy and visa application centre** information for the 20 detailed destinations.
@@ -92,7 +92,7 @@ The chatbot backend lives in `server/` and is designed to be deployed as a separ
 | --- | --- | --- |
 | `GEMINI_API_KEY` | Yes | Primary provider. |
 | `GEMINI_MODEL` | No | Defaults to `gemini-3.5-flash-lite`. |
-| `GROQ_API_KEY` | Recommended | Fallback provider if Gemini is unavailable (optional for local dev). |
+| `GROQ_API_KEY` | Recommended | Fallback provider if Gemini is unavailable (required in production to avoid 503s). |
 | `GROQ_MODEL` | No | Defaults to `openai/gpt-oss-120b`. |
 | `ALLOWED_ORIGINS` | No | Defaults to `https://oussema-mhiri.github.io,http://localhost:5173`. |
 | `UPSTASH_REDIS_REST_URL` | No | Enables distributed rate limiting and caching. |
@@ -112,6 +112,8 @@ The API accepts:
 ```
 
 It returns `answer`, `sources`, `suggestedFollowUps`, `relatedLinks`, `provider`, `cached` and `requestId`. Limits are 12 requests per minute and 80 per day per IP, plus a 1,000 requests/day global cap. First-turn responses are cached for 24 hours when Redis is configured.
+
+If both AI providers fail, the API falls back to `provider: 'knowledge'`: it returns an extract of the matching TuniVisa guides instead of a 503. Check `GET /api/health` to confirm which providers are configured.
 
 The knowledge base is generated from `src/data/`:
 
@@ -170,8 +172,10 @@ The site is deployed to GitHub Pages at https://oussema-mhiri.github.io/tunivisa
 - The router uses `import.meta.env.BASE_URL` as its basename.
 - `public/404.html` provides the SPA fallback for deep links on GitHub Pages.
 - The GitHub Actions workflow builds the app and deploys the `dist/` folder.
-- Set the repository variable `VITE_CHAT_API_URL` to the deployed Vercel API base (for example `https://tunivisa-chat.vercel.app/api`) so the widget appears on the live site.
-- Deploy `server/` separately on Vercel: import the repository, set **Root Directory** to `server`, add the variables from `server/.env.example`, and deploy. GitHub Pages cannot host serverless functions or keep provider keys secret.
+- Set the GitHub repository variable **Settings → Secrets and variables → Actions → Variables → `VITE_CHAT_API_URL`** to the deployed Vercel API base (for example `https://tunivisa-chat.vercel.app/api`). The build workflow injects it at build time; without it the widget is hidden.
+- Deploy `server/` separately on Vercel: import the repository, set **Root Directory** to `server`, add the variables from `server/.env.example` (including a valid `GROQ_API_KEY` and `ALLOWED_ORIGINS=https://oussema-mhiri.github.io,http://localhost:5173`), and redeploy.
+- Verify with `GET <VITE_CHAT_API_URL>/health`: `providers.gemini` and `providers.groq` should be `true`, then rebuild/redeploy Pages so the widget appears.
+- GitHub Pages cannot host serverless functions or keep provider keys secret.
 
 ## Project structure
 
@@ -180,7 +184,7 @@ src/
   components/   Reusable UI components
   components/chat/  Floating chatbot widget and message UI
   context/      App, theme and toast providers
-  data/         Mock countries, visa rules, documents, embassies and map data
+  data/         Mock countries, tourism tips, visa rules, documents, embassies and map data
   hooks/        Local storage, debounce, SEO and chat hooks
   i18n/         Language context and translations
   layouts/      Public and admin layouts
@@ -202,6 +206,7 @@ public/
 ## Notes
 
 - Visa rules change frequently. TuniVisa is guidance, not legal advice; always confirm requirements with the destination's official embassy or government website.
-- The `/admin` area is a frontend-only preview. It has no authentication and no persistence. The chat widget is hidden there.
-- English is fully translated; French is partially translated and Arabic is scaffolded, with missing keys falling back to English. The chatbot answers in English or French.
+- The `/admin` area is a read-only frontend preview. It has no authentication and no persistence; action buttons are labelled as demos. The chat widget is hidden there.
+- English, French and Arabic share the same translation keys (missing keys fall back to English). The chatbot detects Arabic questions and answers in English, French or Arabic; Arabic country and purpose aliases are handled by the retrieval layer.
+- Cache keys are tied to `KNOWLEDGE_META.generatedAt`, so regenerating `server/data/knowledge.js` invalidates cached answers.
 - The chatbot is informational only. It cannot predict approval. Questions and recent chat history are sent to the configured AI providers, so never include passport numbers, bank details or other sensitive personal data.

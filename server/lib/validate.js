@@ -28,7 +28,7 @@ function parseBody(body) {
 
 function normalizeLanguage(value) {
   const language = String(value || '').trim().toLowerCase()
-  return language === 'fr' ? 'fr' : 'en'
+  return language === 'fr' || language === 'ar' ? language : 'en'
 }
 
 function normalizeHistory(history) {

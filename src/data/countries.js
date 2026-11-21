@@ -5,11 +5,13 @@
 // This is guidance, not legal advice — always verify on official websites.
 // -----------------------------------------------------------------------------
 
+import { TOURISM_BY_CODE } from './tourism.js'
+
 /**
  * Detailed country profiles. These 20 countries have full guidance pages.
  * The interactive world map uses a broader dataset (see mapData.js).
  */
-export const COUNTRIES = [
+const COUNTRY_PROFILES = [
   {
     code: 'fr',
     iso3: 'FRA',
@@ -331,6 +333,11 @@ export const COUNTRIES = [
       'Tokyo, Kyoto and Mount Fuji — visa-free for Tunisian tourists for stays of up to 90 days.',
   },
 ]
+
+export const COUNTRIES = COUNTRY_PROFILES.map((country) => ({
+  ...country,
+  tourism: TOURISM_BY_CODE[country.code],
+}))
 
 export const SUGGESTED_COUNTRIES = [
   'France',

@@ -1,4 +1,4 @@
-import { formatMaxStay, visaStatusMeta } from './countryMeta.js'
+import { formatMaxStay, SHORT_STAY_TYPES, visaStatusMeta } from './countryMeta.js'
 
 export const SCHENGEN_CODES = new Set([
   'at', 'be', 'bg', 'hr', 'cz', 'dk', 'ee', 'fi', 'fr', 'de', 'gr', 'hu', 'is',
@@ -48,7 +48,8 @@ export function buildComparison({ items = [], visaType = 'tourism' } = {}) {
       'Maximum stay',
       items.map((item) => {
         const days = item.rule?.maxStayDays ?? item.country.maxStayDays ?? null
-        const display = item.rule?.duration || formatMaxStay(days)
+        const ruleDuration = SHORT_STAY_TYPES.includes(item.rule?.visaType) && !days ? null : item.rule?.duration
+        const display = ruleDuration || formatMaxStay(days)
         return { code: item.country.code, raw: days ?? display, display }
       }),
     ),

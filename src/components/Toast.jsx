@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { AlertCircle, CheckCircle2, Info, X } from 'lucide-react'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 const ICONS = {
@@ -15,6 +16,7 @@ const TONES = {
 }
 
 export function Toast({ toast, onDismiss }) {
+  const { t } = useI18n()
   const Icon = ICONS[toast.type] || Info
   return (
     <motion.div
@@ -35,7 +37,7 @@ export function Toast({ toast, onDismiss }) {
         type="button"
         onClick={() => onDismiss(toast.id)}
         className="rounded-full p-0.5 opacity-60 transition-opacity hover:opacity-100"
-        aria-label="Dismiss notification"
+        aria-label={t('toast.dismiss')}
       >
         <X className="h-4 w-4" />
       </button>

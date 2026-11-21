@@ -4,11 +4,18 @@ import { useI18n } from '../../i18n/LanguageContext'
 import { cn } from '../../utils/formatters'
 
 function Value({ row, value }) {
+  const { t } = useI18n()
   if (row.id === 'status' && value?.meta) return <VisaStatusBadge status={value.raw} />
+  let display = value?.display ?? '—'
+  if (['fee', 'processing', 'method'].includes(row.id) && display === 'Varies') display = t('country.varies')
+  if (row.id === 'maxStay' && (display === 'Not specified' || display === 'Varies')) display = t('country.notSpecified')
+  if (row.id === 'lastVerified' && display === 'N/A') display = t('compare.na')
+  if (row.id === 'source' && display === 'Official government source') display = t('country.officialGovernmentSource')
+  if (row.id === 'embassy' && display === 'Not listed') display = t('compare.notListed')
   if (value?.href && value.display && value.display !== 'Not listed') {
-    return <a href={value.href} target="_blank" rel="noreferrer" className="text-sm font-medium text-brand-700 underline">{value.display}</a>
+    return <a href={value.href} target="_blank" rel="noreferrer" className="text-sm font-medium text-brand-700 underline">{display}</a>
   }
-  return <span className="text-sm text-ink-700">{value?.display ?? '—'}</span>
+  return <span className="text-sm text-ink-700">{display}</span>
 }
 
 export default function CompareCard({ comparison, onlyDifferences = false }) {
@@ -30,7 +37,7 @@ export default function CompareCard({ comparison, onlyDifferences = false }) {
               return (
                 <div key={row.id} className={cn('grid grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-3 px-4 py-3', row.different && 'bg-warning-50/40')}>
                   <dt className="text-xs font-bold uppercase tracking-wide text-ink-500">
-                    {row.label}
+                    {t(`compare.row${row.id.charAt(0).toUpperCase()}${row.id.slice(1)}`)}
                     {row.different && <span className="ml-1 inline-block h-1.5 w-1.5 rounded-full bg-warning-500 align-middle" />}
                   </dt>
                   <dd><Value row={row} value={value} /></dd>

@@ -58,6 +58,7 @@ export const GEMINI_RESPONSE_SCHEMA = uppercaseTypes(BASE_SCHEMA)
 const LANGUAGE_NAME = {
   en: 'English',
   fr: 'French',
+  ar: 'Arabic',
 }
 
 export function buildSystemPrompt(language) {
@@ -157,6 +158,28 @@ export function defaultSuggestions(language, { countryName, visaTypeLabel } = {}
     ]
   }
 
+  if (language === 'ar') {
+    if (countryName && visaTypeLabel) {
+      return [
+        `ما الوثائق المطلوبة لتأشيرة ${visaTypeLabel} إلى ${countryName}؟`,
+        `ما الرسوم ومدة المعالجة لتأشيرة ${countryName}؟`,
+        `أين تقع السفارة أو مركز تقديم التأشيرات في ${countryName}؟`,
+      ]
+    }
+    if (countryName) {
+      return [
+        `هل أحتاج إلى تأشيرة لدخول ${countryName}؟`,
+        `ما الوثائق المطلوبة لـ ${countryName}؟`,
+        `كم مدة الإقامة المسموح بها في ${countryName}؟`,
+      ]
+    }
+    return [
+      'ما الدول التي يمكنني زيارتها دون تأشيرة بجواز سفر تونسي؟',
+      'ما الوثائق المطلوبة لتأشيرة الدراسة؟',
+      'كيف يعمل مقياس الجاهزية في TuniVisa؟',
+    ]
+  }
+
   if (countryName && visaTypeLabel) {
     return [
       `What documents do I need for the ${visaTypeLabel.toLowerCase()} for ${countryName}?`,
@@ -179,7 +202,30 @@ export function defaultSuggestions(language, { countryName, visaTypeLabel } = {}
 }
 
 export function fallbackAnswer(language) {
-  return language === 'fr'
-    ? "Je n'ai pas trouvé de réponse fiable dans les guides TuniVisa pour cette question. Vérifiez la page du pays ou la source officielle indiquée avant de poursuivre."
-    : 'I could not find a reliable answer in the TuniVisa guides for this question. Check the country page or the official source before proceeding.'
+  if (language === 'fr') {
+    return "Je n'ai pas trouvé de réponse fiable dans les guides TuniVisa pour cette question. Vérifiez la page du pays ou la source officielle indiquée avant de poursuivre."
+  }
+  if (language === 'ar') {
+    return 'لم أجد إجابة موثوقة في أدلة TuniVisa لهذا السؤال. تحقق من صفحة البلد أو المصدر الرسمي المذكور قبل اتخاذ أي إجراء.'
+  }
+  return 'I could not find a reliable answer in the TuniVisa guides for this question. Check the country page or the official source before proceeding.'
+}
+
+export function buildKnowledgeAnswer({ language, retrieved }) {
+  const docs = retrieved?.docs?.slice(0, 2) || []
+  if (docs.length === 0) return fallbackAnswer(language)
+
+  const intro = language === 'fr'
+    ? 'Les réponses automatiques sont momentanément indisponibles. Voici un extrait des guides TuniVisa :'
+    : language === 'ar'
+      ? 'الردود الآلية غير متاحة حاليًا. إليك مقتطفًا من أدلة TuniVisa:'
+      : 'Automated answers are temporarily unavailable. Here is an extract from the TuniVisa guides:'
+  const notice = language === 'fr'
+    ? 'Vérifiez toujours la page du pays et la source officielle avant toute démarche.'
+    : language === 'ar'
+      ? 'تحقق دائمًا من صفحة البلد والمصدر الرسمي قبل اتخاذ أي إجراء.'
+      : 'Always check the country page and the official source before taking any action.'
+  const body = docs.map((doc) => `${doc.title}: ${doc.text}`).join('\n\n').slice(0, 2200)
+
+  return `${intro}\n\n${body}\n\n${notice}`
 }

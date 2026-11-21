@@ -31,13 +31,13 @@ function errorText(error, t) {
   if (!error) return ''
   if (error.code === 'rate_limited') return t('chat.rateLimited')
   if (error.code === 'timeout') return t('chat.timeout')
-  if (error.code === 'providers_unavailable') return t('chat.unavailable')
   return t('chat.error')
 }
 
 export default function ChatWidget() {
   const { pathname } = useLocation()
   const { lang, t } = useI18n()
+  const dir = lang === 'ar' ? 'rtl' : 'ltr'
   const toast = useToast()
   const context = useChatContext()
   const {
@@ -129,9 +129,13 @@ export default function ChatWidget() {
   const handleFeedback = async (message, vote) => {
     const next = message.feedback === vote ? null : vote
     updateMessage(message.id, { feedback: next })
-    if (next) {
-      sendFeedback({ requestId: message.requestId, vote: next, messageId: message.id, context })
+    if (!next) return
+    const result = await sendFeedback({ requestId: message.requestId, vote: next, messageId: message.id, context })
+    if (result.ok) {
       toast.success(t('chat.feedbackSaved'))
+    } else {
+      updateMessage(message.id, { feedback: null })
+      toast.error(t('chat.error'))
     }
   }
 
@@ -147,6 +151,7 @@ export default function ChatWidget() {
             transition={{ duration: 0.18, ease: 'easeOut' }}
             className="fixed inset-x-3 bottom-20 top-16 z-50 flex flex-col overflow-hidden rounded-2xl border border-ink-200 bg-ink-50 shadow-pop dark:bg-ink-100 sm:inset-auto sm:bottom-24 sm:right-5 sm:h-[620px] sm:max-h-[calc(100vh-8rem)] sm:w-[400px] sm:max-w-[calc(100vw-2rem)]"
             role="dialog"
+            dir={dir}
             aria-label={t('chat.title')}
           >
             <header className="flex items-start justify-between gap-3 bg-ink-900 px-4 py-3 text-white">
@@ -272,6 +277,7 @@ export default function ChatWidget() {
                   id="tunivisa-chat-input"
                   ref={inputRef}
                   type="text"
+                  dir={dir}
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   maxLength={500}

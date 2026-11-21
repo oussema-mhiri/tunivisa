@@ -63,6 +63,13 @@ function makeCountryDoc(country) {
   const stay = country.maxStayDays ? `The maximum stay is ${country.maxStayDays} days.` : 'The maximum stay varies by entry decision.'
   const source = OFFICIAL_SOURCE[country.code] || 'Official government source'
   const lastVerified = LAST_VERIFIED[country.code] || '2026-11-14'
+  const tourism = country.tourism
+  const capitalText = country.capital
+    ? `the capital is ${country.capital}${country.capital.endsWith('.') ? '' : '.'}`
+    : 'the capital is listed in the guide.'
+  const tourismText = tourism
+    ? ` Tourism: ${capitalText} Must-see places: ${tourism.highlights.join(', ')}. Local tip: ${tourism.tip.en} Best time to visit: ${tourism.bestTime.en}`
+    : ''
 
   return {
     id: `country:${country.code}`,
@@ -71,8 +78,20 @@ function makeCountryDoc(country) {
     countryCode: country.code,
     countryName: country.name,
     route: `/countries/${country.code}`,
-    text: `${country.name} (${country.code.toUpperCase()}) is in ${REGION_LABELS[country.region] || country.region}. For Tunisian passport holders: ${status}. ${stay} ${country.description || ''} TuniVisa has a full destination guide for ${country.name}. Official source: ${source}. Last verified: ${lastVerified}.`,
-    keywords: unique([country.name, country.officialName, country.code, country.capital, country.region, country.visaStatus, 'visa', 'requirements', 'stay']),
+    text: `${country.name} (${country.code.toUpperCase()}) is in ${REGION_LABELS[country.region] || country.region}. For Tunisian passport holders: ${status}. ${stay} ${country.description || ''}${tourismText} TuniVisa has a full destination guide for ${country.name}. Official source: ${source}. Last verified: ${lastVerified}.`,
+    keywords: unique([
+      country.name,
+      country.officialName,
+      country.code,
+      country.capital,
+      country.region,
+      country.visaStatus,
+      'visa',
+      'requirements',
+      'stay',
+      ...(tourism?.highlights || []),
+      ...(tourism ? ['tourism', 'attractions', 'places to visit', 'capital', 'bon plan', 'que visiter', 'visit'] : []),
+    ]),
     sources: sourceList(country.code),
     lastVerified,
   }
@@ -276,6 +295,7 @@ async function main() {
     root: ROOT,
     configFile: false,
     appType: 'custom',
+    optimizeDeps: { noDiscovery: true, include: [] },
     server: { middlewareMode: true },
     logLevel: 'error',
   })

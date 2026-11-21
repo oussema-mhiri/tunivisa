@@ -14,18 +14,20 @@ import EmptyState from '../components/EmptyState'
 import { Skeleton, SkeletonText } from '../components/Skeleton'
 import { getVisaDetails } from '../services/api'
 import { useSeo } from '../hooks/useSeo'
+import { useI18n } from '../i18n/LanguageContext'
 
 export default function VisaDetailsPage() {
+  const { t } = useI18n()
   const { code, visaType } = useParams()
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
 
   useSeo({
-    title: data ? `${data.country.name} — ${data.rule.visaTypeLabel} Visa` : undefined,
+    title: data ? t('visa.seoTitle', { country: data.country.name, type: t(`purpose.${data.rule.visaType}`) }) : undefined,
     path: data ? `/countries/${data.country.code}/visa/${data.rule.visaType}` : undefined,
     description: data
-      ? `Everything about the ${data.rule.visaTypeLabel.toLowerCase()} visa for ${data.country.name}: overview, documents, application steps and official sources.`
+      ? t('visa.seoDescription', { country: data.country.name, type: t(`purpose.${data.rule.visaType}`) })
       : undefined,
   })
 
@@ -78,12 +80,12 @@ export default function VisaDetailsPage() {
       <div className="container-page py-20">
         <EmptyState
           icon={Compass}
-          title="Visa guide not found"
-          text={`We could not find visa details for this country or purpose. Check the link or explore another destination.`}
+          title={t('visa.notFound')}
+          text={t('visa.notFoundText')}
           action={
             <Link to="/countries" className="btn-primary">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Explore countries
+              {t('visa.exploreCountries')}
             </Link>
           }
         />
@@ -92,13 +94,15 @@ export default function VisaDetailsPage() {
   }
 
   const { country, rule, documents, embassy, links } = data
+  const typeLabel = t(`purpose.${rule.visaType}`)
+  const shortLabel = t(`purpose.short.${rule.visaType}`)
 
   return (
     <div className="container-page py-8 sm:py-10">
-      <nav aria-label="Breadcrumb" className="mb-6">
+      <nav aria-label={t('common.breadcrumb')} className="mb-6">
         <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink-500">
           <li>
-            <Link to="/countries" className="font-medium transition-colors hover:text-brand-600">Countries</Link>
+            <Link to="/countries" className="font-medium transition-colors hover:text-brand-600">{t('visa.breadcrumb')}</Link>
           </li>
           <li aria-hidden="true">/</li>
           <li>
@@ -107,7 +111,7 @@ export default function VisaDetailsPage() {
             </Link>
           </li>
           <li aria-hidden="true">/</li>
-          <li className="font-semibold text-ink-800">{rule.visaTypeLabel} Visa</li>
+          <li className="font-semibold text-ink-800">{shortLabel}</li>
         </ol>
       </nav>
 
@@ -130,10 +134,10 @@ export default function VisaDetailsPage() {
             </div>
             <div className="min-w-0">
               <h1 className="font-display text-2xl font-bold tracking-tight break-words text-ink-900 sm:text-3xl">
-                {country.name} — {rule.visaTypeLabel} Visa
+                {country.name} — {shortLabel}
               </h1>
               <p className="mt-1 text-sm text-ink-500">
-                For Tunisian passport holders travelling for {rule.visaTypeLabel.toLowerCase()}
+                {t('visa.forHolders', { purpose: typeLabel })}
               </p>
             </div>
           </div>
@@ -145,9 +149,7 @@ export default function VisaDetailsPage() {
       <div className="mt-6 flex items-start gap-2.5 rounded-xl border border-warning-500/25 bg-warning-50 px-4 py-3 text-xs leading-relaxed text-warning-700">
         <FileWarning className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
         <p>
-          This guide was checked against official government and embassy sources on the date shown below.
-          Entry rules, fees and document lists can change without notice, so always confirm on the official
-          links before applying.
+          {t('visa.sourceNotice')}
         </p>
       </div>
 
@@ -157,10 +159,10 @@ export default function VisaDetailsPage() {
           <DocumentChecklist countryCode={country.code} visaType={rule.visaType} documents={documents} />
           <section aria-labelledby="how-to-apply">
             <h2 id="how-to-apply" className="mb-4 font-display text-xl font-bold tracking-tight text-ink-900">
-              How to Apply
+              {t('visa.howToApply')}
             </h2>
             <div className="card p-5 sm:p-6">
-              <ApplicationSteps steps={rule.steps} />
+              <ApplicationSteps steps={rule.steps} mode={rule.mode} />
             </div>
           </section>
         </div>
@@ -178,10 +180,10 @@ export default function VisaDetailsPage() {
       <div className="mt-8 flex flex-wrap gap-3">
         <Link to={`/countries/${country.code}`} className="btn-secondary">
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Back to {country.name}
+          {t('visa.backTo', { name: country.name })}
         </Link>
         <Link to={`/assistant?country=${country.code}&purpose=${rule.visaType}`} className="btn-primary">
-          Build my checklist with the Assistant
+          {t('visa.buildChecklist')}
         </Link>
       </div>
     </div>

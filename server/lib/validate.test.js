@@ -19,6 +19,12 @@ test('parseChatRequest normalizes message, language and history', () => {
   assert.deepEqual(result.context, { countryCode: 'fr', visaType: 'tourism' })
 })
 
+test('parseChatRequest keeps Arabic and rejects unknown languages', () => {
+  const arabic = parseChatRequest({ message: 'هل أحتاج تأشيرة لفرنسا؟', language: 'AR' })
+  assert.equal(arabic.language, 'ar')
+  assert.equal(parseChatRequest({ message: 'hello', language: 'es' }).language, 'en')
+})
+
 test('parseFeedbackRequest validates and normalizes payload', () => {
   const result = parseFeedbackRequest({
     requestId: 'req-123',

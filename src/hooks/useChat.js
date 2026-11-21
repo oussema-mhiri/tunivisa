@@ -5,6 +5,12 @@ function makeId() {
   return globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`
 }
 
+function canFallbackToJson(error) {
+  if (!error) return false
+  if (['rate_limited', 'not_configured', 'aborted', 'timeout'].includes(error.code)) return false
+  return !error.status || error.status >= 500
+}
+
 export function useChat({ language, context, messages, setMessages }) {
   const [internalMessages, internalSetMessages] = useState([])
   const controlled = Array.isArray(messages) && typeof setMessages === 'function'
@@ -127,8 +133,8 @@ export function useChat({ language, context, messages, setMessages }) {
             updateAssistant(assistantId, (m) => ({ ...m, streaming: false }))
           }
           // if aborted by user, keep partial; handled by stop
-        } else if (!gotFirstToken) {
-          // fallback to classic JSON
+        } else if (!gotFirstToken && canFallbackToJson(requestError)) {
+          // fallback to classic JSON only when the failure is retryable
           try {
             const response = await sendChatMessage({
               message,
@@ -156,7 +162,16 @@ export function useChat({ language, context, messages, setMessages }) {
             setError(fallbackError)
           }
         } else {
-          setMsgs((current) => (current || []).filter((m) => !(m.id === assistantId && !m.content)))
+          setMsgs((current) => {
+            const list = current || []
+            const assistant = list.find((message) => message.id === assistantId)
+            if (assistant && !assistant.content) {
+              return list.filter((message) => message.id !== assistantId)
+            }
+            return list.map((message) =>
+              message.id === assistantId ? { ...message, streaming: false } : message,
+            )
+          })
           setError(requestError)
         }
       } finally {

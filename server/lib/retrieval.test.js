@@ -13,6 +13,11 @@ test('normalizes accents and punctuation', () => {
   assert.equal(normalizeText("Côte d'Ivoire"), 'cote d ivoire')
 })
 
+test('normalizes Arabic text and Arabic-Indic digits', () => {
+  assert.equal(normalizeText('  هل أحتاج تأشيرة لفرنسا؟  '), 'هل أحتاج تأشيرة لفرنسا')
+  assert.equal(normalizeText('٢٠٢٦'), '2026')
+})
+
 test('detects countries from French, English and city aliases', () => {
   assert.equal(detectCountry('visa pour la France'), 'fr')
   assert.equal(detectCountry('travail en Allemagne'), 'de')
@@ -20,6 +25,13 @@ test('detects countries from French, English and city aliases', () => {
   assert.equal(detectCountry('ambassade du Japon'), 'jp')
   assert.equal(detectCountry('Bali visa'), 'id')
   assert.equal(detectCountry('pays sans visa'), null)
+})
+
+test('detects countries and purposes from Arabic questions', () => {
+  assert.equal(detectCountry('هل أحتاج تأشيرة لفرنسا؟'), 'fr')
+  assert.equal(detectCountry('تأشيرة دبي'), 'ae')
+  assert.equal(detectVisaType('الوثائق المطلوبة لتأشيرة الدراسة'), 'study')
+  assert.equal(detectVisaType('تأشيرة عمل في ألمانيا'), 'work')
 })
 
 test('detects visa purposes from natural language', () => {
@@ -58,6 +70,24 @@ test('keeps generic country questions focused on useful visa purposes', () => {
   assert.ok(ids.includes('visa:tr:tourism'))
   assert.ok(!ids.includes('visa:tr:medical'))
   assert.ok(!ids.includes('visa:tr:residence'))
+})
+
+test('retrieves the right guides for an Arabic question', () => {
+  const result = retrieve('ما الوثائق المطلوبة لتأشيرة الدراسة في فرنسا؟')
+
+  assert.equal(result.countryCode, 'fr')
+  assert.equal(result.visaType, 'study')
+  assert.equal(result.docs[0].id, 'visa:fr:study')
+  assert.equal(detectStatusIntent('دول بدون تأشيرة'), 'visa_free')
+})
+
+test('retrieves tourism information for a country', () => {
+  const result = retrieve('Que visiter en France ?')
+
+  assert.equal(result.countryCode, 'fr')
+  const doc = result.docs.find((item) => item.id === 'country:fr')
+  assert.match(doc.text, /Must-see places: Eiffel Tower/)
+  assert.match(doc.text, /Local tip:/)
 })
 
 test('answers generic checklist questions without inventing a country', () => {

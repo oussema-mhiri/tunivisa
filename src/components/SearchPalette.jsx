@@ -9,6 +9,7 @@ import { globalSearch } from '../services/api'
 import { useDebounce } from '../hooks/useDebounce'
 import { useApp } from '../context/AppContext'
 import { VISA_TYPES } from '../data/visaTypes'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 function ResultRow({ active, onHover, onClick, children }) {
@@ -29,6 +30,7 @@ function ResultRow({ active, onHover, onClick, children }) {
 
 export default function SearchPalette() {
   const navigate = useNavigate()
+  const { t } = useI18n()
   const { addRecentSearch } = useApp()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -118,7 +120,7 @@ export default function SearchPalette() {
   const groups = [
     {
       key: 'countries',
-      label: 'Countries',
+      label: t('search.countries'),
       items: results.countries,
       toItem: (c) => ({ type: 'country', payload: c }),
       render: (c) => (
@@ -131,31 +133,31 @@ export default function SearchPalette() {
     },
     {
       key: 'visaTypes',
-      label: 'Visa types',
+      label: t('search.visaTypes'),
       items: results.visaTypes,
-      toItem: (t) => ({ type: 'visa', payload: t }),
-      render: (t) => (
+      toItem: (v) => ({ type: 'visa', payload: v }),
+      render: (v) => (
         <>
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
             <Plane className="h-4 w-4" aria-hidden="true" />
           </span>
-          <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink-900">{t.label}</span>
-          <span className="text-xs text-ink-400">{t.shortLabel}</span>
+          <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink-900">{t(`purpose.${v.id || 'tourism'}`)}</span>
+          <span className="text-xs text-ink-400">{t(`purpose.short.${v.id || 'tourism'}`)}</span>
         </>
       ),
     },
     {
       key: 'purposes',
-      label: 'Travel purposes',
+      label: t('search.travelPurposes'),
       items: results.purposes,
-      toItem: (t) => ({ type: 'purpose', payload: t }),
-      render: (t) => (
+      toItem: (id) => ({ type: 'purpose', payload: VISA_TYPES.find((v) => v.id === id) }),
+      render: (v) => (
         <>
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-success-50 text-success-600">
             <Plane className="h-4 w-4" aria-hidden="true" />
           </span>
-          <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink-900">{t.label}</span>
-          <span className="text-xs text-ink-400">Ask the assistant</span>
+          <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink-900">{t(`purpose.${v?.id || 'tourism'}`)}</span>
+          <span className="text-xs text-ink-400">{t('search.askAssistant')}</span>
         </>
       ),
     },
@@ -182,7 +184,7 @@ export default function SearchPalette() {
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
-            aria-label="Global search"
+            aria-label={t('search.ariaGlobal')}
             className="w-full max-w-xl overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-pop"
           >
             <div className="flex items-center gap-3 border-b border-ink-100 px-4 py-3">
@@ -193,15 +195,15 @@ export default function SearchPalette() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Search countries, visa types, travel purposes…"
+                placeholder={t('search.placeholder')}
                 className="w-full bg-transparent text-base text-ink-900 placeholder:text-ink-400 focus:outline-none"
-                aria-label="Search TuniVisa"
+                aria-label={t('search.ariaSearch')}
               />
               <button
                 type="button"
                 onClick={closePalette}
                 className="rounded-lg border border-ink-200 px-1.5 py-0.5 text-xs font-semibold text-ink-400 hover:text-ink-600"
-                aria-label="Close search"
+                aria-label={t('search.close')}
               >
                 ESC
               </button>
@@ -211,20 +213,20 @@ export default function SearchPalette() {
               {!query.trim() && (
                 <div className="flex items-center gap-2.5 px-4 py-3 text-sm text-ink-500">
                   <CornerDownLeft className="h-4 w-4 text-ink-400" aria-hidden="true" />
-                  Type to search countries, visa types and travel purposes…
+                  {t('search.typeToSearch')}
                 </div>
               )}
 
               {query.trim() && loading && (
                 <div className="flex items-center gap-2.5 px-4 py-4 text-sm text-ink-500">
                   <Loader2 className="h-4 w-4 animate-spin text-brand-600" aria-hidden="true" />
-                  Searching…
+                  {t('search.searching')}
                 </div>
               )}
 
               {query.trim() && !loading && flatItems.length === 0 && (
                 <p className="px-4 py-6 text-center text-sm text-ink-500">
-                  No results for “{query}”. Try another search.
+                  {t('search.noResults', { query })}
                 </p>
               )}
 
@@ -260,9 +262,9 @@ export default function SearchPalette() {
             </div>
 
             <div className="hidden items-center gap-4 border-t border-ink-100 bg-ink-50 px-4 py-2 text-[11px] font-medium text-ink-400 sm:flex">
-              <span className="flex items-center gap-1"><kbd className="rounded-lg border border-ink-200 bg-white px-1">↑↓</kbd> Navigate</span>
-              <span className="flex items-center gap-1"><kbd className="rounded-lg border border-ink-200 bg-white px-1">↵</kbd> Select</span>
-              <span className="flex items-center gap-1"><kbd className="rounded-lg border border-ink-200 bg-white px-1">ESC</kbd> Close</span>
+              <span className="flex items-center gap-1"><kbd className="rounded-lg border border-ink-200 bg-white px-1">↑↓</kbd> {t('search.navigate')}</span>
+              <span className="flex items-center gap-1"><kbd className="rounded-lg border border-ink-200 bg-white px-1">↵</kbd> {t('search.select')}</span>
+              <span className="flex items-center gap-1"><kbd className="rounded-lg border border-ink-200 bg-white px-1">ESC</kbd> {t('search.closeKey')}</span>
             </div>
           </motion.div>
         </motion.div>

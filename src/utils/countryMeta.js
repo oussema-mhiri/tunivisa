@@ -1,5 +1,14 @@
 export const REGIONS = ['Europe', 'Africa', 'Asia', 'Americas', 'Middle East', 'Oceania']
 
+export const SHORT_STAY_TYPES = ['tourism', 'business', 'family', 'medical']
+
+const LONG_STAY_DURATION_KEYS = {
+  transit: 'rule.durationTransit',
+  study: 'rule.durationStudy',
+  work: 'rule.durationWork',
+  residence: 'rule.durationResidence',
+}
+
 export const VISA_STATUSES = {
   visa_free: {
     key: 'visa_free',
@@ -91,7 +100,18 @@ export function getCountryFlag(country) {
 }
 
 export function formatMaxStay(days) {
-  if (!days || days <= 0) return 'Varies'
+  if (!days || days <= 0) return 'Not specified'
   if (days >= 365) return `${Math.round(days / 365)} year${days > 365 ? 's' : ''}`
   return `${days} days`
+}
+
+export function localizedDuration(rule, t) {
+  if (!rule) return t('country.notSpecified')
+  if (SHORT_STAY_TYPES.includes(rule.visaType)) {
+    return rule.maxStayDays
+      ? t('rule.durationShortStay', { days: rule.maxStayDays })
+      : t('country.notSpecified')
+  }
+  const key = LONG_STAY_DURATION_KEYS[rule.visaType]
+  return key ? t(key) : rule.duration || t('country.notSpecified')
 }

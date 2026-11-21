@@ -6,12 +6,13 @@ import ChatSuggestions from './ChatSuggestions'
 import { cn } from '../../utils/formatters'
 
 export default function ChatMessage({ message, showSuggestions = false, onSuggestion, onFeedback }) {
-  const { t } = useI18n()
+  const { lang, t } = useI18n()
   const isUser = message.role === 'user'
+  const dir = lang === 'ar' ? 'rtl' : 'ltr'
 
   if (isUser) {
     return (
-      <div className="flex justify-end">
+      <div className="flex justify-end" dir={dir}>
         <div className="max-w-[85%] rounded-2xl rounded-br-md bg-brand-600 px-3.5 py-2.5 text-sm leading-relaxed text-white shadow-sm dark:bg-brand-800">
           <span className="sr-only">{t('chat.userLabel')}: </span>
           <p className="whitespace-pre-wrap break-words">{message.content}</p>
@@ -23,10 +24,10 @@ export default function ChatMessage({ message, showSuggestions = false, onSugges
   const feedback = message.feedback || null
 
   return (
-    <div className="flex justify-start">
+    <div className="flex justify-start" dir={dir}>
       <div className="max-w-[92%] rounded-2xl rounded-bl-md border border-ink-100 bg-white px-3.5 py-2.5 text-sm leading-relaxed text-ink-800 shadow-sm">
         <span className="sr-only">{t('chat.assistantLabel')}: </span>
-        <p className="whitespace-pre-wrap break-words" aria-live={message.streaming ? 'polite' : undefined}>
+        <p className="whitespace-pre-wrap break-words" dir={dir} aria-live={message.streaming ? 'polite' : undefined}>
           {message.content}
           {message.streaming && <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse rounded-sm bg-brand-500 align-[-2px]" aria-hidden="true" />}
         </p>

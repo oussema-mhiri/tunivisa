@@ -1677,8 +1677,7 @@ body::after {
 /* Print styles: focus on checklist/exportable content */
 @media print {
   body { background: #fff !important; background-image: none !important; }
-  header, footer, nav, .chat-widget, button[aria-label*="assistant"], [role="dialog"],
-  .print\\:hidden { display: none !important; }
+  header, footer, nav, .chat-widget, button[aria-label*="assistant"], [role="dialog"] { display: none !important; }
   .card { box-shadow: none !important; }
   a[href]::after { content: ""; }
 }

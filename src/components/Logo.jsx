@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom'
 import Flag from './Flag'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 export default function Logo({ to = '/', className, iconOnly = false, light = false }) {
+  const { t } = useI18n()
   return (
     <Link
       to={to}
       className={cn('group inline-flex items-center gap-2', className)}
-      aria-label="TuniVisa home"
+      aria-label={t('layout.logoAria')}
     >
       <span
         className={cn(

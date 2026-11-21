@@ -1,12 +1,14 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 export default function ThemeToggle({ className }) {
   const { theme, toggleTheme } = useTheme()
+  const { t } = useI18n()
   const isDark = theme === 'dark'
-  const label = isDark ? 'Switch to light mode' : 'Switch to dark mode'
+  const label = isDark ? t('theme.light') : t('theme.dark')
 
   return (
     <button

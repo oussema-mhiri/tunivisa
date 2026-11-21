@@ -61,7 +61,7 @@ export default function CompareSelector({ countries = [], selectedCodes = [], vi
                         <Flag code={country.code} size="sm" />
                         <span className="truncate text-sm font-medium text-ink-800">{country.name}</span>
                       </span>
-                      <button type="button" onClick={() => removeCountry(country.code)} className="rounded p-1 text-ink-400 hover:bg-ink-100 hover:text-ink-700" aria-label={`Remove ${country.name}`}>
+                      <button type="button" onClick={() => removeCountry(country.code)} className="rounded p-1 text-ink-400 hover:bg-ink-100 hover:text-ink-700" aria-label={t('compare.removeCountry', { name: country.name })}>
                         <X className="h-4 w-4" />
                       </button>
                     </div>
@@ -126,7 +126,7 @@ export default function CompareSelector({ countries = [], selectedCodes = [], vi
             className="mt-2 h-11 w-full rounded-xl border border-ink-200 bg-white px-3 text-sm font-medium text-ink-800 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
           >
             {VISA_TYPES.map((type) => (
-              <option key={type.id} value={type.id}>{type.shortLabel || type.label}</option>
+              <option key={type.id} value={type.id}>{t(`purpose.short.${type.id}`)}</option>
             ))}
           </select>
         </div>

@@ -10,14 +10,16 @@ import { SkeletonTable } from '../../components/Skeleton'
 import { getCountries } from '../../services/api'
 import { LAST_VERIFIED, OFFICIAL_SOURCE } from '../../data/visaRules'
 import { getVerificationStatus } from '../../data/admin'
-import { visaStatusMeta, STATUS_ORDER } from '../../utils/countryMeta'
+import { STATUS_ORDER } from '../../utils/countryMeta'
 import { formatDate } from '../../utils/formatters'
 import { useToast } from '../../context/ToastContext'
+import { useI18n } from '../../i18n/LanguageContext'
 import { useDebounce } from '../../hooks/useDebounce'
 import { useSeo } from '../../hooks/useSeo'
 
 export default function AdminCountriesPage() {
-  useSeo({ title: 'Admin — Countries', description: 'Manage the country dataset and verification status.' })
+  const { t } = useI18n()
+  useSeo({ title: t('admin.countriesSeoTitle'), description: t('admin.countriesSeoDescription') })
   const toast = useToast()
   const [countries, setCountries] = useState(null)
   const [query, setQuery] = useState('')
@@ -49,19 +51,19 @@ export default function AdminCountriesPage() {
         <SearchBar
           value={query}
           onChange={setQuery}
-          placeholder="Search countries…"
+          placeholder={t('admin.searchCountries')}
           className="sm:max-w-xs"
         />
-        <label htmlFor="admin-status-filter" className="sr-only">Filter by visa status</label>
+        <label htmlFor="admin-status-filter" className="sr-only">{t('admin.filterStatus')}</label>
         <select
           id="admin-status-filter"
           value={status}
           onChange={(e) => setStatus(e.target.value)}
           className="input w-auto"
         >
-          <option value="all">All statuses</option>
+          <option value="all">{t('admin.allStatuses')}</option>
           {STATUS_ORDER.filter((s) => s !== 'unknown').map((s) => (
-            <option key={s} value={s}>{visaStatusMeta(s).label}</option>
+            <option key={s} value={s}>{t(`status.${s}`)}</option>
           ))}
         </select>
       </div>
@@ -71,8 +73,8 @@ export default function AdminCountriesPage() {
       {countries && rows.length === 0 && (
         <EmptyState
           icon={SearchX}
-          title="No countries match"
-          text="Try a different search term or clear the visa status filter."
+          title={t('admin.noCountriesMatch')}
+          text={t('admin.noCountriesText')}
           action={
             <button
               type="button"
@@ -82,7 +84,7 @@ export default function AdminCountriesPage() {
                 setStatus('all')
               }}
             >
-              Clear filters
+              {t('common.clearFilters')}
             </button>
           }
         />
@@ -92,15 +94,15 @@ export default function AdminCountriesPage() {
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[720px] text-left text-sm">
-              <caption className="sr-only">Countries, visa status and verification</caption>
+              <caption className="sr-only">{t('admin.tableCountriesCaption')}</caption>
               <thead>
                 <tr className="border-b border-ink-200/80 bg-ink-50/70 text-xs font-semibold tracking-wide text-ink-500 uppercase">
-                  <th scope="col" className="px-5 py-3.5">Country</th>
-                  <th scope="col" className="px-5 py-3.5">Visa status</th>
-                  <th scope="col" className="px-5 py-3.5">Last verified</th>
-                  <th scope="col" className="px-5 py-3.5">Source</th>
-                  <th scope="col" className="px-5 py-3.5">Verification</th>
-                  <th scope="col" className="px-5 py-3.5 text-right">Actions</th>
+                  <th scope="col" className="px-5 py-3.5">{t('common.country')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colVisaStatus')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('common.lastVerified')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('common.source')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colVerification')}</th>
+                  <th scope="col" className="px-5 py-3.5 text-right">{t('common.actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink-100">
@@ -115,7 +117,7 @@ export default function AdminCountriesPage() {
                             <span className="block truncate font-semibold text-ink-800 group-hover:text-brand-700">
                               {c.name}
                             </span>
-                            <span className="block text-xs text-ink-400">{c.code.toUpperCase()} · {c.region}</span>
+                            <span className="block text-xs text-ink-400">{c.code.toUpperCase()} · {t(`region.${c.region}`)}</span>
                           </span>
                         </Link>
                       </td>
@@ -126,7 +128,7 @@ export default function AdminCountriesPage() {
                         {formatDate(LAST_VERIFIED[c.code])}
                       </td>
                       <td className="max-w-[220px] truncate px-5 py-3.5 text-ink-500">
-                        {OFFICIAL_SOURCE[c.code] || 'Official government source'}
+                        {OFFICIAL_SOURCE[c.code] || t('country.officialGovernmentSource')}
                       </td>
                       <td className="px-5 py-3.5">
                         <VerificationBadge status={verification} />
@@ -134,12 +136,12 @@ export default function AdminCountriesPage() {
                       <td className="px-5 py-3.5 text-right">
                         <button
                           type="button"
-                          onClick={() => toast.info(`${c.name}: editing is a demo action — nothing is saved.`)}
+                          onClick={() => toast.info(t('admin.editDemo', { name: c.name }))}
                           className="btn-secondary h-9 px-3 text-xs"
-                          aria-label={`Edit ${c.name}`}
+                          aria-label={`${t('admin.editAction')} ${c.name}`}
                         >
                           <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
-                          Edit
+                          {t('admin.editAction')}
                         </button>
                       </td>
                     </tr>
@@ -153,7 +155,7 @@ export default function AdminCountriesPage() {
 
       {countries && (
         <p className="text-xs text-ink-400">
-          Showing {rows.length} of {countries.length} detailed countries. Edit actions do not persist.
+          {t('admin.showingCountries', { shown: rows.length, total: countries.length })}
         </p>
       )}
     </div>

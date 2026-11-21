@@ -8,11 +8,14 @@ import EmptyState from '../../components/EmptyState'
 import { SkeletonTable } from '../../components/Skeleton'
 import { getCountries, getVisaRules } from '../../services/api'
 import { VISA_TYPES } from '../../data/visaTypes'
+import { localizedDuration } from '../../utils/countryMeta'
 import { useDebounce } from '../../hooks/useDebounce'
+import { useI18n } from '../../i18n/LanguageContext'
 import { useSeo } from '../../hooks/useSeo'
 
 export default function AdminVisaRulesPage() {
-  useSeo({ title: 'Admin — Visa Rules', description: 'Review visa rules by country and travel purpose.' })
+  const { t } = useI18n()
+  useSeo({ title: t('admin.visaRulesSeoTitle'), description: t('admin.visaRulesSeoDescription') })
   const [rows, setRows] = useState(null)
   const [query, setQuery] = useState('')
   const [purpose, setPurpose] = useState('all')
@@ -41,25 +44,43 @@ export default function AdminVisaRulesPage() {
       .sort((a, b) => a.countryName.localeCompare(b.countryName) || a.visaTypeLabel.localeCompare(b.visaTypeLabel))
   }, [rows, debouncedQuery, purpose])
 
+  function localizedRuleValue(rule, field) {
+    if (field === 'duration') {
+      return localizedDuration(rule, t)
+    }
+    if (field === 'fee') {
+      if (rule.fee === 'None') return t('common.none')
+      if (String(rule.fee).startsWith('Varies')) return t('rule.feeVaries')
+      return rule.fee
+    }
+    if (field === 'processingTime') {
+      if (rule.visaType === 'transit') return t('rule.processingTransit')
+      if (String(rule.processingTime).startsWith('Varies by permit type')) return t('rule.processingLong')
+      if (String(rule.processingTime).startsWith('Varies')) return t('rule.processingVaries')
+      return rule.processingTime
+    }
+    return rule[field]
+  }
+
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <SearchBar
           value={query}
           onChange={setQuery}
-          placeholder="Search by country…"
+          placeholder={t('admin.searchByCountry')}
           className="sm:max-w-xs"
         />
-        <label htmlFor="admin-purpose-filter" className="sr-only">Filter by travel purpose</label>
+        <label htmlFor="admin-purpose-filter" className="sr-only">{t('admin.filterPurpose')}</label>
         <select
           id="admin-purpose-filter"
           value={purpose}
           onChange={(e) => setPurpose(e.target.value)}
           className="input w-auto"
         >
-          <option value="all">All purposes</option>
-          {VISA_TYPES.map((t) => (
-            <option key={t.id} value={t.id}>{t.label}</option>
+          <option value="all">{t('admin.allPurposes')}</option>
+          {VISA_TYPES.map((item) => (
+            <option key={item.id} value={item.id}>{t(`purpose.${item.id}`)}</option>
           ))}
         </select>
       </div>
@@ -69,8 +90,8 @@ export default function AdminVisaRulesPage() {
       {rows && filtered.length === 0 && (
         <EmptyState
           icon={SearchX}
-          title="No visa rules match"
-          text="Try a different country or travel purpose."
+          title={t('admin.noRulesMatch')}
+          text={t('admin.noRulesText')}
           action={
             <button
               type="button"
@@ -80,7 +101,7 @@ export default function AdminVisaRulesPage() {
                 setPurpose('all')
               }}
             >
-              Clear filters
+              {t('common.clearFilters')}
             </button>
           }
         />
@@ -90,16 +111,16 @@ export default function AdminVisaRulesPage() {
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[820px] text-left text-sm">
-              <caption className="sr-only">Visa rules by country and purpose</caption>
+              <caption className="sr-only">{t('admin.tableRulesCaption')}</caption>
               <thead>
                 <tr className="border-b border-ink-200/80 bg-ink-50/70 text-xs font-semibold tracking-wide text-ink-500 uppercase">
-                  <th scope="col" className="px-5 py-3.5">Country</th>
-                  <th scope="col" className="px-5 py-3.5">Purpose</th>
-                  <th scope="col" className="px-5 py-3.5">Status</th>
-                  <th scope="col" className="px-5 py-3.5">Duration</th>
-                  <th scope="col" className="px-5 py-3.5">Fee</th>
-                  <th scope="col" className="px-5 py-3.5">Processing</th>
-                  <th scope="col" className="px-5 py-3.5 text-right">Actions</th>
+                  <th scope="col" className="px-5 py-3.5">{t('common.country')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colPurpose')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colStatus')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colDuration')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colFee')}</th>
+                  <th scope="col" className="px-5 py-3.5">{t('admin.colProcessing')}</th>
+                  <th scope="col" className="px-5 py-3.5 text-right">{t('common.actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink-100">
@@ -116,22 +137,22 @@ export default function AdminVisaRulesPage() {
                     <td className="px-5 py-3.5">
                       <span className="inline-flex items-center gap-1.5 font-medium text-ink-600">
                         <FileText className="h-3.5 w-3.5 text-ink-300" aria-hidden="true" />
-                        {rule.visaTypeLabel}
+                        {t(`purpose.${rule.visaType}`)}
                       </span>
                     </td>
                     <td className="px-5 py-3.5">
                       <VisaStatusBadge status={rule.status} />
                     </td>
-                    <td className="max-w-[200px] truncate px-5 py-3.5 text-ink-600">{rule.duration}</td>
-                    <td className="px-5 py-3.5 whitespace-nowrap text-ink-600">{rule.fee}</td>
-                    <td className="px-5 py-3.5 text-ink-600">{rule.processingTime}</td>
+                    <td className="max-w-[200px] truncate px-5 py-3.5 text-ink-600">{localizedRuleValue(rule, 'duration')}</td>
+                    <td className="px-5 py-3.5 whitespace-nowrap text-ink-600">{localizedRuleValue(rule, 'fee')}</td>
+                    <td className="px-5 py-3.5 text-ink-600">{localizedRuleValue(rule, 'processingTime')}</td>
                     <td className="px-5 py-3.5 text-right">
                       <Link
                         to={`/countries/${rule.countryCode}/visa/${rule.visaType}`}
                         className="inline-flex h-9 items-center rounded-none border border-ink-200 bg-white px-3 text-xs font-semibold text-ink-700 shadow-sm transition-colors hover:border-ink-300 hover:bg-ink-100"
-                        aria-label={`Open ${rule.countryName} ${rule.visaTypeLabel} visa guide`}
+                        aria-label={`${t('common.viewDetails')}: ${rule.countryName} — ${t(`purpose.${rule.visaType}`)}`}
                       >
-                        View
+                        {t('admin.viewAction')}
                       </Link>
                     </td>
                   </tr>
@@ -144,7 +165,7 @@ export default function AdminVisaRulesPage() {
 
       {rows && (
         <p className="text-xs text-ink-400">
-          {filtered.length} rules shown. Data reflects the last official-source check; edits do not persist.
+          {t('admin.showingRules', { count: filtered.length })}
         </p>
       )}
     </div>

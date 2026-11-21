@@ -31,7 +31,7 @@ export const KNOWLEDGE = [
     "countryCode": "fr",
     "countryName": "France",
     "route": "/countries/fr",
-    "text": "France (FR) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. France is a top Schengen destination for Tunisians — from the Eiffel Tower to the French Riviera and the Alps. TuniVisa has a full destination guide for France. Official source: France-Visas (Ministry for Europe and Foreign Affairs). Last verified: 2026-11-14.",
+    "text": "France (FR) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. France is a top Schengen destination for Tunisians — from the Eiffel Tower to the French Riviera and the Alps. Tourism: the capital is Paris. Must-see places: Eiffel Tower, Louvre Museum, Notre-Dame Cathedral, French Riviera, Mont Blanc. Local tip: Reserve Louvre and Eiffel Tower time slots online a few weeks ahead, and use the metro or RER instead of taxis in Paris. Best time to visit: April–June and September–October TuniVisa has a full destination guide for France. Official source: France-Visas (Ministry for Europe and Foreign Affairs). Last verified: 2026-11-14.",
     "keywords": [
       "France",
       "French Republic",
@@ -41,7 +41,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Eiffel Tower",
+      "Louvre Museum",
+      "Notre-Dame Cathedral",
+      "French Riviera",
+      "Mont Blanc",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -496,7 +508,7 @@ export const KNOWLEDGE = [
     "countryCode": "it",
     "countryName": "Italy",
     "route": "/countries/it",
-    "text": "Italy (IT) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Rome, Milan, Florence and the Amalfi Coast — Italy offers history, culture and cuisine across the whole country. TuniVisa has a full destination guide for Italy. Official source: Italian Ministry of Foreign Affairs / Embassy in Tunis. Last verified: 2026-11-14.",
+    "text": "Italy (IT) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Rome, Milan, Florence and the Amalfi Coast — Italy offers history, culture and cuisine across the whole country. Tourism: the capital is Rome. Must-see places: Colosseum, Vatican Museums, Florence Cathedral, Venice Grand Canal, Amalfi Coast. Local tip: Book the Colosseum and Vatican Museums early in the morning, and avoid the mid-August heat and crowds. Best time to visit: April–June and September–October TuniVisa has a full destination guide for Italy. Official source: Italian Ministry of Foreign Affairs / Embassy in Tunis. Last verified: 2026-11-14.",
     "keywords": [
       "Italy",
       "Italian Republic",
@@ -506,7 +518,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Colosseum",
+      "Vatican Museums",
+      "Florence Cathedral",
+      "Venice Grand Canal",
+      "Amalfi Coast",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -961,7 +985,7 @@ export const KNOWLEDGE = [
     "countryCode": "de",
     "countryName": "Germany",
     "route": "/countries/de",
-    "text": "Germany (DE) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Germany combines modern cities, engineering excellence and deep-rooted history in the heart of Europe. TuniVisa has a full destination guide for Germany. Official source: German Federal Foreign Office / Embassy in Tunis. Last verified: 2026-11-14.",
+    "text": "Germany (DE) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Germany combines modern cities, engineering excellence and deep-rooted history in the heart of Europe. Tourism: the capital is Berlin. Must-see places: Brandenburg Gate, Reichstag Dome, Marienplatz, Neuschwanstein Castle, Rhine Valley. Local tip: The Reichstag dome is free but needs an online reservation; regional trains are much cheaper when booked in advance. Best time to visit: May–September, or December for Christmas markets TuniVisa has a full destination guide for Germany. Official source: German Federal Foreign Office / Embassy in Tunis. Last verified: 2026-11-14.",
     "keywords": [
       "Germany",
       "Federal Republic of Germany",
@@ -971,7 +995,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Brandenburg Gate",
+      "Reichstag Dome",
+      "Marienplatz",
+      "Neuschwanstein Castle",
+      "Rhine Valley",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -1426,7 +1462,7 @@ export const KNOWLEDGE = [
     "countryCode": "tr",
     "countryName": "Turkey",
     "route": "/countries/tr",
-    "text": "Turkey (TR) is in Middle East. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. Istanbul, Cappadocia and the Mediterranean coast make Turkey one of the most popular visa-free getaways for Tunisians. TuniVisa has a full destination guide for Turkey. Official source: Turkish Ministry of Foreign Affairs / Embassy in Tunis. Last verified: 2026-11-14.",
+    "text": "Turkey (TR) is in Middle East. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. Istanbul, Cappadocia and the Mediterranean coast make Turkey one of the most popular visa-free getaways for Tunisians. Tourism: the capital is Ankara. Must-see places: Hagia Sophia, Topkapı Palace, Cappadocia, Ephesus, Antalya coast. Local tip: Use an Istanbulkart for city transport and book Cappadocia balloon flights as soon as your dates are fixed. Best time to visit: April–June and September–October TuniVisa has a full destination guide for Turkey. Official source: Turkish Ministry of Foreign Affairs / Embassy in Tunis. Last verified: 2026-11-14.",
     "keywords": [
       "Turkey",
       "Republic of Turkey",
@@ -1436,7 +1472,19 @@ export const KNOWLEDGE = [
       "visa_free",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Hagia Sophia",
+      "Topkapı Palace",
+      "Cappadocia",
+      "Ephesus",
+      "Antalya coast",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -1846,7 +1894,7 @@ export const KNOWLEDGE = [
     "countryCode": "dz",
     "countryName": "Algeria",
     "route": "/countries/dz",
-    "text": "Algeria (DZ) is in Africa. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. A neighbouring Maghreb country with the Sahara desert, coastal cities and shared cultural ties with Tunisia. TuniVisa has a full destination guide for Algeria. Official source: Algerian Ministry of Foreign Affairs. Last verified: 2026-11-14.",
+    "text": "Algeria (DZ) is in Africa. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. A neighbouring Maghreb country with the Sahara desert, coastal cities and shared cultural ties with Tunisia. Tourism: the capital is Algiers. Must-see places: Algiers Casbah, Oran, Constantine, Ghardaïa, Tassili n’Ajjer. Local tip: Book domestic flights early, carry cash for smaller towns, and allow extra time for road trips across the Sahara. Best time to visit: March–May and October–November TuniVisa has a full destination guide for Algeria. Official source: Algerian Ministry of Foreign Affairs. Last verified: 2026-11-14.",
     "keywords": [
       "Algeria",
       "People’s Democratic Republic of Algeria",
@@ -1856,7 +1904,19 @@ export const KNOWLEDGE = [
       "visa_free",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Algiers Casbah",
+      "Oran",
+      "Constantine",
+      "Ghardaïa",
+      "Tassili n’Ajjer",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -2266,7 +2326,7 @@ export const KNOWLEDGE = [
     "countryCode": "ma",
     "countryName": "Morocco",
     "route": "/countries/ma",
-    "text": "Morocco (MA) is in Africa. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. Marrakech, Casablanca and the Atlas Mountains — Morocco is an accessible, visa-free African favourite. TuniVisa has a full destination guide for Morocco. Official source: Moroccan Ministry of Foreign Affairs. Last verified: 2026-11-14.",
+    "text": "Morocco (MA) is in Africa. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. Marrakech, Casablanca and the Atlas Mountains — Morocco is an accessible, visa-free African favourite. Tourism: the capital is Rabat. Must-see places: Marrakech Medina, Jemaa el-Fnaa, Hassan II Mosque, Chefchaouen, Atlas Mountains. Local tip: Haggle politely in the souks, use shared grand taxis between cities, and try a mint tea in a rooftop riad. Best time to visit: March–May and September–November TuniVisa has a full destination guide for Morocco. Official source: Moroccan Ministry of Foreign Affairs. Last verified: 2026-11-14.",
     "keywords": [
       "Morocco",
       "Kingdom of Morocco",
@@ -2276,7 +2336,19 @@ export const KNOWLEDGE = [
       "visa_free",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Marrakech Medina",
+      "Jemaa el-Fnaa",
+      "Hassan II Mosque",
+      "Chefchaouen",
+      "Atlas Mountains",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -2686,7 +2758,7 @@ export const KNOWLEDGE = [
     "countryCode": "es",
     "countryName": "Spain",
     "route": "/countries/es",
-    "text": "Spain (ES) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Sun-drenched beaches, vibrant cities and a rich Andalusian heritage make Spain a sought-after Schengen destination. TuniVisa has a full destination guide for Spain. Official source: Spanish Ministry of Foreign Affairs / BLS Spain Tunisia. Last verified: 2026-11-14.",
+    "text": "Spain (ES) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Sun-drenched beaches, vibrant cities and a rich Andalusian heritage make Spain a sought-after Schengen destination. Tourism: the capital is Madrid. Must-see places: Prado Museum, Park Güell, Alhambra, Seville Alcázar, Costa del Sol. Local tip: Alhambra tickets sell out weeks ahead; plan around the afternoon siesta and eat late like locals. Best time to visit: April–June and September–October TuniVisa has a full destination guide for Spain. Official source: Spanish Ministry of Foreign Affairs / BLS Spain Tunisia. Last verified: 2026-11-14.",
     "keywords": [
       "Spain",
       "Kingdom of Spain",
@@ -2696,7 +2768,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Prado Museum",
+      "Park Güell",
+      "Alhambra",
+      "Seville Alcázar",
+      "Costa del Sol",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -3151,7 +3235,7 @@ export const KNOWLEDGE = [
     "countryCode": "be",
     "countryName": "Belgium",
     "route": "/countries/be",
-    "text": "Belgium (BE) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. From Brussels’ Grand-Place to Bruges’ canals, Belgium is a compact Schengen country with European institutions at its heart. TuniVisa has a full destination guide for Belgium. Official source: Belgian FPS Foreign Affairs / Immigration Office. Last verified: 2026-11-14.",
+    "text": "Belgium (BE) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. From Brussels’ Grand-Place to Bruges’ canals, Belgium is a compact Schengen country with European institutions at its heart. Tourism: the capital is Brussels. Must-see places: Brussels Grand-Place, Atomium, Bruges canals, Ghent, Antwerp. Local tip: Bruges and Ghent make easy day trips by train from Brussels; compare waffles and chocolates in the old town. Best time to visit: April–June and September–December TuniVisa has a full destination guide for Belgium. Official source: Belgian FPS Foreign Affairs / Immigration Office. Last verified: 2026-11-14.",
     "keywords": [
       "Belgium",
       "Kingdom of Belgium",
@@ -3161,7 +3245,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Brussels Grand-Place",
+      "Atomium",
+      "Bruges canals",
+      "Ghent",
+      "Antwerp",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -3616,7 +3712,7 @@ export const KNOWLEDGE = [
     "countryCode": "ca",
     "countryName": "Canada",
     "route": "/countries/ca",
-    "text": "Canada (CA) is in Americas. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 180 days. Canada offers breathtaking nature, welcoming cities and strong Francophone ties through Quebec. TuniVisa has a full destination guide for Canada. Official source: Immigration, Refugees and Citizenship Canada. Last verified: 2026-11-14.",
+    "text": "Canada (CA) is in Americas. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 180 days. Canada offers breathtaking nature, welcoming cities and strong Francophone ties through Quebec. Tourism: the capital is Ottawa. Must-see places: Niagara Falls, Banff National Park, CN Tower, Montreal Old Port, Stanley Park. Local tip: Distances are huge: pick one region per trip and book national park passes and domestic flights early. Best time to visit: June–September, or September–October for autumn colours TuniVisa has a full destination guide for Canada. Official source: Immigration, Refugees and Citizenship Canada. Last verified: 2026-11-14.",
     "keywords": [
       "Canada",
       "ca",
@@ -3625,7 +3721,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Niagara Falls",
+      "Banff National Park",
+      "CN Tower",
+      "Montreal Old Port",
+      "Stanley Park",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -4080,7 +4188,7 @@ export const KNOWLEDGE = [
     "countryCode": "gb",
     "countryName": "United Kingdom",
     "route": "/countries/gb",
-    "text": "United Kingdom (GB) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 180 days. London, Edinburgh and Manchester — the UK is a major study, work and tourism hub for Tunisians. TuniVisa has a full destination guide for United Kingdom. Official source: UK Visas & Immigration (GOV.UK). Last verified: 2026-11-14.",
+    "text": "United Kingdom (GB) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 180 days. London, Edinburgh and Manchester — the UK is a major study, work and tourism hub for Tunisians. Tourism: the capital is London. Must-see places: Tower of London, British Museum, Edinburgh Castle, Manchester, Stonehenge. Local tip: Book major attractions online for better prices, use contactless payment on transport, and allow a full day per city. Best time to visit: May–September TuniVisa has a full destination guide for United Kingdom. Official source: UK Visas & Immigration (GOV.UK). Last verified: 2026-11-14.",
     "keywords": [
       "United Kingdom",
       "United Kingdom of Great Britain and Northern Ireland",
@@ -4090,7 +4198,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Tower of London",
+      "British Museum",
+      "Edinburgh Castle",
+      "Manchester",
+      "Stonehenge",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -4545,7 +4665,7 @@ export const KNOWLEDGE = [
     "countryCode": "ae",
     "countryName": "United Arab Emirates",
     "route": "/countries/ae",
-    "text": "United Arab Emirates (AE) is in Middle East. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 30 days. Dubai and Abu Dhabi — modern skylines, shopping and Gulf hospitality. Tunisians must arrange a visa before travel; single-entry tourist visas are usually issued for 30 or 60 days. TuniVisa has a full destination guide for United Arab Emirates. Official source: UAE Government portal / ICP. Last verified: 2026-11-14.",
+    "text": "United Arab Emirates (AE) is in Middle East. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 30 days. Dubai and Abu Dhabi — modern skylines, shopping and Gulf hospitality. Tunisians must arrange a visa before travel; single-entry tourist visas are usually issued for 30 or 60 days. Tourism: the capital is Abu Dhabi. Must-see places: Burj Khalifa, Dubai Fountain, Sheikh Zayed Grand Mosque, Louvre Abu Dhabi, Desert safari. Local tip: Combine an afternoon desert safari with an evening in Dubai, dress modestly in public, and apply for the tourist visa before flying. Best time to visit: November–March TuniVisa has a full destination guide for United Arab Emirates. Official source: UAE Government portal / ICP. Last verified: 2026-11-14.",
     "keywords": [
       "United Arab Emirates",
       "ae",
@@ -4554,7 +4674,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Burj Khalifa",
+      "Dubai Fountain",
+      "Sheikh Zayed Grand Mosque",
+      "Louvre Abu Dhabi",
+      "Desert safari",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -5009,7 +5141,7 @@ export const KNOWLEDGE = [
     "countryCode": "sa",
     "countryName": "Saudi Arabia",
     "route": "/countries/sa",
-    "text": "Saudi Arabia (SA) is in Middle East. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Saudi Arabia is open for tourism and Umrah. Tunisians apply at the Saudi embassy unless they qualify through a prior US, UK or Schengen visa. TuniVisa has a full destination guide for Saudi Arabia. Official source: Saudi Ministry of Tourism / Ministry of Foreign Affairs. Last verified: 2026-11-14.",
+    "text": "Saudi Arabia (SA) is in Middle East. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Saudi Arabia is open for tourism and Umrah. Tunisians apply at the Saudi embassy unless they qualify through a prior US, UK or Schengen visa. Tourism: the capital is Riyadh. Must-see places: Kingdom Centre, At-Turaif in Diriyah, Jeddah Corniche, AlUla, Mecca and Medina. Local tip: Choose the right visa route for tourism or Umrah, book AlUla well in advance, and respect local dress and visiting rules. Best time to visit: November–March TuniVisa has a full destination guide for Saudi Arabia. Official source: Saudi Ministry of Tourism / Ministry of Foreign Affairs. Last verified: 2026-11-14.",
     "keywords": [
       "Saudi Arabia",
       "Kingdom of Saudi Arabia",
@@ -5019,7 +5151,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Kingdom Centre",
+      "At-Turaif in Diriyah",
+      "Jeddah Corniche",
+      "AlUla",
+      "Mecca and Medina",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -5474,7 +5618,7 @@ export const KNOWLEDGE = [
     "countryCode": "eg",
     "countryName": "Egypt",
     "route": "/countries/eg",
-    "text": "Egypt (EG) is in Africa. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 30 days. The Pyramids of Giza, the Nile and the Red Sea — Egypt is a historic destination. Tunisians apply at the Egyptian embassy in Tunis. TuniVisa has a full destination guide for Egypt. Official source: Egyptian Ministry of Foreign Affairs / Embassy in Tunis. Last verified: 2026-11-14.",
+    "text": "Egypt (EG) is in Africa. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 30 days. The Pyramids of Giza, the Nile and the Red Sea — Egypt is a historic destination. Tunisians apply at the Egyptian embassy in Tunis. Tourism: the capital is Cairo. Must-see places: Giza Pyramids, Egyptian Museum, Karnak Temple in Luxor, Aswan, Red Sea resorts. Local tip: Agree on taxi and felucca prices before boarding, take a guide at Giza, and keep the embassy visa approval with your documents. Best time to visit: October–April TuniVisa has a full destination guide for Egypt. Official source: Egyptian Ministry of Foreign Affairs / Embassy in Tunis. Last verified: 2026-11-14.",
     "keywords": [
       "Egypt",
       "Arab Republic of Egypt",
@@ -5484,7 +5628,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Giza Pyramids",
+      "Egyptian Museum",
+      "Karnak Temple in Luxor",
+      "Aswan",
+      "Red Sea resorts",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -5939,7 +6095,7 @@ export const KNOWLEDGE = [
     "countryCode": "qa",
     "countryName": "Qatar",
     "route": "/countries/qa",
-    "text": "Qatar (QA) is in Middle East. For Tunisian passport holders: eVisa or eTA available for Tunisian passport holders. The maximum stay is 30 days. Doha blends a futuristic skyline with Gulf heritage. Tunisians apply for a paid A1 e-visa through the Hayya portal before travel. TuniVisa has a full destination guide for Qatar. Official source: Qatar Ministry of Interior / Visit Qatar (Hayya). Last verified: 2026-11-14.",
+    "text": "Qatar (QA) is in Middle East. For Tunisian passport holders: eVisa or eTA available for Tunisian passport holders. The maximum stay is 30 days. Doha blends a futuristic skyline with Gulf heritage. Tunisians apply for a paid A1 e-visa through the Hayya portal before travel. Tourism: the capital is Doha. Must-see places: Museum of Islamic Art, Souq Waqif, Katara Cultural Village, The Pearl, Khor Al Adaid. Local tip: Apply for the paid A1 e-visa on the Hayya portal before travel; many Doha museums are free and the metro is cheap. Best time to visit: November–March TuniVisa has a full destination guide for Qatar. Official source: Qatar Ministry of Interior / Visit Qatar (Hayya). Last verified: 2026-11-14.",
     "keywords": [
       "Qatar",
       "State of Qatar",
@@ -5949,7 +6105,19 @@ export const KNOWLEDGE = [
       "evisa_eta",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Museum of Islamic Art",
+      "Souq Waqif",
+      "Katara Cultural Village",
+      "The Pearl",
+      "Khor Al Adaid",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -6404,7 +6572,7 @@ export const KNOWLEDGE = [
     "countryCode": "ch",
     "countryName": "Switzerland",
     "route": "/countries/ch",
-    "text": "Switzerland (CH) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Alpine landscapes, precision rail travel and Zurich’s financial district — a premium Schengen destination. TuniVisa has a full destination guide for Switzerland. Official source: Swiss State Secretariat for Migration (SEM). Last verified: 2026-11-14.",
+    "text": "Switzerland (CH) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Alpine landscapes, precision rail travel and Zurich’s financial district — a premium Schengen destination. Tourism: the capital is Bern. Must-see places: Zurich old town, Matterhorn in Zermatt, Lake Lucerne, Bern old town, Glacier Express. Local tip: A Swiss Travel Pass can pay off if you use trains often; reserve panoramic routes early and budget for high food prices. Best time to visit: June–September, or December–March for skiing TuniVisa has a full destination guide for Switzerland. Official source: Swiss State Secretariat for Migration (SEM). Last verified: 2026-11-14.",
     "keywords": [
       "Switzerland",
       "Swiss Confederation",
@@ -6414,7 +6582,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Zurich old town",
+      "Matterhorn in Zermatt",
+      "Lake Lucerne",
+      "Bern old town",
+      "Glacier Express",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -6869,7 +7049,7 @@ export const KNOWLEDGE = [
     "countryCode": "nl",
     "countryName": "Netherlands",
     "route": "/countries/nl",
-    "text": "Netherlands (NL) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Amsterdam’s canals, the Hague and Rotterdam — a compact, cycling-friendly Schengen country. TuniVisa has a full destination guide for Netherlands. Official source: Netherlands Ministry of Foreign Affairs / IND. Last verified: 2026-11-14.",
+    "text": "Netherlands (NL) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Amsterdam’s canals, the Hague and Rotterdam — a compact, cycling-friendly Schengen country. Tourism: the capital is Amsterdam. Must-see places: Amsterdam canals, Rijksmuseum, Van Gogh Museum, Keukenhof, Rotterdam. Local tip: Book museum slots online, explore by bike or tram, and visit Keukenhof only during the spring tulip season. Best time to visit: April–May for tulips, or June–September TuniVisa has a full destination guide for Netherlands. Official source: Netherlands Ministry of Foreign Affairs / IND. Last verified: 2026-11-14.",
     "keywords": [
       "Netherlands",
       "Kingdom of the Netherlands",
@@ -6879,7 +7059,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Amsterdam canals",
+      "Rijksmuseum",
+      "Van Gogh Museum",
+      "Keukenhof",
+      "Rotterdam",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -7334,7 +7526,7 @@ export const KNOWLEDGE = [
     "countryCode": "us",
     "countryName": "United States",
     "route": "/countries/us",
-    "text": "United States (US) is in Americas. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 180 days. New York, California and beyond — a continent-sized country with a demanding but well-documented visa process. TuniVisa has a full destination guide for United States. Official source: U.S. Department of State / U.S. Embassy in Tunis. Last verified: 2026-11-14.",
+    "text": "United States (US) is in Americas. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 180 days. New York, California and beyond — a continent-sized country with a demanding but well-documented visa process. Tourism: the capital is Washington, D.C. Must-see places: Statue of Liberty and Times Square, Golden Gate Bridge, Grand Canyon, Los Angeles, Smithsonian museums in Washington. Local tip: Tunisian travellers need a B1/B2 visa and an interview, so apply months ahead; book domestic flights separately and allow time for airport security. Best time to visit: April–June and September–November TuniVisa has a full destination guide for United States. Official source: U.S. Department of State / U.S. Embassy in Tunis. Last verified: 2026-11-14.",
     "keywords": [
       "United States",
       "United States of America",
@@ -7344,7 +7536,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Statue of Liberty and Times Square",
+      "Golden Gate Bridge",
+      "Grand Canyon",
+      "Los Angeles",
+      "Smithsonian museums in Washington",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -7799,7 +8003,7 @@ export const KNOWLEDGE = [
     "countryCode": "gr",
     "countryName": "Greece",
     "route": "/countries/gr",
-    "text": "Greece (GR) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Santorini, Athens and the Greek islands — Mediterranean islands at the heart of the Schengen area. TuniVisa has a full destination guide for Greece. Official source: Hellenic Ministry of Foreign Affairs / Embassy in Tunis. Last verified: 2026-11-14.",
+    "text": "Greece (GR) is in Europe. For Tunisian passport holders: Visa required before travel for Tunisian passport holders. The maximum stay is 90 days. Santorini, Athens and the Greek islands — Mediterranean islands at the heart of the Schengen area. Tourism: the capital is Athens. Must-see places: Acropolis of Athens, Santorini, Mykonos, Delphi, Meteora. Local tip: Buy a combined Acropolis ticket, reserve ferries in shoulder season, and stay in a village on Santorini for better value. Best time to visit: May–June and September–October TuniVisa has a full destination guide for Greece. Official source: Hellenic Ministry of Foreign Affairs / Embassy in Tunis. Last verified: 2026-11-14.",
     "keywords": [
       "Greece",
       "Hellenic Republic",
@@ -7809,7 +8013,19 @@ export const KNOWLEDGE = [
       "visa_required",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Acropolis of Athens",
+      "Santorini",
+      "Mykonos",
+      "Delphi",
+      "Meteora",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -8264,7 +8480,7 @@ export const KNOWLEDGE = [
     "countryCode": "my",
     "countryName": "Malaysia",
     "route": "/countries/my",
-    "text": "Malaysia (MY) is in Asia. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. Kuala Lumpur, Penang and Borneo — a visa-free Southeast Asian destination with tropical diversity. TuniVisa has a full destination guide for Malaysia. Official source: Immigration Department of Malaysia (JIM). Last verified: 2026-11-14.",
+    "text": "Malaysia (MY) is in Asia. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. Kuala Lumpur, Penang and Borneo — a visa-free Southeast Asian destination with tropical diversity. Tourism: the capital is Kuala Lumpur. Must-see places: Petronas Towers, Batu Caves, George Town in Penang, Langkawi, Cameron Highlands. Local tip: Enjoy the visa-free 90-day stay, use ride-hailing apps for cheap city trips, and try the street food in George Town. Best time to visit: March–September TuniVisa has a full destination guide for Malaysia. Official source: Immigration Department of Malaysia (JIM). Last verified: 2026-11-14.",
     "keywords": [
       "Malaysia",
       "my",
@@ -8273,7 +8489,19 @@ export const KNOWLEDGE = [
       "visa_free",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Petronas Towers",
+      "Batu Caves",
+      "George Town in Penang",
+      "Langkawi",
+      "Cameron Highlands",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -8728,7 +8956,7 @@ export const KNOWLEDGE = [
     "countryCode": "jp",
     "countryName": "Japan",
     "route": "/countries/jp",
-    "text": "Japan (JP) is in Asia. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. Tokyo, Kyoto and Mount Fuji — visa-free for Tunisian tourists for stays of up to 90 days. TuniVisa has a full destination guide for Japan. Official source: Ministry of Foreign Affairs of Japan / Embassy in Tunis. Last verified: 2026-11-14.",
+    "text": "Japan (JP) is in Asia. For Tunisian passport holders: Visa-free for Tunisian passport holders. The maximum stay is 90 days. Tokyo, Kyoto and Mount Fuji — visa-free for Tunisian tourists for stays of up to 90 days. Tourism: the capital is Tokyo. Must-see places: Shibuya and Sensō-ji in Tokyo, Fushimi Inari in Kyoto, Mount Fuji, Osaka, Hiroshima Peace Memorial. Local tip: Use an IC card for transport, book popular restaurants ahead, and check whether a rail pass still pays off after recent price changes. Best time to visit: March–May for cherry blossoms, or October–November TuniVisa has a full destination guide for Japan. Official source: Ministry of Foreign Affairs of Japan / Embassy in Tunis. Last verified: 2026-11-14.",
     "keywords": [
       "Japan",
       "jp",
@@ -8737,7 +8965,19 @@ export const KNOWLEDGE = [
       "visa_free",
       "visa",
       "requirements",
-      "stay"
+      "stay",
+      "Shibuya and Sensō-ji in Tokyo",
+      "Fushimi Inari in Kyoto",
+      "Mount Fuji",
+      "Osaka",
+      "Hiroshima Peace Memorial",
+      "tourism",
+      "attractions",
+      "places to visit",
+      "capital",
+      "bon plan",
+      "que visiter",
+      "visit"
     ],
     "sources": [
       {
@@ -13298,7 +13538,7 @@ export const KNOWLEDGE = [
 ]
 
 export const KNOWLEDGE_META = {
-  "generatedAt": "2026-11-16T16:53:11.405Z",
+  "generatedAt": "2026-11-21T16:03:41.552Z",
   "dataLastVerified": "2026-11-14",
   "countries": 20,
   "visaRules": 160,

@@ -12,19 +12,19 @@ export default function Footer() {
   const exploreLinks = [
     { to: '/countries', label: t('nav.explore') },
     { to: '/assistant', label: t('nav.assistant') },
-    { to: '/saved', label: 'Saved destinations' },
+    { to: '/saved', label: t('footer.saved') },
     { to: '/about', label: t('nav.about') },
   ]
 
   const resourceLinks = [
-    { to: '/assistant', label: 'Visa Assistant' },
-    { to: '/countries', label: 'Popular destinations' },
+    { to: '/assistant', label: t('footer.assistant') },
+    { to: '/countries', label: t('footer.popular') },
     { to: '/my-space', label: t('nav.mySpace') },
-    { to: '/about', label: 'About TuniVisa' },
+    { to: '/about', label: t('footer.about') },
   ]
 
   const legalLinks = [
-    { to: '/about', label: 'Contact' },
+    { to: '/about', label: t('footer.contact') },
     { to: '/about', label: t('footer.privacy') },
     { to: '/about', label: t('footer.terms') },
   ]
@@ -37,7 +37,7 @@ export default function Footer() {
           <p className="mt-4 text-sm leading-relaxed text-ink-500">{t('footer.tagline')}</p>
           <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-medium text-ink-400">
             <Globe2 className="h-4 w-4" aria-hidden="true" />
-            French <Flag code="fr" size="xs" /> and Arabic <Flag code="sa" size="xs" /> editions coming soon.
+            {t('footer.frenchAvailable')} <Flag code="fr" size="xs" /> · {t('footer.arabicBeta')} <Flag code="sa" size="xs" />
           </div>
           <a
             href="mailto:hello@tunivisa.tn"
@@ -48,7 +48,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <nav aria-label="Explore">
+        <nav aria-label={t('footer.explore')}>
           <h3 className="text-sm font-bold tracking-wide text-ink-900 uppercase">{t('footer.explore')}</h3>
           <ul className="mt-4 space-y-2.5">
             {exploreLinks.map((l) => (
@@ -61,8 +61,8 @@ export default function Footer() {
           </ul>
         </nav>
 
-        <nav aria-label="Resources">
-          <h3 className="text-sm font-bold tracking-wide text-ink-900 uppercase">Resources</h3>
+        <nav aria-label={t('footer.resources')}>
+          <h3 className="text-sm font-bold tracking-wide text-ink-900 uppercase">{t('footer.resources')}</h3>
           <ul className="mt-4 space-y-2.5">
             {resourceLinks.map((l) => (
               <li key={l.label}>
@@ -74,7 +74,7 @@ export default function Footer() {
           </ul>
         </nav>
 
-        <nav aria-label="Legal">
+        <nav aria-label={t('footer.legal')}>
           <h3 className="text-sm font-bold tracking-wide text-ink-900 uppercase">{t('footer.legal')}</h3>
           <ul className="mt-4 space-y-2.5">
             {legalLinks.map((l) => (
@@ -100,7 +100,7 @@ export default function Footer() {
               <Flag code="tn" size="xs" />
             </p>
             <p>
-              Visa data: <a href={VISA_MATRIX_META.url} target="_blank" rel="noreferrer" className="underline hover:text-brand-600">passport-index-dataset</a> (MIT), synced {String(VISA_MATRIX_META.fetchedAt||'').slice(0,10)}
+              {t('footer.visaData')} <a href={VISA_MATRIX_META.url} target="_blank" rel="noreferrer" className="underline hover:text-brand-600">passport-index-dataset</a> {t('footer.synced', { date: String(VISA_MATRIX_META.fetchedAt || '').slice(0, 10) })}
             </p>
           </div>
         </div>

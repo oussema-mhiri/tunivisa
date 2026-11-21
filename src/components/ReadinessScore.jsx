@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Info } from 'lucide-react'
+import { useI18n } from '../i18n/LanguageContext'
 import { cn } from '../utils/formatters'
 
 const CIRCLE_RADIUS = 52
@@ -13,30 +14,31 @@ function scoreColor(score) {
 }
 
 export default function ReadinessScore({ score, breakdown, className }) {
+  const { t } = useI18n()
   const pct = Math.max(0, Math.min(100, Math.round(score || 0)))
   const color = scoreColor(pct)
 
   const breakdownItems = breakdown || [
-    { label: 'Financial documents', value: 70 },
-    { label: 'Travel purpose', value: 80 },
-    { label: 'Accommodation', value: 60 },
-    { label: 'Supporting documents', value: 75 },
-    { label: 'Travel history', value: 50 },
+    { label: t('wizard.breakdownFinancial'), value: 70 },
+    { label: t('wizard.breakdownPurpose'), value: 80 },
+    { label: t('wizard.breakdownAccommodation'), value: 60 },
+    { label: t('wizard.breakdownSupporting'), value: 75 },
+    { label: t('wizard.breakdownHistory'), value: 50 },
   ]
 
   return (
     <div className="card overflow-hidden">
       <div className="border-b border-ink-100 px-5 py-4">
-        <h2 className="font-display text-lg font-bold text-ink-900">Application readiness</h2>
+        <h2 className="font-display text-lg font-bold text-ink-900">{t('readiness.title')}</h2>
         <p className="mt-0.5 flex items-start gap-1.5 text-sm text-ink-500">
           <Info className="mt-0.5 h-4 w-4 shrink-0 text-info-500" aria-hidden="true" />
-          This score is not a prediction of visa approval — it highlights what to prepare.
+          {t('readiness.note')}
         </p>
       </div>
 
       <div className="grid gap-6 p-5 sm:grid-cols-[auto_1fr] sm:items-center">
         <div className="relative mx-auto h-36 w-36 sm:h-40 sm:w-40">
-          <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90" role="img" aria-label={`Application readiness score ${pct} out of 100`}>
+          <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90" role="img" aria-label={t('readiness.aria', { score: pct })}>
             <circle cx="60" cy="60" r={CIRCLE_RADIUS} fill="none" stroke="var(--color-ink-200)" strokeWidth="10" />
             <motion.circle
               cx="60"

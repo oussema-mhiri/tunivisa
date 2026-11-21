@@ -1,5 +1,5 @@
 import { KNOWLEDGE } from '../data/knowledge.js'
-import { COUNTRY_ALIASES, VISA_TYPE_KEYWORDS } from './aliases.js'
+import { ARABIC_COUNTRY_ALIASES, ARABIC_VISA_TYPE_KEYWORDS, COUNTRY_ALIASES, VISA_TYPE_KEYWORDS } from './aliases.js'
 
 const MAX_SELECTED_DOCS = 6
 const MAX_CONTEXT_CHARS = 6500
@@ -11,6 +11,8 @@ const STOP_WORDS = new Set([
   'les', 'des', 'une', 'aux', 'pour', 'avec', 'dans', 'que', 'qui', 'quel', 'quelle', 'quels', 'quelles',
   'est', 'sont', 'comment', 'combien', 'faut', 'il', 'elle', 'ils', 'elles', 'mon', 'ma', 'mes', 'votre', 'vos',
   'notre', 'nos', 'sur', 'sous', 'par', 'pas', 'plus', 'moins', 'aussi', 'mais', 'donc', 'alors', 'quand',
+  'في', 'من', 'على', 'إلى', 'الى', 'عن', 'مع', 'هل', 'ما', 'ماذا', 'كيف', 'كم', 'أين', 'اين', 'متى', 'لماذا',
+  'هذا', 'هذه', 'ذلك', 'التي', 'الذي', 'أنا', 'انا', 'أنت', 'انت', 'هو', 'هي', 'نحن', 'هم', 'أن', 'ان', 'أو', 'او',
 ])
 
 const DOCS = KNOWLEDGE.map((doc) => {
@@ -62,21 +64,33 @@ const ALIASES = (() => {
     }
   }
 
+  for (const [code, aliases] of Object.entries(ARABIC_COUNTRY_ALIASES)) {
+    for (const alias of aliases) {
+      const normalized = normalizeText(alias)
+      if (normalized) entries.set(normalized, code)
+    }
+  }
+
   return [...entries.entries()]
     .map(([phrase, code]) => ({ phrase, code }))
     .sort((a, b) => b.phrase.length - a.phrase.length)
 })()
 
-const VISA_KEYWORDS = Object.entries(VISA_TYPE_KEYWORDS).flatMap(([id, keywords]) =>
+const ALL_VISA_KEYWORDS = { ...VISA_TYPE_KEYWORDS }
+for (const [id, keywords] of Object.entries(ARABIC_VISA_TYPE_KEYWORDS)) {
+  ALL_VISA_KEYWORDS[id] = [...(ALL_VISA_KEYWORDS[id] || []), ...keywords]
+}
+
+const VISA_KEYWORDS = Object.entries(ALL_VISA_KEYWORDS).flatMap(([id, keywords]) =>
   keywords.map((keyword) => ({ id, phrase: normalizeText(keyword) })).filter((item) => item.phrase),
 )
 
 const STATUS_KEYWORDS = {
-  visa_free: ['visa free', 'sans visa', 'visa gratuit', 'voyager sans visa', 'no visa', 'where can i travel', 'ou voyager'],
-  visa_on_arrival: ['visa on arrival', 'visa a l arrivee', 'visa at arrival'],
-  evisa_eta: ['evisa', 'e visa', 'eta', 'electronic visa', 'visa electronique'],
-  visa_required: ['visa required', 'visa requis', 'need a visa', 'besoin d un visa'],
-  no_admission: ['no admission', 'admission refused', 'entry banned', 'not allowed entry', 'interdit d entree', 'admission refusee'],
+  visa_free: ['visa free', 'sans visa', 'visa gratuit', 'voyager sans visa', 'no visa', 'where can i travel', 'ou voyager', 'بدون تأشيرة', 'دون تأشيرة', 'لا تحتاج تأشيرة', 'إعفاء من التأشيرة'],
+  visa_on_arrival: ['visa on arrival', 'visa a l arrivee', 'visa at arrival', 'تأشيرة عند الوصول', 'تأشيرة عند الدخول'],
+  evisa_eta: ['evisa', 'e visa', 'eta', 'electronic visa', 'visa electronique', 'تأشيرة إلكترونية', 'تصريح سفر إلكتروني'],
+  visa_required: ['visa required', 'visa requis', 'need a visa', 'besoin d un visa', 'تأشيرة مطلوبة', 'تحتاج إلى تأشيرة', 'تأشيرة إلزامية'],
+  no_admission: ['no admission', 'admission refused', 'entry banned', 'not allowed entry', 'interdit d entree', 'admission refusee', 'منع دخول', 'ممنوع الدخول', 'رفض الدخول'],
 }
 
 const STATUS_PHRASES = Object.entries(STATUS_KEYWORDS).flatMap(([id, keywords]) =>
@@ -97,16 +111,23 @@ export function normalizeText(value) {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/[\u064b-\u0653\u0656-\u065f\u0670\u06d6-\u06ed]/g, '')
+    .replace(/[\u0660-\u0669]/g, (digit) => String(digit.charCodeAt(0) - 0x0660))
+    .replace(/[^\p{L}\p{N}\u0654\u0655]+/gu, ' ')
     .trim()
+    .normalize('NFC')
 }
+
+const ARABIC_CLITICS = new Set(['ل', 'ب', 'ك', 'ف', 'و'])
 
 function hasPhrase(haystack, phrase) {
   if (!phrase) return false
   let index = haystack.indexOf(phrase)
+  const arabicPhrase = /[\u0600-\u06ff]/.test(phrase[0])
 
   while (index !== -1) {
-    const beforeOk = index === 0 || haystack[index - 1] === ' '
+    const before = index === 0 ? '' : haystack[index - 1]
+    const beforeOk = index === 0 || before === ' ' || (arabicPhrase && ARABIC_CLITICS.has(before))
     const afterIndex = index + phrase.length
     const afterOk = afterIndex === haystack.length || haystack[afterIndex] === ' '
     if (beforeOk && afterOk) return true
@@ -229,6 +250,10 @@ function scoreDoc(doc, normalizedQuery, tokens, countryCode, visaType) {
     'checklist',
     'required documents',
     'documents requis',
+    'الوثائق',
+    'وثائق',
+    'المستندات',
+    'الأوراق',
   ]
   const wantsDocuments = hasAny(normalizedQuery, docWords)
   if (wantsDocuments) {
@@ -236,13 +261,13 @@ function scoreDoc(doc, normalizedQuery, tokens, countryCode, visaType) {
   }
   if (!wantsDocuments && doc.type === 'document') score -= 6
 
-  const feeWords = ['fee', 'fees', 'frais', 'cout', 'couts', 'price', 'prix', 'combien', 'pay', 'payer']
+  const feeWords = ['fee', 'fees', 'frais', 'cout', 'couts', 'price', 'prix', 'combien', 'pay', 'payer', 'الرسوم', 'التكلفة', 'رسوم', 'كم']
   if (hasAny(normalizedQuery, feeWords) && doc.type === 'visa') score += 2.5
 
-  const timeWords = ['processing', 'traitement', 'delai', 'delais', 'how long', 'combien de temps', 'wait']
+  const timeWords = ['processing', 'traitement', 'delai', 'delais', 'how long', 'combien de temps', 'wait', 'المدة', 'مدة', 'المعالجة', 'كم يستغرق']
   if (hasAny(normalizedQuery, timeWords) && doc.type === 'visa') score += 2.5
 
-  const embassyWords = ['embassy', 'ambassade', 'consulate', 'consulat', 'appointment', 'rendez vous', 'contact', 'telephone']
+  const embassyWords = ['embassy', 'ambassade', 'consulate', 'consulat', 'appointment', 'rendez vous', 'contact', 'telephone', 'السفارة', 'سفارة', 'القنصلية', 'مركز التأشيرات']
   if (hasAny(normalizedQuery, embassyWords) && doc.type === 'embassy') score += 8
 
   const statusWords = [
@@ -261,6 +286,12 @@ function scoreDoc(doc, normalizedQuery, tokens, countryCode, visaType) {
     'overstay',
     'where can i travel',
     'ou voyager',
+    'بدون تأشيرة',
+    'دون تأشيرة',
+    'تأشيرة عند الوصول',
+    'تأشيرة إلكترونية',
+    'تأشيرة مطلوبة',
+    'الدخول',
   ]
   if (hasAny(normalizedQuery, statusWords) && (doc.type === 'country' || doc.type === 'map')) score += 3
   if (hasAny(normalizedQuery, statusWords) && doc.type === 'status') score += 12
