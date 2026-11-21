@@ -2,8 +2,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
+const isVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV)
+
 export default defineConfig({
-  base: process.env.VITE_BASE || '/tunivisa/',
+  base: process.env.VITE_BASE || (isVercel ? '/' : '/tunivisa/'),
+  define: {
+    __VERCEL_BUILD__: JSON.stringify(isVercel),
+  },
   plugins: [react(), tailwindcss()],
   server: {
     port: 5173,

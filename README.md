@@ -179,15 +179,13 @@ The site is deployed to GitHub Pages at https://oussema-mhiri.github.io/tunivisa
 
 ### Full-stack on Vercel (frontend + chat API)
 
-The root `vercel.json` builds the Vite app to `dist/`, serves it at `/`, and exposes `api/chat.js`, `api/feedback.js` and `api/health.js` as `/api/*`. Import the repository with **Root Directory = `.`** (preset Vite), set Node.js 22 in Project Settings, and add these Environment Variables:
+The root `vercel.json` builds the Vite app to `dist/`, serves it at `/`, and exposes `api/chat.js`, `api/feedback.js` and `api/health.js` as `/api/*`. Import the repository with **Root Directory = `.`** (preset Vite) and set Node.js 22 in Project Settings. Vercel builds are detected automatically: the frontend uses `/` as its base and calls `/api`, so `VITE_BASE` and `VITE_CHAT_API_URL` are optional overrides, not requirements. Add the API Environment Variables:
 
-- `VITE_BASE=/`
-- `VITE_CHAT_API_URL=/api`
 - `GEMINI_API_KEY`, `GEMINI_MODEL`, `GROQ_API_KEY`, `GROQ_MODEL`
 - `ALLOWED_ORIGINS=https://<project>.vercel.app` — the built-in `VERCEL_URL` origin is allowed automatically, so this is only needed for extra/custom domains
 - `PROVIDER_TIMEOUT_MS=11000`, `RATE_LIMIT_DISABLED=false`, optional Upstash Redis credentials
 
-Check `GET /api/health`, then test the chat widget and a deep link such as `/countries/fr`. The GitHub Pages workflow can stay enabled: without `VITE_BASE`, its build keeps the `/tunivisa/` base.
+Check `GET /api/health`, then test the chat widget and a deep link such as `/countries/fr`. The GitHub Pages workflow can stay enabled: outside Vercel, its build keeps the `/tunivisa/` base.
 
 ## Project structure
 

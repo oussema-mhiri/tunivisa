@@ -1,6 +1,8 @@
 const DEV_API_BASE = 'http://localhost:3000/api'
 const CONFIGURED_API_BASE = String(import.meta.env.VITE_CHAT_API_URL || '').trim().replace(/\/$/, '')
-const API_BASE = CONFIGURED_API_BASE || (import.meta.env.DEV ? DEV_API_BASE : '')
+const VERCEL_BUILD = typeof __VERCEL_BUILD__ !== 'undefined' && __VERCEL_BUILD__
+const API_BASE =
+  CONFIGURED_API_BASE || (import.meta.env.DEV ? DEV_API_BASE : VERCEL_BUILD ? '/api' : '')
 
 export const CHAT_ENABLED = Boolean(API_BASE)
 
