@@ -177,6 +177,18 @@ The site is deployed to GitHub Pages at https://oussema-mhiri.github.io/tunivisa
 - Verify with `GET <VITE_CHAT_API_URL>/health`: `providers.gemini` and `providers.groq` should be `true`, then rebuild/redeploy Pages so the widget appears.
 - GitHub Pages cannot host serverless functions or keep provider keys secret.
 
+### Full-stack on Vercel (frontend + chat API)
+
+The root `vercel.json` builds the Vite app to `dist/`, serves it at `/`, and exposes `api/chat.js`, `api/feedback.js` and `api/health.js` as `/api/*`. Import the repository with **Root Directory = `.`** (preset Vite), set Node.js 22 in Project Settings, and add these Environment Variables:
+
+- `VITE_BASE=/`
+- `VITE_CHAT_API_URL=/api`
+- `GEMINI_API_KEY`, `GEMINI_MODEL`, `GROQ_API_KEY`, `GROQ_MODEL`
+- `ALLOWED_ORIGINS=https://<project>.vercel.app` — the built-in `VERCEL_URL` origin is allowed automatically, so this is only needed for extra/custom domains
+- `PROVIDER_TIMEOUT_MS=11000`, `RATE_LIMIT_DISABLED=false`, optional Upstash Redis credentials
+
+Check `GET /api/health`, then test the chat widget and a deep link such as `/countries/fr`. The GitHub Pages workflow can stay enabled: without `VITE_BASE`, its build keeps the `/tunivisa/` base.
+
 ## Project structure
 
 ```text

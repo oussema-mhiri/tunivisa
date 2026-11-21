@@ -5,8 +5,11 @@ export function allowedOrigins() {
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean)
+  const vercelUrl = String(process.env.VERCEL_URL || '').trim()
+  const vercelOrigin = vercelUrl ? `https://${vercelUrl}` : ''
+  const defaults = configured.length > 0 ? [] : DEFAULT_ORIGINS
 
-  return configured.length > 0 ? configured : DEFAULT_ORIGINS
+  return [...new Set([...configured, ...defaults, vercelOrigin].filter(Boolean))]
 }
 
 export function isOriginAllowed(origin) {
