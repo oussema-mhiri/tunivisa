@@ -155,7 +155,7 @@ npm install
 npm run dev
 ```
 
-The dev server runs at `http://localhost:5173/`.
+The dev server runs at `http://localhost:5173/`. Keep the chat API from the previous step running in another terminal; otherwise the chat widget shows a connection error.
 
 ```bash
 npm run build          # production build in dist/

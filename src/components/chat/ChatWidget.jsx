@@ -31,6 +31,8 @@ function errorText(error, t) {
   if (!error) return ''
   if (error.code === 'rate_limited') return t('chat.rateLimited')
   if (error.code === 'timeout') return t('chat.timeout')
+  if (['network_error', 'not_configured', 'origin_not_allowed'].includes(error.code)) return t('chat.connection')
+  if (error.status >= 500) return t('chat.unavailable')
   return t('chat.error')
 }
 
@@ -283,7 +285,7 @@ export default function ChatWidget() {
                   maxLength={500}
                   placeholder={t('chat.placeholder')}
                   autoComplete="off"
-                  className="min-w-0 flex-1 rounded-xl border border-ink-200 bg-ink-50 px-3 py-2.5 text-sm text-ink-800 placeholder:text-ink-400 focus:border-brand-400 focus:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+                  className="min-w-0 flex-1 rounded-xl border border-ink-200 bg-white px-3 py-2.5 text-sm text-ink-900 caret-brand-600 placeholder:text-ink-400 focus:border-brand-400 focus:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 dark:bg-ink-100 dark:text-ink-900 dark:caret-brand-200 dark:focus:bg-ink-100"
                 />
                 {loading || streaming ? (
                   <button
