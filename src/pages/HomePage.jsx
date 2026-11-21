@@ -40,6 +40,7 @@ export default function HomePage() {
   useSeo({
     path: '/',
     title: t('home.heroTitle'),
+    documentTitle: 'TuniVisa — Visa & Travel Guide for Tunisian Passport Holders',
     description: t('home.heroSubtitle'),
   })
 

@@ -4,9 +4,9 @@ const SITE_NAME = 'TuniVisa'
 const SITE_URL = 'https://oussema-mhiri.github.io/tunivisa'
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.svg`
 
-export function useSeo({ title, description, path = '', image, noindex = false } = {}) {
+export function useSeo({ title, documentTitle, description, path = '', image, noindex = false } = {}) {
   useEffect(() => {
-    const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Visa & Travel Guide for Tunisians`
+    const fullTitle = documentTitle || (title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Visa & Travel Guide for Tunisians`)
     document.title = fullTitle
 
     const setMeta = (attr, key, content) => {
@@ -48,5 +48,5 @@ export function useSeo({ title, description, path = '', image, noindex = false }
     setMeta('name', 'twitter:description', desc)
     setMeta('name', 'twitter:image', img)
     setLink('canonical', url)
-  }, [title, description, path, image, noindex])
+  }, [title, documentTitle, description, path, image, noindex])
 }
