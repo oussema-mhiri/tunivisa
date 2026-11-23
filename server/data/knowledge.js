@@ -13538,7 +13538,7 @@ export const KNOWLEDGE = [
 ]
 
 export const KNOWLEDGE_META = {
-  "generatedAt": "2026-11-21T16:03:41.552Z",
+  "generatedAt": "2026-11-23T17:19:31.146Z",
   "dataLastVerified": "2026-11-14",
   "countries": 20,
   "visaRules": 160,
